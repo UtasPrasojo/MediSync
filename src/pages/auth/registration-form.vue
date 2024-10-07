@@ -7,6 +7,7 @@ meta:
 import { ref } from 'vue'
 import { useHttpMutation } from '@/composables/http/http'
 import { useMessage } from 'naive-ui'
+import { useUserSignup } from '@/services/auth';
 
 const message = useMessage()
 
@@ -22,17 +23,7 @@ const onSubmit = () => {
   mutate(formData.value)
   console.log(formData)
 }
-const { mutate, isPending } = useHttpMutation('/v1/auth/user/sign-up', {
-  method: 'POST',
-  queryOptions: {
-    onSuccess: () => {
-      message.success('Registrasi berhasil')
-    },
-    onError: () => {
-      message.error('Password atau email anda salah')
-    }
-  }
-})
+const { mutate, isPending } = useUserSignup()
 </script>
 
 <template>

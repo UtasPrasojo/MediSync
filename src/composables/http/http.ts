@@ -10,29 +10,29 @@ import { unref, type ComputedRef, type Ref } from 'vue'
 import axios from 'axios'
 import type { AxiosResponse } from 'node_modules/axios/index.cjs'
 
-
+export const API = { AUTH_USER_SIGNIN: '/v1/auth/user/sign-in',AUTH_USER_SIGNUP:'/v1/auth/user/sign-up' }
 
 export const http = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL
 })
 
 type ResponseData<TData = any> = {
-    data: TData;
-  };
-   
-  type Config<TData = any, TError = DefaultError> = {
-    keys?: any[];
-    params?: Record<string, any>;
-    httpOptions?: AxiosRequestConfig;
-    queryOptions?: UseQueryOptions<TData, TError>;
-  };
-   
-  type DefaultError = {
-    message: string;
-    validation: {};
-  };
-   
-  /**
+  data: TData
+}
+
+type Config<TData = any, TError = DefaultError> = {
+  keys?: any[]
+  params?: Record<string, any>
+  httpOptions?: AxiosRequestConfig
+  queryOptions?: UseQueryOptions<TData, TError>
+}
+
+type DefaultError = {
+  message: string
+  validation: {}
+}
+
+/**
   * API GET Method request only.
   * @example
       const { data: items, isLoading, isError } = useHttp<number, string>('/', {
@@ -49,46 +49,38 @@ type ResponseData<TData = any> = {
   * @param url URL API
   * @param options HTTP Mutation Options
   */
-  export function useHttp<TData = any, TError = any>(
-    url: string,
-    options?: Config<TData, TError>
-    ) {
-    const defaultOptions = {
-      queryKey: [url],
-      queryFn: async () => {
-        try {
-          const defaultConfig =  {}
-   
-          if (options?.params) {
-            Object.assign(defaultConfig, { params: options.params })
-          }
-          const { data } = await http.get<ResponseData>(url, defaultConfig);
-          return data?.data ?? null;
-        } catch (e: any) {
-          Promise.reject(e?.response ?? e);
-          return e;
+export function useHttp<TData = any, TError = any>(url: string, options?: Config<TData, TError>) {
+  const defaultOptions = {
+    queryKey: [url],
+    queryFn: async () => {
+      try {
+        const defaultConfig = {}
+
+        if (options?.params) {
+          Object.assign(defaultConfig, { params: options.params })
         }
-      },
-    };
-   
-    if (options?.queryOptions) {
-      Object.assign(defaultOptions, options.queryOptions)
+        const { data } = await http.get<ResponseData>(url, defaultConfig)
+        return data?.data ?? null
+      } catch (e: any) {
+        Promise.reject(e?.response ?? e)
+        return e
+      }
     }
-    return useQuery(defaultOptions);
   }
-   
-  type HttpMutationOptions<
-    TData = any,
-    TError = any,
-    TVariables = any,
-    TContext = any
-  > = {
-    method: "GET" | "HEAD" | "POST" | "OPTIONS" | "PUT" | "DELETE" | "PATCH";
-    httpOptions?: AxiosRequestConfig;
-    queryOptions?: UseMutationOptions<TData, TError, TVariables, TContext>;
-  };
-   
-  /**
+
+  if (options?.queryOptions) {
+    Object.assign(defaultOptions, options.queryOptions)
+  }
+  return useQuery(defaultOptions)
+}
+
+type HttpMutationOptions<TData = any, TError = any, TVariables = any, TContext = any> = {
+  method: 'GET' | 'HEAD' | 'POST' | 'OPTIONS' | 'PUT' | 'DELETE' | 'PATCH'
+  httpOptions?: AxiosRequestConfig
+  queryOptions?: UseMutationOptions<TData, TError, TVariables, TContext>
+}
+
+/**
   * Update data to the server.
   * @example
     const {mutate, isLoading, isError, error} =  useHttpMutation<TData, TError>('todos/:id', {
@@ -111,29 +103,29 @@ type ResponseData<TData = any> = {
   * @param url URL API
   * @param options HTTP Mutation Options
   */
-  export function useHttpMutation<
-    TData = any,
-    TError = AxiosResponse<DefaultError>,
-    TVariables = any
-  >(url: string, options: HttpMutationOptions<TData, TError>) {
-    return useMutation({
-      mutationFn: (value: TVariables) => {
-        return new Promise<TData>((resolve, reject) => {
-          return http
-            .request<TData>({
-              url: url,
-              method: options.method,
-              ...options.httpOptions,
-              data: value,
-            })
-            .then((response) => {
-              resolve(response.data);
-            })
-            .catch((error: AxiosError<TError>) => {
-              reject(error.response ?? error.message);
-            });
-        });
-      },
-      ...options.queryOptions,
-    });
-  }
+export function useHttpMutation<
+  TData = any,
+  TError = AxiosResponse<DefaultError>,
+  TVariables = any
+>(url: string, options: HttpMutationOptions<TData, TError>) {
+  return useMutation({
+    mutationFn: (value: TVariables) => {
+      return new Promise<TData>((resolve, reject) => {
+        return http
+          .request<TData>({
+            url: url,
+            method: options.method,
+            ...options.httpOptions,
+            data: value
+          })
+          .then((response) => {
+            resolve(response.data)
+          })
+          .catch((error: AxiosError<TError>) => {
+            reject(error.response ?? error.message)
+          })
+      })
+    },
+    ...options.queryOptions
+  })
+}

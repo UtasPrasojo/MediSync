@@ -32,7 +32,7 @@
       <div class="bg-white p-6 rounded-md shadow-md">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-lg font-semibold">Data Anak</h2>
-          <button class="px-4 py-2 bg-pink-500 text-white rounded-md flex items-center">
+          <button class="px-4 py-2 bg-pink-500 text-white rounded-md flex items-center" @click="() => console.log('p')">
             <i class="fas fa-plus mr-2"></i>
             Tambah Profil Anak
           </button>

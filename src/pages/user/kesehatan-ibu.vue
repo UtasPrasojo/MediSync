@@ -25,46 +25,11 @@
       </div>
 
       <!-- Dropdown Anak -->
-      <div class="relative inline-block text-left">
-        <button
-          @click="toggleChildDropdown"
-          class="bg-pink-500 text-white px-4 py-2 rounded-md flex items-center"
-        >
-          {{ selectedChild }}
-          <i class="ml-2 fas fa-chevron-down"></i>
-        </button>
-
-        <!-- Dropdown Menu -->
-        <div v-if="isChildDropdownOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg">
-          <div class="py-1">
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              @click="selectChild('Anak Ke-1')"
-            >
-              Anak Ke-1
-            </a>
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              @click="selectChild('Anak Ke-2')"
-            >
-              Anak Ke-2
-            </a>
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              @click="selectChild('Anak Ke-3')"
-            >
-              Anak Ke-3
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
+    <!-- div BIM -->
     <div class="bg-white p-6 rounded-lg shadow mb-6">
       <div class="flex justify-between">
-        <h2 class="text-lg font-semibold">Grafik BMI Anak</h2>
+        <h2 class="text-lg font-semibold">Grafik BMI Ibu</h2>
 
         <!-- Dropdown Bulan -->
         <div class="relative inline-block text-left">
@@ -167,201 +132,204 @@
           </div>
         </div>
       </div>
-      <div class="mt-4 h-48 bg-gray-100 rounded-lg flex items-center justify-center">
-        <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-          <div class="flex justify-between">
-            <div>
-              <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
-                32.4k
-              </h5>
-              <p class="text-base font-normal text-gray-500 dark:text-gray-400">Users this week</p>
-            </div>
-            <div
-              class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center"
+
+      <div class="h-full w-full bg-white rounded-lg shadow dark:bg-white p-4">
+        <div class="flex justify-between">
+          <div>
+            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
+              32.4k
+            </h5>
+            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Users this week</p>
+          </div>
+          <div
+            class="flex items-center px-2.5 py-0.5 text-base font-semibold text-pink-500 dark:text-pink-500 text-center"
+          >
+            12%
+            <svg
+              class="w-3 h-3 ms-1"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 14"
             >
-              12%
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13V1m0 0L1 5m4-4 4 4"
+              />
+            </svg>
+          </div>
+        </div>
+        <div id="area-chart"></div>
+        <div
+          class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between"
+        >
+          <div class="flex justify-between items-center pt-5">
+            <!-- Button -->
+            <button
+              id="dropdownDefaultButton"
+              data-dropdown-toggle="lastDaysdropdown"
+              data-dropdown-placement="bottom"
+              class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+              type="button"
+            >
+              Last 7 days
               <svg
-                class="w-3 h-3 ms-1"
+                class="w-2.5 m-2.5 ms-1.5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 10 14"
+                viewBox="0 0 10 6"
               >
                 <path
                   stroke="currentColor"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M5 13V1m0 0L1 5m4-4 4 4"
+                  d="m1 1 4 4 4-4"
                 />
               </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div
+              id="lastDaysdropdown"
+              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+            >
+              <ul
+                class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownDefaultButton"
+              >
+                <li>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >Yesterday</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >Today</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >Last 7 days</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >Last 30 days</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >Last 90 days</a
+                  >
+                </li>
+              </ul>
             </div>
-          </div>
-          <div id="area-chart"></div>
-          <div
-            class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between"
-          >
-            <div class="flex justify-between items-center pt-5">
-              <!-- Button -->
-              <button
-                id="dropdownDefaultButton"
-                data-dropdown-toggle="lastDaysdropdown"
-                data-dropdown-placement="bottom"
-                class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-                type="button"
+            <a
+              href="#"
+              class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-pink-600 hover:text-pink-700 dark:hover:text-white hover:bg-gray-500 dark:hover:bg-pink-700 dark:focus:ring-pink-700 dark:border-pink-700 px-3 py-2"
+            >
+              Users Report
+              <svg
+                class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 6 10"
               >
-                Last 7 days
-                <svg
-                  class="w-2.5 m-2.5 ms-1.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
-              <!-- Dropdown menu -->
-              <div
-                id="lastDaysdropdown"
-                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-              >
-                <ul
-                  class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                  aria-labelledby="dropdownDefaultButton"
-                >
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Yesterday</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Today</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Last 7 days</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Last 30 days</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Last 90 days</a
-                    >
-                  </li>
-                </ul>
-              </div>
-              <a
-                href="#"
-                class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
-              >
-                Users Report
-                <svg
-                  class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 6 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 9 4-4-4-4"
-                  />
-                </svg>
-              </a>
-            </div>
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 9 4-4-4-4"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <div>
-      <n-data-table
-        pagination-behavior-on-filter="first"
-        :columns="columns"
-        :data="data"
-        :pagination="pagination"
-      />
-    </div>
+    <div class="rounded-lg shadow mb-6">
+      <div class="flex justify-end mb-6">
+        <n-button>Input Mandiri</n-button>
+      </div>
+      <div>
+        <n-data-table
+          pagination-behavior-on-filter="first"
+          :columns="columns"
+          :data="data"
+          :pagination="pagination"
+        />
+      </div>
 
-    <div class="bg-white p-6 rounded-lg shadow mb-6">
-      <n-table :single-line="false">
-        <thead>
-          <tr class="bg-pink-500 text-white">
-            <th>Tanggal</th>
-            <th>Tinggi Badan</th>
-            <th>Berat Badan</th>
-            <th>Lingkar Kepala</th>
-            <th>Usia</th>
-            <th>BMI Anak</th>
-            <th>Opsi Input</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Juli, 23 2023</td>
-            <td>45 cm</td>
-            <td>12 kg</td>
-            <td>24 cm</td>
-            <td>20 hari</td>
-            <td>21 Normal</td>
-            <td>Posyandu</td>
-            <td>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-              >
-                <path
-                  d="M11 6.05C12.0125 6.05 12.8333 5.31127 12.8333 4.4C12.8333 3.48873 12.0125 2.75 11 2.75C9.9875 2.75 9.16667 3.48873 9.16667 4.4C9.16667 5.31127 9.9875 6.05 11 6.05Z"
-                  fill="#FFC107"
-                />
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M11 1.25C10.3367 1.25 9.68833 1.3725 9.16667 1.65C7.61042 2.515 6.5 4.5 6.5 7C6.5 9.18929 7.87833 11.25 9.66667 11.25H12.3333C14.1217 11.25 15.5 9.18929 15.5 7C15.5 4.5 14.3896 2.515 12.8333 1.65C12.3117 1.3725 11.6633 1.25 11 1.25ZM11 16.25C12.0125 16.25 12.8333 15.5113 12.8333 14.6C12.8333 13.6887 12.0125 12.95 11 12.95C9.9875 12.95 9.16667 13.6887 9.16667 14.6C9.16667 15.5113 9.9875 16.25 11 16.25Z"
-                  fill="#FFC107"
-                />
-              </svg>
-            </td>
-          </tr>
-        </tbody>
-      </n-table>
+      <!-- <div class="bg-white p-6 rounded-lg shadow mb-6">
+        <n-table :single-line="false">
+          <thead>
+            <tr class="bg-pink-500 text-white">
+              <th>Tanggal</th>
+              <th>Tinggi Badan</th>
+              <th>Berat Badan</th>
+              <th>Lingkar Kepala</th>
+              <th>Usia</th>
+              <th>BMI Anak</th>
+              <th>Opsi Input</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Juli, 23 2023</td>
+              <td>45 cm</td>
+              <td>12 kg</td>
+              <td>24 cm</td>
+              <td>20 hari</td>
+              <td>21 Normal</td>
+              <td>Posyandu</td>
+              <td>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                >
+                  <path
+                    d="M11 6.05C12.0125 6.05 12.8333 5.31127 12.8333 4.4C12.8333 3.48873 12.0125 2.75 11 2.75C9.9875 2.75 9.16667 3.48873 9.16667 4.4C9.16667 5.31127 9.9875 6.05 11 6.05Z"
+                    fill="#FFC107"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M11 1.25C10.3367 1.25 9.68833 1.3725 9.16667 1.65C7.61042 2.515 6.5 4.5 6.5 7C6.5 9.18929 7.87833 11.25 9.66667 11.25H12.3333C14.1217 11.25 15.5 9.18929 15.5 7C15.5 4.5 14.3896 2.515 12.8333 1.65C12.3117 1.3725 11.6633 1.25 11 1.25ZM11 16.25C12.0125 16.25 12.8333 15.5113 12.8333 14.6C12.8333 13.6887 12.0125 12.95 11 12.95C9.9875 12.95 9.16667 13.6887 9.16667 14.6C9.16667 15.5113 9.9875 16.25 11 16.25Z"
+                    fill="#FFC107"
+                  />
+                </svg>
+              </td>
+            </tr>
+          </tbody>
+        </n-table>
+      </div> -->
     </div>
   </div>
 </template>
 
-
 <script lang="ts">
 import { ref, onMounted } from 'vue'
-import VueApexCharts from "vue3-apexcharts";
+import ApexCharts from 'apexcharts'
 
 interface RowData {
   key: number
@@ -371,9 +339,6 @@ interface RowData {
 }
 
 export default {
-  components: {
-    apexchart: VueApexCharts // Register the component
-  },
   setup() {
     const selectedChild = ref('Pilih Anak')
     const isChildDropdownOpen = ref(false)
@@ -381,11 +346,11 @@ export default {
     const selectedMonth = ref('Pilih Bulan')
 
     const toggleChildDropdown = () => {
-      isChildDropdownOpen.value = !isChildDropdown.value
+      isChildDropdownOpen.value = !isChildDropdownOpen.value
     }
 
     const toggleMonthDropdown = () => {
-      isMonthDropdownOpen.value = !isMonthDropdown.value
+      isMonthDropdownOpen.value = !isMonthDropdownOpen.value
     }
 
     const selectChild = (child: string) => {
@@ -458,7 +423,7 @@ export default {
         key: 'age'
       },
       {
-        title: 'BMI Anak',
+        title: 'BMI Ibu',
         key: 'weight'
       },
       {
@@ -571,7 +536,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 /* Your styles here */

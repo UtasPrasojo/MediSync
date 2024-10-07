@@ -8,6 +8,8 @@ import Layouts from 'vite-plugin-vue-layouts';
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import {NaiveUiResolver} from 'unplugin-vue-components/resolvers'
+import c from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
 
 
 // https://vitejs.dev/config/
@@ -18,12 +20,17 @@ export default defineConfig({
     vueDevTools(),
     Pages(),
     Layouts(),
-    AutoImport({ /* options */ }),
+    // AutoImport({ /* options */ }),
     Components({directoryAsNamespace:true
       ,resolvers:[
-        NaiveUiResolver()
+        NaiveUiResolver(), c()
       ]
     }),
+    Icons({
+      // experimental
+      autoInstall: true,
+
+    })
   ],
   resolve: {
     alias: {

@@ -8,9 +8,12 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('./src/components/ui/button.vue')['default']
+    'IMaterialSymbols:search': typeof import('~icons/material-symbols/search')['default']
     LayoutHapusAkun: typeof import('./src/components/layout/hapus-akun.vue.vue')['default']
     LayoutSidebar: typeof import('./src/components/layout/sidebar.vue')['default']
+    LayoutSiderbarAdmin: typeof import('./src/components/layout/siderbar-admin.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDataTable: typeof import('naive-ui')['NDataTable']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']

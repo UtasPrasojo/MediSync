@@ -5,21 +5,13 @@
   </route>
 
 <script setup lang="ts">
-import { useHttpMutation } from '@/composables/http/http';
+
+import { useUserSignin } from '@/services/auth';
 import { useMessage } from 'naive-ui';
 import { ref } from 'vue';
 
 const message = useMessage()
-const {mutate,isPending} =useHttpMutation('/v1/auth/user/sign-in',{
-  method:"POST",
-  queryOptions:{
-    onSuccess:() => {
-      message.success("Login berhasil")
-    }, onError:() => {
-      message.error("Password atau email anda salah")
-    }
-  }
-})
+const {mutate,isPending} = useUserSignin()
 const formData = ref({
   
   "email": "string",
