@@ -1,12 +1,13 @@
 <template>
   <div class="bg-white p-6 rounded-lg shadow overflow-auto p-6">
     <div class="flex justify-between items-center mb-6">
-      <div class="flex items-center space-x-2 text-gray-600">
-        <i class="fas fa-home"></i>
-        <span>Dashboard</span>
-        <i class="fas fa-chevron-right"></i>
-        <span>Info Posyandu</span>
+      <div>
+        <div class="flex flex-col space-y-2 text-gray-600">
+          <h1 class="text-2xl font-semibold text-gray-800">Jadwal Posyandu</h1>
+          <p>Informasi tentang data jadwal posyandu</p>
+        </div>
       </div>
+
       <div>
         <div class="flex items-center space-x-4">
           <img
@@ -22,7 +23,7 @@
 
     <div class="bg-white p-6 rounded-lg shadow overflow-auto">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-lg font-semibold">Jadwal Posyanndu</h3>
+        <h3 class="text-lg font-semibold">Data Jadwal Posyandu</h3>
         <div class="flex items-center space-x-2">
           <div class="relative">
             <input
@@ -33,9 +34,10 @@
             />
             <i class="fas fa-search absolute left-3 top-3 text-gray-600"></i>
           </div>
-          <n-button type= "primary" >
+          <n-button type="primary">
             <i-material-symbols:search></i-material-symbols:search>
           </n-button>
+          <n-button type="primary">Tambah User</n-button>
         </div>
       </div>
 
@@ -59,34 +61,28 @@ export default {
     const data = ref([
       {
         date: 'Juli, 23 2023',
-        pelapor: 'Budi Santoso',
-        anak: 'Ahmad Zulkarnain',
-        alamat: 'Jl. Merdeka No. 45',
-        gender: 'Laki-laki',
-        phone: '081234567890',
-        bmi: '21 Normal',
-        option: 'Posyandu'
+        posyandu: 'Suka makmur',
+        waktu: '08.00-09.00',
+        petugas: 'Dono,Doni',
+        catatan: 'Sarapan dulu',
+        action: '',
       },
       {
-        date: 'Agustus, 15 2023',
-        pelapor: 'Siti Aminah',
-        anak: 'Fatimah Aisyah',
-        alamat: 'Jl. Pahlawan No. 10',
-        gender: 'Perempuan',
-        phone: '081987654321',
-        bmi: '22 Normal',
-        option: 'Posyandu'
+        date: 'Juli, 23 2023',
+        posyandu: 'Suka makmur',
+        waktu: '08.00-09.00',
+        petugas: 'Dono,Doni',
+        catatan: 'Sarapan dulu',
+        action: '',
       },
       {
-        date: 'September, 10 2023',
-        pelapor: 'Rahmat Hidayat',
-        anak: 'Deni Kurniawan',
-        alamat: 'Jl. Kebon Jeruk No. 5',
-        gender: 'Laki-laki',
-        phone: '081234112233',
-        bmi: '23 Normal',
-        option: 'Posyandu'
-      }
+        date: 'Juli, 23 2023',
+        posyandu: 'Suka makmur',
+        waktu: '08.00-09.00',
+        petugas: 'Dono,Doni',
+        catatan: 'Sarapan dulu',
+        action: '',
+      },
     ])
 
     const columns = ref([
@@ -95,33 +91,26 @@ export default {
         key: 'date'
       },
       {
-        title: 'Nama Pelapor',
-        key: 'pelapor'
+        title: 'Posyandu',
+        key: 'posyandu'
       },
       {
-        title: 'Nama Anak',
-        key: 'anak'
+        title: 'Waktu',
+        key: 'waktu'
       },
       {
-        title: 'Alamat Anak',
-        key: 'alamat'
+        title: 'Petugas',
+        key: 'petugas'
       },
       {
-        title: 'Jenis Kelamin',
-        key: 'gender'
+        title: 'Catatan',
+        key: 'catatan'
       },
       {
-        title: 'No Telepon',
-        key: 'phone'
+        title: '',
+        key: 'action'
       },
-      {
-        title: 'BMI',
-        key: 'bmi'
-      },
-      {
-        title: 'Opsi Input',
-        key: 'option'
-      }
+      
     ])
 
     return {

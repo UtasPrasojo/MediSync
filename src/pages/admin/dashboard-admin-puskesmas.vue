@@ -127,8 +127,10 @@
             </svg>
           </div>
         </n-card>
-        <n-card class="bg-red-500 row-span-2">
-          
+        <n-card class="bg-white shadow-md row-span-2">
+          <div class="w-full">
+            <ApexChart :options="coptions" :series="series"></ApexChart>
+          </div>
         </n-card>
 
         <n-card
@@ -254,14 +256,22 @@
       <div class="bg-white p-6 rounded-lg shadow-md mt-6">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-semibold">Jadwal Posyandu</h2>
-          <div class="relative">
-            <input
-              type="text"
-              placeholder="Search"
-              class="border rounded-lg p-2 pl-10"
-              v-model="searchQuery"
-            />
-            <i class="fas fa-search absolute left-3 top-3 text-gray-600"></i>
+
+          <!-- Memindahkan input dan button ke sebelah kanan -->
+          <div class="flex items-center">
+            <div class="relative mr-4">
+              <!-- Tambahkan margin kanan -->
+              <input
+                type="text"
+                placeholder="Search"
+                class="border rounded-lg p-2 pl-10"
+                v-model="searchQuery"
+              />
+              <i class="fas fa-search absolute left-3 top-3 text-gray-600"></i>
+            </div>
+            <n-button type="primary">
+              <i-material-symbols:search></i-material-symbols:search>
+            </n-button>
           </div>
         </div>
 
@@ -271,148 +281,188 @@
           :data="data"
           :pagination="pagination"
         />
-
-        <div class="flex justify-between items-center mt-4">
-          <div>
-            <button class="px-4 py-2 bg-gray-200 rounded-lg">Previous</button>
-            <button class="px-4 py-2 bg-gray-200 rounded-lg">1</button>
-            <button class="px-4 py-2 bg-gray-200 rounded-lg">2</button>
-            <button class="px-4 py-2 bg-gray-200 rounded-lg">3</button>
-            <button class="px-4 py-2 bg-gray-200 rounded-lg">Next</button>
-          </div>
-          <p class="text-gray-600">Menampilkan 7 dari 21 Data</p>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { options } from 'node_modules/axios/index.cjs'
 import { ref, computed } from 'vue'
+import ApexChart from 'vue3-apexcharts'
 
-export default {
-    
-  setup() {
-    const menuItems = ref([
-      { label: 'Dashboard', icon: 'fas fa-tachometer-alt', active: true },
-      { label: 'Laporan Stunting', icon: 'fas fa-file-alt' },
-      { label: 'Pemeriksaan Ibu Hamil', icon: 'fas fa-user-md' },
-      { label: 'Pemeriksaan Bayi', icon: 'fas fa-baby' },
-      { label: 'Artikel', icon: 'fas fa-newspaper' },
-      { label: 'Jadwal Posyandu', icon: 'fas fa-calendar-alt' },
-      { label: 'Master Data', icon: 'fas fa-database' },
-      { label: 'Data Bayi', icon: 'fas fa-baby-carriage' }
-    ])
+const menuItems = ref([
+  { label: 'Dashboard', icon: 'fas fa-tachometer-alt', active: true },
+  { label: 'Laporan Stunting', icon: 'fas fa-file-alt' },
+  { label: 'Pemeriksaan Ibu Hamil', icon: 'fas fa-user-md' },
+  { label: 'Pemeriksaan Bayi', icon: 'fas fa-baby' },
+  { label: 'Artikel', icon: 'fas fa-newspaper' },
+  { label: 'Jadwal Posyandu', icon: 'fas fa-calendar-alt' },
+  { label: 'Master Data', icon: 'fas fa-database' },
+  { label: 'Data Bayi', icon: 'fas fa-baby-carriage' }
+])
 
-    const stats = ref([
-      { title: 'Total Bayi', value: 90, icon: 'fas fa-baby' },
-      { title: 'Total User', value: 92, icon: 'fas fa-users' },
-      { title: 'Total Artikel', value: 91, icon: 'fas fa-newspaper' },
-      { title: 'Total Jadwal Posyandu', value: 91, icon: 'fas fa-calendar-alt' }
-    ])
+const stats = ref([
+  { title: 'Total Bayi', value: 90, icon: 'fas fa-baby' },
+  { title: 'Total User', value: 92, icon: 'fas fa-users' },
+  { title: 'Total Artikel', value: 91, icon: 'fas fa-newspaper' },
+  { title: 'Total Jadwal Posyandu', value: 91, icon: 'fas fa-calendar-alt' }
+])
 
-    const schedules = ref([
-      {
-        date: 'Jul 23, 2023',
-        posyandu: 'Suka Makmur',
-        time: '8.00-9.00',
-        staff: 'Dono, Doni',
-        note: 'Sarapan dulu'
-      },
-      {
-        date: 'Jun 12, 2022',
-        posyandu: 'Suka Makmur',
-        time: '8.00-9.00',
-        staff: 'Dono, Doni',
-        note: 'Sarapan dulu'
-      }
-      // Add more schedule data here...
-    ])
+const schedules = ref([
+  {
+    date: 'Jul 23, 2023',
+    posyandu: 'Suka Makmur',
+    time: '8.00-9.00',
+    staff: 'Dono, Doni',
+    note: 'Sarapan dulu'
+  },
+  {
+    date: 'Jun 12, 2022',
+    posyandu: 'Suka Makmur',
+    time: '8.00-9.00',
+    staff: 'Dono, Doni',
+    note: 'Sarapan dulu'
+  }
+  // Add more schedule data here...
+])
 
-    const searchQuery = ref('')
+const searchQuery = ref('')
 
-    const filteredSchedules = computed(() => {
-      if (!searchQuery.value) return schedules.value
-      return schedules.value.filter((schedule) =>
-        schedule.posyandu.toLowerCase().includes(searchQuery.value.toLowerCase())
-      )
-    })
-    const pagination = {
-      page: 1,
-      pageSize: 10,
-      itemCount: 0
+const series = [
+  {
+    data: [
+      { x: 1, y: 0 },
+      { x: 2, y: 1 },
+      { x: 3, y: 3 },
+      { x: 4, y: 5 },
+      { x: 5, y: 6 },
+      { x: 6, y: 5 },
+      { x: 7, y: 3 },
+      { x: 8, y: 1 },
+      { x: 9, y: 0 },
+      { x: 10, y: 1 },
+      { x: 11, y: 3 },
+      { x: 12, y: 5 },
+      { x: 13, y: 6 },
+      { x: 14, y: 5 },
+      { x: 15, y: 3 },
+      { x: 16, y: 1 },
+      { x: 17, y: 0 }
+    ]
+  }
+]
+
+const coptions = {
+  chart: {
+    height: 500,
+    width: 800, // Ubah lebar untuk menciptakan rasio yang tepat
+    type: 'line',
+    zoom: {
+      enabled: false
     }
-
-    const data = [
-      {
-        date: 'Juli, 23 2023',
-        posyandu: 'Suka Makmur',
-        waktu: '08.00-09.00',
-        petugas: 'Dono, Doni',
-        catatan: 'Sarapan dulu',
-        action: ' '
-      },
-      {
-        date: 'Juli, 23 2023',
-        posyandu: 'Suka Makmur',
-        waktu: '08.00-09.00',
-        petugas: 'Dono, Doni',
-        catatan: 'Sarapan dulu',
-        action: ' '
-      },
-      {
-        date: 'Juli, 23 2023',
-        posyandu: 'Suka Makmur',
-        waktu: '08.00-09.00',
-        petugas: 'Dono, Doni',
-        catatan: 'Sarapan dulu',
-        action: ' '
-      }
-      // Tambahkan lebih banyak baris jika diperlukan
-    ]
-
-    const columns = [
-      {
-        title: 'Tanggal',
-        key: 'date'
-      },
-      {
-        title: 'Posyandu',
-        key: 'posyandu'
-      },
-      {
-        title: 'Waktu',
-        key: 'waktu'
-      },
-      {
-        title: 'Petugas',
-        key: 'petugas'
-      },
-      {
-        title: 'Catatan',
-        key: 'catatan'
-      },
-      {
-        title: ' ',
-        key: 'action'
-      }
-      
-    ]
-
-    
-
-    return {
-      menuItems,
-      stats,
-      schedules,
-      searchQuery,
-      filteredSchedules,
-      pagination,
-      data,
-      columns
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'smooth'
+  },
+  title: {
+    text: 'Laporan Stunting',
+    align: 'left'
+  },
+  grid: {
+    show: false // Menyembunyikan grid jika diperlukan
+  },
+  xaxis: {
+    type: 'numeric',
+    labels: {
+      show: false // Menyembunyikan label sumbu x
+    },
+    min: 0,
+    max: 17 // Sesuaikan agar sesuai dengan data
+  },
+  yaxis: {
+    min: -1, // Sesuaikan nilai minimum
+    max: 7, // Sesuaikan nilai maksimum
+    labels: {
+      show: false // Menyembunyikan label sumbu y
     }
   }
 }
+
+const xaxis = {
+  type: 'datetime'
+}
+
+const filteredSchedules = computed(() => {
+  if (!searchQuery.value) return schedules.value
+  return schedules.value.filter((schedule) =>
+    schedule.posyandu.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
+})
+
+const pagination = {
+  page: 1,
+  pageSize: 10,
+  itemCount: 0
+}
+
+const data = [
+  {
+    date: 'Juli, 23 2023',
+    posyandu: 'Suka Makmur',
+    waktu: '08.00-09.00',
+    petugas: 'Dono, Doni',
+    catatan: 'Sarapan dulu',
+    action: ' '
+  },
+  {
+    date: 'Juli, 23 2023',
+    posyandu: 'Suka Makmur',
+    waktu: '08.00-09.00',
+    petugas: 'Dono, Doni',
+    catatan: 'Sarapan dulu',
+    action: ' '
+  },
+  {
+    date: 'Juli, 23 2023',
+    posyandu: 'Suka Makmur',
+    waktu: '08.00-09.00',
+    petugas: 'Dono, Doni',
+    catatan: 'Sarapan dulu',
+    action: ' '
+  }
+  // Tambahkan lebih banyak baris jika diperlukan
+]
+
+const columns = [
+  {
+    title: 'Tanggal',
+    key: 'date'
+  },
+  {
+    title: 'Posyandu',
+    key: 'posyandu'
+  },
+  {
+    title: 'Waktu',
+    key: 'waktu'
+  },
+  {
+    title: 'Petugas',
+    key: 'petugas'
+  },
+  {
+    title: 'Catatan',
+    key: 'catatan'
+  },
+  {
+    title: ' ',
+    key: 'action'
+  }
+]
 </script>
 
 <style>

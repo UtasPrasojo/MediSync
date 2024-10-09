@@ -12,10 +12,13 @@ import { RouterView } from 'vue-router'
           textColorFocus: '#ec4899FF',
           colorTertiary: 'rgba(255, 255, 255, 0.08)',
           textColorTertiary: 'rgba(255, 5, 176, 0.52)',
-          colorTertiaryHover: 'rgba(255, 255, 255, 0.12)'
+          colorTertiaryHover: 'rgba(255, 255, 255, 0.12)',
+          textColorTextPressed: '#EC4899FF',
+          textColorGhostPressed: '#EC4899FF',
+          colorPressedPrimary: '#EC4899FF'
         },
         common: {
-          primaryColor: '#F40BB6FF',
+          primaryColor: '#D61F69',
           primaryColorHover: '#E4CDDAFF'
         },
         DataTable: {

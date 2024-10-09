@@ -20,8 +20,8 @@
     "pinia": "^2.1.7",
     "tailwind-variants": "^0.2.1",
     "vue": "^3.4.29",
-    "vue-apexcharts": "^1.6.2",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vue3-apexcharts": "^1.7.0"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.256",

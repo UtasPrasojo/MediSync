@@ -65,7 +65,7 @@
     <!-- div BIM -->
     <div class="bg-white p-6 rounded-lg shadow mb-6">
       <div class="flex justify-between">
-        <h2 class="text-lg font-semibold">Grafik BMI Anak</h2>
+        <h2 class="text-lg font-semibold">Grafik BMI Putri</h2>
 
         <!-- Dropdown Bulan -->
         <div class="relative inline-block text-left">

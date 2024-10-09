@@ -50,12 +50,7 @@
         <div class="mt-8">
           <!-- Submit Button -->
           <div class="flex justify-center">
-            <button
-              type="submit"
-              class="flex w-auto justify-center rounded-md bg-white border-2 border-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-600 shadow-sm hover:bg-pink-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-            >
-              Mungkin nanti
-            </button>
+            <n-button type="tertiary" >Mungkin Nanti</n-button>
           </div>
         </div>
       </form>
