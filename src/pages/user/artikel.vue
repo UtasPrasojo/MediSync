@@ -1,6 +1,6 @@
 <template>
   <div class="p-4">
-    <div class="flex justify-end items-center mb-4 shadow-md">
+    <div class="hidden md:flex justify-end items-center mb-4 shadow-md">
       <div class="flex items-center space-x-4">
         <i class="fas fa-bell text-xl"></i>
         <div class="flex items-center space-x-2">
@@ -25,18 +25,18 @@
       <h2 class="text-xl font-semibold mb-4">Artikel Kesehatan</h2>
       <div class="flex justify-end mb-6 w-full">
         <div class="flex mb-6 w-1/3">
-          <input
+          <n-input
             class="border border-gray-300 rounded-lg p-2 flex-grow"
             placeholder="Search"
             type="text"
           />
-          <button class="bg-pink-500 text-white p-2 rounded-lg ml-2">
-            <i class="fas fa-search"></i>
+          <button class="bg-pink-500 text-white p-4 rounded-lg ml-2">
+            <i-material-symbols:search></i-material-symbols:search>
           </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6 ">
+      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6 ">
         <div
           class="bg-white p-4 rounded-lg shadow-md "
           v-for="(article, index) in articles"
@@ -57,7 +57,7 @@
           </a>
         </div>
       </div>
-      <div class="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6">
         <div
           class="bg-white p-4 rounded-lg shadow-md"
           v-for="(article, index) in articles"
@@ -81,18 +81,18 @@
       
 
       <div class="flex justify-between items-center mt-6">
-        <button class="bg-gray-200 text-gray-600 p-2 rounded-lg">Sebelum</button>
+        <n-button class="bg-gray-200 text-gray-600 p-2 rounded-lg">Sebelum</n-button>
         <div class="flex space-x-2">
-          <button
+          <n-button
             v-for="(page, index) in pagination"
             :key="index"
             class="p-2 rounded-lg"
             :class="page === currentPage ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-600'"
           >
             {{ page }}
-          </button>
+          </n-button>
         </div>
-        <button class="bg-gray-200 text-gray-600 p-2 rounded-lg">Sesudah</button>
+        <n-button class="bg-gray-200 text-gray-600 p-2 rounded-lg">Sesudah</n-button>
       </div>
     </div>
   </div>

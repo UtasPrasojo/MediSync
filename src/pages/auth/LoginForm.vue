@@ -1,7 +1,4 @@
-<route lang="yaml">
-  meta:
-    layout: blank
-  </route>
+
 
 <script setup lang="ts">
 import { useUserSignin } from '@/services/auth'
@@ -135,3 +132,8 @@ const handleSubmit = () => {
     </div>
   </div>
 </template>
+
+<route lang="yaml">
+  meta:
+    layout: blank
+  </route>

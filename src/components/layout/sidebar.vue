@@ -1,8 +1,35 @@
+<script setup lang="ts">
+import { defineComponent } from 'vue'
+
+// Tipe objek untuk setiap opsi
+interface Option {
+  label: string;
+  key: string;
+}
+
+const options: Option[] = [
+  {
+    label: 'Profile',
+    key: 'profile'
+  },
+  {
+    label: 'Edit Profile',
+    key: 'editProfile'
+  },
+  {
+    label: 'Logout',
+    key: 'logout'
+  }
+]
+</script>
+
+
+
 <template>
   <aside
     class="hidden md:block sticky inset-y-0 top-0 left-0 w-64 h-screen bg-white border-r border-gray-200 dark:bg-white dark:border-gray-200"
   >
-    <div class="flex items-center py-5 px-5">
+    <div class="flex items-center justify-center my-6">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="44"
@@ -19,11 +46,11 @@
           fill="#E74694"
         />
       </svg>
-      <h3 class="ml-2 font-bold">Stunting Apps</h3>
+      <h3 class="ml-2 font-bold text-xl">Stunting</h3>
     </div>
 
     <div class="h-1/3 flex flex-col py-5 px-3">
-      <div class="flex  justify-center h-1/5">
+      <div class="flex justify-center h-1/5">
         <ul>
           <li>
             <router-link
@@ -55,40 +82,14 @@
               to="/about"
               class="block p-2 text-gray-900 dark:text-black hover:text-white"
             >
-              <div class="rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600">
-                <div class="flex item-center mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="25"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                  >
-                    <path
-                      d="M18.066 2.05543H9.82799C9.43391 2.05453 9.04356 2.13174 8.6795 2.28262C8.31545 2.43349 7.98491 2.65503 7.70699 2.93443L4.87899 5.76243C4.59942 6.04021 4.37776 6.37073 4.22687 6.73481C4.07598 7.0989 3.99887 7.48932 3.99999 7.88343V20.0554C3.99196 20.5769 4.19104 21.0803 4.55359 21.4552C4.91613 21.8301 5.41254 22.046 5.93399 22.0554H18.066C18.5874 22.046 19.0839 21.8301 19.4464 21.4552C19.8089 21.0803 20.008 20.5769 20 20.0554V4.05543C20.008 3.53396 19.8089 3.03058 19.4464 2.65567C19.0839 2.28075 18.5874 2.0649 18.066 2.05543ZM8.99999 4.46943V7.05543H6.41399L8.99999 4.46943ZM5.99999 20.0554V9.05543H8.99999C9.53042 9.05543 10.0391 8.84471 10.4142 8.46964C10.7893 8.09457 11 7.58586 11 7.05543V4.05543L18 4.03343C18.0015 4.04068 18.0015 4.04818 18 4.05543L18.066 20.0554H5.99999Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M8.99999 15.0554C8.73477 15.0554 8.48042 15.1608 8.29288 15.3483C8.10535 15.5359 7.99999 15.7902 7.99999 16.0554V18.0554C7.99999 18.3206 8.10535 18.575 8.29288 18.7625C8.48042 18.9501 8.73477 19.0554 8.99999 19.0554C9.26521 19.0554 9.51956 18.9501 9.7071 18.7625C9.89463 18.575 9.99999 18.3206 9.99999 18.0554V16.0554C9.99999 15.7902 9.89463 15.5359 9.7071 15.3483C9.51956 15.1608 9.26521 15.0554 8.99999 15.0554Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M12 11.0554C11.7348 11.0554 11.4804 11.1608 11.2929 11.3483C11.1053 11.5359 11 11.7902 11 12.0554V18.0554C11 18.3206 11.1053 18.575 11.2929 18.7625C11.4804 18.9501 11.7348 19.0554 12 19.0554C12.2652 19.0554 12.5196 18.9501 12.7071 18.7625C12.8946 18.575 13 18.3206 13 18.0554V12.0554C13 11.7902 12.8946 11.5359 12.7071 11.3483C12.5196 11.1608 12.2652 11.0554 12 11.0554Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M15 13.0554C14.7348 13.0554 14.4804 13.1608 14.2929 13.3483C14.1053 13.5359 14 13.7902 14 14.0554V18.0554C14 18.3206 14.1053 18.575 14.2929 18.7625C14.4804 18.9501 14.7348 19.0554 15 19.0554C15.2652 19.0554 15.5196 18.9501 15.7071 18.7625C15.8946 18.575 16 18.3206 16 18.0554V14.0554C16 13.7902 15.8946 13.5359 15.7071 13.3483C15.5196 13.1608 15.2652 13.0554 15 13.0554Z"
-                      fill="#1F2A37"
-                    />
-                  </svg>
-                  <span>Kesehatan</span>
-                </div>
-              </div>
+              <n-dropdown :options="options">
+                <n-button>User profile</n-button>
+              </n-dropdown>
             </router-link>
           </li>
           <li>
             <router-link
-              to="/contact"
+              to="/user/info-posyandu"
               class="block p-2 text-gray-900 dark:text-black hover:text-white"
             >
               <div class="rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600">
@@ -116,7 +117,7 @@
           </li>
           <li>
             <router-link
-              to="/contact"
+              to="/user/artikel"
               class="block p-2 text-gray-900 dark:text-black hover:text-white"
             >
               <div class="rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600">
@@ -164,11 +165,11 @@
           </li>
           <li>
             <router-link
-              to="/contact"
+              to="/user/lapor-stunting"
               class="block p-2 text-gray-900 dark:text-black hover:text-white"
             >
-              <div class=" flex flex-col rounded-lg  hover:bg-pink-600 dark:hover:bg-pink-600 h-10">
-                <div class="flex items-center mb-2 ">
+              <div class="flex flex-col rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600 h-10">
+                <div class="flex items-center mb-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

@@ -121,7 +121,7 @@
               <h3 class="text-lg font-semibold">Data Orang Tua</h3>
               <!-- Checkbox untuk Data Orang Tua -->
 
-              <n-checkbox v-model:checked='value'> Samakan dengan profile </n-checkbox>
+              <n-checkbox v-model:checked="checked"> Samakan dengan profile </n-checkbox>
             </div>
 
             <div class="mt-4 space-y-4">
@@ -171,25 +171,32 @@
 
                     <!-- Tanggal Lahir -->
                     <div class="w-1/2">
-                      <n-date-picker v-model:value='timestamp' type="date" />
+                      <n-date-picker v-model:value="timestamp" type="date" />
+                    </div>
+                  </div>
+                  <div class="mb-4 flex space-x-4">
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Provinsi</label>
+                      <n-select v-model:value="value" :options="options" />
+                    </div>
+
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Kabupaten</label>
+                      <n-select v-model:value="value" :options="options" />
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
                     <!-- Kelurahan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kelurahan</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
                     <!-- Kecamatan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kecamatan</label>
-                      <n-select v-model:value="value" :options="options" />
-                    </div>
-
-                    <!-- Kabupaten -->
-                    <div class="w-1/3">
-                      <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
                   </div>
@@ -259,21 +266,28 @@
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Provinsi</label>
+                      <n-select v-model:value="value" :options="options" />
+                    </div>
+
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Kabupaten</label>
+                      <n-select v-model:value="value" :options="options" />
+                    </div>
+                  </div>
+                  <div class="mb-4 flex space-x-4">
                     <!-- Kelurahan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kelurahan</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
                     <!-- Kecamatan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kecamatan</label>
-                      <n-select v-model:value="value" :options="options" />
-                    </div>
-
-                    <!-- Kabupaten -->
-                    <div class="w-1/3">
-                      <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
                   </div>
@@ -340,7 +354,7 @@
               <h2 class="text-lg font-semibold">Data Orang Tua</h2>
               <!-- Checkbox untuk Data Orang Tua -->
               <div>
-                <n-checkbox v-model:checked='value'> Samakan dengan profile </n-checkbox>
+                <n-checkbox v-model:checked="checked"> Samakan dengan profile </n-checkbox>
               </div>
             </div>
 
@@ -392,25 +406,32 @@
                     <!-- Tanggal Lahir -->
                     <div class="w-1/2">
                       <label class="block text-gray-700">Tanggal Lahir</label>
-                      <n-date-picker v-model:value='timestamp' type="date" />
+                      <n-date-picker v-model:value="timestamp" type="date" />
+                    </div>
+                  </div>
+                  <div class="mb-4 flex space-x-4">
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Provinsi</label>
+                      <n-select v-model:value="value" :options="options" />
+                    </div>
+
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Kabupaten</label>
+                      <n-select v-model:value="value" :options="options" />
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
                     <!-- Kelurahan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kelurahan</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
                     <!-- Kecamatan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kecamatan</label>
-                      <n-select v-model:value="value" :options="options" />
-                    </div>
-
-                    <!-- Kabupaten -->
-                    <div class="w-1/3">
-                      <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
                   </div>
@@ -474,25 +495,32 @@
                     <!-- Tanggal Lahir -->
                     <div class="w-1/2">
                       <label class="block text-gray-700">Tanggal Lahir</label>
-                      <n-date-picker v-model:value='timestamp' type="date" />
+                      <n-date-picker v-model:value="timestamp" type="date" />
+                    </div>
+                  </div>
+                  <div class="mb-4 flex space-x-4">
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Provinsi</label>
+                      <n-select v-model:value="value" :options="options" />
+                    </div>
+
+                    
+                    <div class="w-1/2">
+                      <label class="block text-gray-700">Kabupaten</label>
+                      <n-select v-model:value="value" :options="options" />
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
                     <!-- Kelurahan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kelurahan</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
                     <!-- Kecamatan -->
-                    <div class="w-1/3">
+                    <div class="w-1/2">
                       <label class="block text-gray-700">Kecamatan</label>
-                      <n-select v-model:value="value" :options="options" />
-                    </div>
-
-                    <!-- Kabupaten -->
-                    <div class="w-1/3">
-                      <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
                   </div>
@@ -527,7 +555,6 @@ const userEmail = ref('email@example.com')
 const userPhone = ref('081234567890')
 const userAddress = ref('Jl. Contoh Alamat, Indonesia')
 
-
 function toggleDropdown(profile: string) {
   if (profile === 'ibu') {
     showIbu.value = !showIbu.value
@@ -537,6 +564,7 @@ function toggleDropdown(profile: string) {
 }
 
 const value = ref(null)
+const checked = ref(false)
 const disabled1 = ref(false)
 const disabled2 = ref(false)
 
@@ -561,7 +589,7 @@ const songs = [
 // Perbaikan tipe array untuk options
 const options = [
   {
-    label: 'Everybody\'s Got Something to Hide Except Me and My Monkey',
+    label: "Everybody's Got Something to Hide Except Me and My Monkey",
     value: 'song0',
     disabled: true
   },
@@ -577,7 +605,6 @@ const options = [
 
 // Anda bisa langsung menambahkan timestamp di sini
 const timestamp = ref(1183135260000)
-
 </script>
 
 <style scoped>

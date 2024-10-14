@@ -1,7 +1,4 @@
-<route lang="yaml">
-    meta:
-      layout: blank
-    </route>
+
     
 <template>
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
@@ -137,3 +134,8 @@
   /* You can add any additional styles here if needed */
   </style>
   
+
+  <route lang="yaml">
+    meta:
+      layout: blank
+    </route>

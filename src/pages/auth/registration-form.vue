@@ -1,7 +1,4 @@
-<!-- <route lang="yaml">
-meta:
-  layout: blank
-</route> -->
+
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -198,3 +195,9 @@ const { mutate, isPending } = useUserSignup()
     </div>
   </div>
 </template>
+
+
+<route lang="yaml">
+  meta:
+    layout: blank
+  </route>

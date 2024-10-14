@@ -1,13 +1,11 @@
-<!-- <route lang="yaml">
-meta:
-  layout: blank
-</route> -->
+
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
 const value = ref(null)
 const fileInput = ref<HTMLInputElement | null>(null)
+  const timestamp = ref<number>(1183135260000)
 
 const options = [
   {
@@ -67,16 +65,16 @@ const options = [
   }
 ]
 
-const triggerFileUpload = () => {
-  fileInput.value?.click() // Menggunakan optional chaining
-}
+// const triggerFileUpload = () => {
+//   fileInput.value?.click() // Menggunakan optional chaining
+// }
 
-const handleFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
-  // Proses file di sini
-  console.log(file)
-}
+// const handleFileChange = (event: Event) => {
+//   const target = event.target as HTMLInputElement
+//   const file = target.files?.[0]
+//   // Proses file di sini
+//   console.log(file)
+// }
 </script>
 
 <template>
@@ -164,6 +162,33 @@ const handleFileChange = (event: Event) => {
           <div class="flex space-x-4">
             <!-- Kelurahan -->
             <div class="flex-1">
+              <label for="provinsi" class="block text-sm font-medium leading-6 text-gray-900"
+                >Provinsi</label
+              >
+              <div class="mt-1">
+                <n-select v-model:value="value" :options="options">
+                  
+                </n-select>
+              </div>
+            </div>
+
+            <!-- Kecamatan -->
+            <div class="flex-1">
+              <label for="kabupaten" class="block text-sm font-medium leading-6 text-gray-900"
+                >Kabupaten</label
+              >
+              <div class="mt-1">
+                <n-select v-model:value="value" :options="options">
+                  
+                </n-select>
+              </div>
+            </div>
+
+            
+          </div>
+          <div class="flex space-x-4">
+            <!-- Kelurahan -->
+            <div class="flex-1">
               <label for="kelurahan" class="block text-sm font-medium leading-6 text-gray-900"
                 >Kelurahan</label
               >
@@ -186,17 +211,7 @@ const handleFileChange = (event: Event) => {
               </div>
             </div>
 
-            <!-- Kabupaten -->
-            <div class="flex-1">
-              <label for="kabupaten" class="block text-sm font-medium leading-6 text-gray-900"
-                >Kabupaten</label
-              >
-              <div class="mt-1">
-                <n-select v-model:value="value" :options="options">
-                  
-                </n-select>
-              </div>
-            </div>
+            
           </div>
 
           <!-- Alamat -->
@@ -244,10 +259,9 @@ const handleFileChange = (event: Event) => {
                   <ArchiveIcon />
                 </n-icon>
               </div>
-              <n-text style="font-size: 16px"> Click or drag a file to this area to upload </n-text>
+              <n-text style="font-size: 16px"> Klik untuk unggah foto </n-text>
               <n-p depth="3" style="margin: 8px 0 0 0">
-                Strictly prohibit from uploading sensitive information. For example, your bank card
-                PIN or your credit card expiry date.
+                SVG,PNG,JPG or GIF
               </n-p>
             </n-upload-dragger>
           </n-upload>
@@ -274,6 +288,13 @@ const handleFileChange = (event: Event) => {
   </div>
 </template>
 
+
+
 <style scoped>
 /* Tambahan gaya dapat ditambahkan di sini jika diperlukan */
 </style>
+
+<route lang="yaml">
+  meta:
+    layout: blank
+  </route>

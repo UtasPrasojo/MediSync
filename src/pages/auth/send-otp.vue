@@ -1,7 +1,4 @@
-<!-- <route lang="yaml">
-  meta:
-    layout: blank
-  </route> -->
+
 
 <template>
   <div class="flex min-h-screen">
@@ -112,3 +109,9 @@
     },
   };
   </script> -->
+
+
+  <route lang="yaml">
+    meta:
+      layout: blank
+    </route>

@@ -1,8 +1,16 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const isOpen= ref(false)
+</script>
+
 <template>
-  <div class="w-full h-screen bg-white fixed">
+  <div v-if="isOpen" class="w-full h-screen bg-white fixed z-50" >
+    <layout-sidebarmobile @close="isOpen = !isOpen" />
+  </div>
   <div class="mx-4 mt-4">
     <div class="flex-1 max-w-full mx-4 mt-6">
-      <div class="flex items-center justify-between mb-6 md:hidden">
+      <div class="flex items-center justify-between mb-2 md:hidden">
         <!-- SVG Logo -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +33,7 @@
         <h2 class="text-xl font-bold">Stunting</h2>
 
         <!-- Burger Icon -->
-        <div>
+        <div @click="isOpen=!isOpen">
           <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
             <path
               fill="none"
@@ -40,5 +48,4 @@
       </div>
     </div>
   </div>
-</div>
 </template>

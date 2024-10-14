@@ -1,7 +1,4 @@
-<!-- <route lang="yaml">
-  meta:
-    layout: blank
-  </route> -->
+
 
   <script lang="ts">
 import { defineComponent, ref } from 'vue'
@@ -356,3 +353,8 @@ export default defineComponent({
   </div>
 </template>
 
+
+<route lang="yaml">
+  meta:
+    layout: blank
+  </route>
