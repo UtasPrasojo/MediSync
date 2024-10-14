@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="sticky inset-y-0 top-0 left-0 w-64 h-screen bg-white border-r border-gray-200 dark:bg-white dark:border-gray-200"
+    class="hidden md:block sticky inset-y-0 top-0 left-0 w-64 h-screen bg-white border-r border-gray-200 dark:bg-white dark:border-gray-200"
   >
     <div class="flex items-center py-5 px-5">
       <svg

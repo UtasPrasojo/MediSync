@@ -1,4 +1,5 @@
-import { API, useHttpMutation } from '@/composables/http/http'
+import { API } from '@/composables/http/api-constant'
+import { useHttpMutation } from '@/composables/http/http'
 import { createDiscreteApi } from 'naive-ui'
 
 const { message } = createDiscreteApi(
@@ -12,8 +13,9 @@ export const useUserSignin = () => useHttpMutation(API.AUTH_USER_SIGNIN, {
     onSuccess: () => {
       message.success('Login berhasil')
     },
-    onError: () => {
-      message.error('Password atau email anda salah')
+    onError: (error) => {
+      // message.error('Password atau email anda salah')
+      message.error(error.data.message)
     }
   }
 })

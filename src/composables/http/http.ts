@@ -4,13 +4,12 @@ import {
   type UseMutationOptions,
   useQuery,
   useMutation,
-  type UndefinedInitialDataInfiniteOptions
+
 } from '@tanstack/vue-query'
-import { unref, type ComputedRef, type Ref } from 'vue'
+
 import axios from 'axios'
 import type { AxiosResponse } from 'node_modules/axios/index.cjs'
 
-export const API = { AUTH_USER_SIGNIN: '/v1/auth/user/sign-in',AUTH_USER_SIGNUP:'/v1/auth/user/sign-up' }
 
 export const http = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL

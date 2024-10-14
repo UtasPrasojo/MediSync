@@ -32,6 +32,12 @@ import { RouterView } from 'vue-router'
         Table: {
           borderColor: 'rgba(236, 72, 153, 1)',
           borderColorModal: 'rgba(236, 72, 153, 1)'
+        },
+        Tabs: {
+          colorSegment: 'rgb(247, 247, 250)',
+          tabColorSegment: '#E74694FF',
+          tabTextColorHoverSegment: 'rgb(51, 54, 57)',
+          tabTextColorActiveSegment: 'rgba(255, 255, 255, 1)'
         }
       }"
     >

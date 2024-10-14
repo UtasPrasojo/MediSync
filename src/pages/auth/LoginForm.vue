@@ -1,28 +1,35 @@
-<!-- <route lang="yaml">
+<route lang="yaml">
   meta:
     layout: blank
-  </route> -->
+  </route>
 
 <script setup lang="ts">
 import { useUserSignin } from '@/services/auth'
-import { useMessage } from 'naive-ui'
+import { useMessage, type FormInst } from 'naive-ui'
 import { ref } from 'vue'
+
+interface ModelType {
+  email: string | null
+  password: string | null
+}
 
 const message = useMessage()
 const { mutate, isPending } = useUserSignin()
-const formData = ref({
-  email: 'string',
-  password: 'string'
+
+const formData = ref<FormInst | null>(null)
+const formModel = ref<ModelType>({
+  email: '',
+  password: ''
 })
 const handleSubmit = () => {
-  mutate(formData.value)
+  mutate(formModel.value)
 }
 </script>
 
 <template>
   <div class="flex min-h-screen">
     <!-- Left Side (Form) -->
-    <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-white  px-4  md:px-10">
+    <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-white px-4 md:px-10">
       <div class="bg-white p-2 w-full max-w-md flex justify-center items-center space-x-4">
         <!-- SVG Logo (hidden on desktop) -->
         <svg
@@ -44,15 +51,15 @@ const handleSubmit = () => {
         </svg>
 
         <!-- Title Text -->
-        <h2 class="text-xl font-bold md:hidden">Stunting Up</h2>
+        <h2 class="text-xl font-bold md:hidden">Stunting</h2>
       </div>
       <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mt-4 mx-4 sm:mx-0 md:px-10">
-        <h2 class="text-center text-xl leading-9 tracking-tight text-gray-900">Masuk</h2>
+        <h3 class="text-center text-xl leading-9 tracking-tight text-black">Masuk</h3>
         <p class="text-center text-xs font-medium leading-9 text-gray-500">
           Silahkan Masukan Email dan Password Anda
         </p>
 
-        <form class="space-y-6 mt-10" @submit.prevent="handleSubmit">
+        <n-form class="space-y-6 mt-10" @submit.prevent="handleSubmit" ref="formData">
           <!-- Email -->
           <div>
             <div class="flex items-center justify-between">
@@ -61,14 +68,15 @@ const handleSubmit = () => {
               >
             </div>
             <div class="mt-2">
-              <input
+              <n-input
                 id="email"
                 name="email"
-                type="email"
+                type="text"
                 autocomplete="email"
+                v-model:value="formModel.email"
                 required
-                class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
               />
+              <label></label>
             </div>
           </div>
 
@@ -80,13 +88,14 @@ const handleSubmit = () => {
               >
             </div>
             <div class="mt-2">
-              <input
+              <n-input
                 id="password"
                 name="password"
                 type="password"
+                v-model:value="formModel.password"
                 autocomplete="current-password"
                 required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                
               />
             </div>
           </div>
@@ -116,7 +125,7 @@ const handleSubmit = () => {
               </RouterLink>
             </p>
           </div>
-        </form>
+        </n-form>
       </div>
     </div>
 

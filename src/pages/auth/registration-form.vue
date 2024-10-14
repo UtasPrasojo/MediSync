@@ -6,21 +6,30 @@ meta:
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useHttpMutation } from '@/composables/http/http'
-import { useMessage } from 'naive-ui'
+import { useMessage, type FormInst } from 'naive-ui'
 import { useUserSignup } from '@/services/auth'
 
-const message = useMessage()
+interface ModelType {
+  email: string | null
+  fullName: string | null
+  phone: number | null
+  password: string | null
+  confirmPassword: string | null
+}
 
-let formData = ref({
+const formData = ref<FormInst | null>(null)
+const formModel = ref<ModelType>({
   email: '',
   fullName: '',
-  phone: '',
+  phone: null,
   password: '',
   confirmPassword: ''
 })
 
+const message = useMessage()
+
 const onSubmit = () => {
-  mutate(formData.value)
+  mutate(formModel.value)
   console.log(formData)
 }
 const { mutate, isPending } = useUserSignup()
@@ -52,18 +61,18 @@ const { mutate, isPending } = useUserSignup()
           </svg>
 
           <!-- Title Text -->
-          <h2 class="text-xl font-bold">Stunting Up</h2>
+          <h2 class="text-xl font-bold">Stunting</h2>
         </div>
       </div>
 
       <!-- Daftar Div -->
       <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-md mt-4">
-        <h3 class="text-center text-xl  leading-9 tracking-tight text-black">Daftar</h3>
+        <h3 class="text-center text-xl leading-9 tracking-tight text-black">Daftar</h3>
         <p class="text-center text-xs font-medium leading-9 text-gray-500">
           Silahkan Masukan Data Diri Anda
         </p>
 
-        <form class="space-y-6 mt-10" @submit.prevent="onSubmit" :model="formData">
+        <n-form class="space-y-6 mt-10" @submit.prevent="onSubmit" ref="formData">
           <!-- Flex container for Nama Lengkap and Password -->
           <div class="flex flex-col md:flex-row gap-4">
             <!-- Nama Lengkap -->
@@ -74,11 +83,11 @@ const { mutate, isPending } = useUserSignup()
                 >
               </div>
               <div class="mt-2">
-                <input
+                <n-input
                   type="text"
                   required
-                  v-model="formData.fullName"
-                  class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  v-model:value="formModel.fullName"
+                  
                 />
               </div>
             </div>
@@ -91,12 +100,12 @@ const { mutate, isPending } = useUserSignup()
                 >
               </div>
               <div class="mt-2">
-                <input
+                <n-input
                   type="password"
-                  v-model="formData.password"
+                  v-model:value="formModel.password"
                   autocomplete="current-password"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  
                 />
               </div>
             </div>
@@ -112,12 +121,12 @@ const { mutate, isPending } = useUserSignup()
                 >
               </div>
               <div class="mt-2">
-                <input
-                  type="email"
-                  v-model="formData.email"
+                <n-input
+                  type="text"
+                  v-model:value="formModel.email"
                   autocomplete="email"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  
                 />
               </div>
             </div>
@@ -132,11 +141,11 @@ const { mutate, isPending } = useUserSignup()
                 >
               </div>
               <div class="mt-2">
-                <input
+                <n-input
                   type="password"
-                  v-model="formData.confirmPassword"
+                  v-model:value="formModel.confirmPassword"
                   required
-                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                  
                 />
               </div>
             </div>
@@ -150,12 +159,14 @@ const { mutate, isPending } = useUserSignup()
               >
             </div>
             <div class="mt-2">
-              <input
-                type="tel"
-                v-model="formData.phone"
+              <n-input-number
+                :show-button="false"
+                clearable
+                type="text"
+                v-model:value="formModel.phone"
                 placeholder=""
                 required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
+                
               />
             </div>
           </div>
@@ -177,7 +188,7 @@ const { mutate, isPending } = useUserSignup()
               Masuk
             </RouterLink>
           </div>
-        </form>
+        </n-form>
       </div>
     </div>
 
@@ -187,4 +198,3 @@ const { mutate, isPending } = useUserSignup()
     </div>
   </div>
 </template>
-
