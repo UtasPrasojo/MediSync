@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white p-6 rounded-lg shadow overflow-auto p-6">
-    <div class="flex justify-between items-center mb-6">
+    <div class="hidden md:flex justify-between items-center mb-6">
       <div class="flex items-center space-x-2 text-gray-600">
         <i class="fas fa-home"></i>
         <span>Dashboard</span>
@@ -27,113 +27,29 @@
       <!-- Dropdown Anak -->
     </div>
     <!-- div BIM -->
-    <div class="bg-white p-6 rounded-lg shadow mb-6">
+    <div class="bg-white p-2 rounded-lg shadow mb-6">
       <div class="flex justify-between">
         <h2 class="text-lg font-semibold">Grafik BMI Ibu</h2>
 
         <!-- Dropdown Bulan -->
         <div class="relative inline-block text-left">
-          <button
-            @click="toggleMonthDropdown"
-            class="bg-pink-500 text-white px-4 py-2 rounded-md flex items-center"
-          >
-            {{ selectedMonth }}
-            <i class="ml-2 fas fa-chevron-down"></i>
-          </button>
 
           <!-- Dropdown Menu Bulan -->
-          <div v-if="isMonthDropdownOpen" class="absolute mt-2 w-48 bg-white rounded-md shadow-lg">
-            <div class="py-1">
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Januari')"
-              >
-                Januari
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Februari')"
-              >
-                Februari
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Maret')"
-              >
-                Maret
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('April')"
-              >
-                April
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Mei')"
-              >
-                Mei
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Juni')"
-              >
-                Juni
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Juli')"
-              >
-                Juli
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Agustus')"
-              >
-                Agustus
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('September')"
-              >
-                September
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Oktober')"
-              >
-                Oktober
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('November')"
-              >
-                November
-              </a>
-              <a
-                href="#"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                @click="selectMonth('Desember')"
-              >
-                Desember
-              </a>
-            </div>
-          </div>
+          <div class="relative inline-block text-left mb-2">
+          <!-- Dropdown Bulan -->
+          <n-dropdown :options="monthOptions" trigger="click" @select="selectMonth">
+            <n-button class="bg-pink-500 text-white">
+              {{ selectedMonth }}
+              <n-icon class="ml-2">
+                <i class="fas fa-chevron-down"></i>
+              </n-icon>
+            </n-button>
+          </n-dropdown>
+        </div>
         </div>
       </div>
 
-      <div class="h-full w-full bg-white rounded-lg shadow dark:bg-white p-4">
+      <div class="h-full w-full bg-white rounded-lg  dark:bg-white p-4">
         <div class="flex justify-between">
           <div>
             <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
@@ -263,11 +179,12 @@
         </div>
       </div>
     </div>
-    <div class="rounded-lg shadow mb-6">
-      <div class="flex justify-end mb-6">
-        <n-button>Input Mandiri</n-button>
+    <div class="rounded-lg  mb-6">
+      <div class="flex justify-between mb-6">
+        <h2 class="text-lg font-semibold">Riwayat Perkembangan</h2>
+        <n-button type="primary">Input Mandiri</n-button>
       </div>
-      <div>
+      <div class="hidden md:block">
         <n-data-table
           pagination-behavior-on-filter="first"
           :columns="columns"
@@ -275,54 +192,50 @@
           :pagination="pagination"
         />
       </div>
+       <!-- Card Layout untuk tampilan Mobile -->
+       <div class="block md:hidden space-y-4">
+        <div v-for="(row, index) in data" :key="index" class="bg-white p-4 rounded-lg shadow-md">
+          <!-- Flex container untuk Tanggal dan BMI Anak dengan garis bawah -->
+          <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-300">
+            <p class="font-semibold text-gray-800 bg-pink-200 p-2 rounded">
+              Tanggal: {{ row.date }}
+            </p>
+            <p class="text-gray-600">{{ row.bmi }}</p>
+            <button>
+              <i-mage:dots></i-mage:dots>
+            </button>
+          </div>
 
-      <!-- <div class="bg-white p-6 rounded-lg shadow mb-6">
-        <n-table :single-line="false">
-          <thead>
-            <tr class="bg-pink-500 text-white">
-              <th>Tanggal</th>
-              <th>Tinggi Badan</th>
-              <th>Berat Badan</th>
-              <th>Lingkar Kepala</th>
-              <th>Usia</th>
-              <th>BMI Anak</th>
-              <th>Opsi Input</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Juli, 23 2023</td>
-              <td>45 cm</td>
-              <td>12 kg</td>
-              <td>24 cm</td>
-              <td>20 hari</td>
-              <td>21 Normal</td>
-              <td>Posyandu</td>
-              <td>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  fill="none"
-                >
-                  <path
-                    d="M11 6.05C12.0125 6.05 12.8333 5.31127 12.8333 4.4C12.8333 3.48873 12.0125 2.75 11 2.75C9.9875 2.75 9.16667 3.48873 9.16667 4.4C9.16667 5.31127 9.9875 6.05 11 6.05Z"
-                    fill="#FFC107"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M11 1.25C10.3367 1.25 9.68833 1.3725 9.16667 1.65C7.61042 2.515 6.5 4.5 6.5 7C6.5 9.18929 7.87833 11.25 9.66667 11.25H12.3333C14.1217 11.25 15.5 9.18929 15.5 7C15.5 4.5 14.3896 2.515 12.8333 1.65C12.3117 1.3725 11.6633 1.25 11 1.25ZM11 16.25C12.0125 16.25 12.8333 15.5113 12.8333 14.6C12.8333 13.6887 12.0125 12.95 11 12.95C9.9875 12.95 9.16667 13.6887 9.16667 14.6C9.16667 15.5113 9.9875 16.25 11 16.25Z"
-                    fill="#FFC107"
-                  />
-                </svg>
-              </td>
-            </tr>
-          </tbody>
-        </n-table>
-      </div> -->
+          <!-- Data lainnya di bawah -->
+          <div class="flex justify-between mb-2">
+            <div>
+              <p class="text-gray-600 font-bold">Tinggi Badan:</p>
+              <p class="text-gray-600">{{ row.high }}</p>
+            </div>
+            <div>
+              <p class="text-gray-600 font-bold">Berat Badan:</p>
+              <p class="text-gray-600">{{ row.weight }}</p>
+            </div>
+            <div>
+              <p class="text-gray-600 font-bold">Opsi Input:</p>
+              <p class="text-gray-600">{{ row.option }}</p>
+            </div>
+          </div>
+
+          <!-- Data tambahan dengan jarak yang sama -->
+          <div class="flex justify-start">
+            <div>
+              <p class="text-gray-600 font-bold">Lingkar Kepala:</p>
+              <p class="text-gray-600">{{ row.urteri }}</p>
+            </div>
+            <div class="ml-10">
+              <p class="text-gray-600 font-bold">Usia:</p>
+              <p class="text-gray-600">{{ row.lengan }}</p>
+            </div>
+          </div>
+        </div>
+        <n-pagination v-model:page="page" :page-count="100" />
+      </div>
     </div>
   </div>
 </template>
@@ -369,14 +282,15 @@ export default {
       pageSize: 10,
       itemCount: 0
     }
+    const page = ref(1)
 
     const data = [
       {
         date: 'Juli, 23 2023',
         high: '45 cm',
         weight: '12 kg',
-        head: '24 cm',
-        age: '20 hari',
+        urteri: '24 cm',
+        lengan: '20 hari',
         bmi: '21 Normal',
         option: 'Posyandu'
       },
@@ -384,8 +298,8 @@ export default {
         date: 'Agustus, 15 2023',
         high: '46 cm',
         weight: '13 kg',
-        head: '25 cm',
-        age: '30 hari',
+        urteri: '25 cm',
+        lengan: '30 hari',
         bmi: '22 Normal',
         option: 'Posyandu'
       },
@@ -393,8 +307,8 @@ export default {
         date: 'September, 10 2023',
         high: '48 cm',
         weight: '14 kg',
-        head: '26 cm',
-        age: '40 hari',
+        urteri: '26 cm',
+        lengan: '40 hari',
         bmi: '23 Normal',
         option: 'Posyandu'
       }
@@ -415,12 +329,12 @@ export default {
         key: 'weight'
       },
       {
-        title: 'Lingkar Kepala',
-        key: 'head'
+        title: 'fundus urteri',
+        key: 'urteri'
       },
       {
-        title: 'Usia',
-        key: 'age'
+        title: 'Lingkar Lengan',
+        key: 'lengan'
       },
       {
         title: 'BMI Ibu',
@@ -434,6 +348,21 @@ export default {
         title: ' ',
         key: 'action'
       }
+    ]
+
+    const monthOptions = [
+      { label: 'Januari', key: 'Januari' },
+      { label: 'Februari', key: 'Februari' },
+      { label: 'Maret', key: 'Maret' },
+      { label: 'April', key: 'April' },
+      { label: 'Mei', key: 'Mei' },
+      { label: 'Juni', key: 'Juni' },
+      { label: 'Juli', key: 'Juli' },
+      { label: 'Agustus', key: 'Agustus' },
+      { label: 'September', key: 'September' },
+      { label: 'Oktober', key: 'Oktober' },
+      { label: 'November', key: 'November' },
+      { label: 'Desember', key: 'Desember' }
     ]
 
     const options = {
@@ -529,9 +458,11 @@ export default {
       isMonthDropdownOpen,
       toggleMonthDropdown,
       selectMonth,
+      monthOptions,
       pagination,
       data,
-      columns
+      columns,
+      page,
     }
   }
 }

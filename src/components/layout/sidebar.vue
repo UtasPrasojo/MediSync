@@ -82,7 +82,7 @@ const options: Option[] = [
               to="/about"
               class="block p-2 text-gray-900 dark:text-black hover:text-white"
             >
-              <n-dropdown :options="options">
+              <n-dropdown :Options="options">
                 <n-button>User profile</n-button>
               </n-dropdown>
             </router-link>

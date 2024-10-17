@@ -23,22 +23,24 @@
     </div>
     <div class="bg-white p-6 mt-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold mb-4">Artikel Kesehatan</h2>
-      <div class="flex justify-end mb-6 w-full">
-        <div class="flex mb-6 w-1/3">
+      <div class="flex justify-between md:justify-end mb-6 w-full">
+        <div class="w-full flex items-center mb-6 md:w-1/3">
           <n-input
-            class="border border-gray-300 rounded-lg p-2 flex-grow"
+            class="border border-gray-300 rounded-lg h-12 p-2 flex-grow"
             placeholder="Search"
             type="text"
           />
-          <button class="bg-pink-500 text-white p-4 rounded-lg ml-2">
+          <button
+            class="bg-pink-500 text-white h-12 w-12 rounded-lg ml-2 flex items-center justify-center"
+          >
             <i-material-symbols:search></i-material-symbols:search>
           </button>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6 ">
+      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 mb-6">
         <div
-          class="bg-white p-4 rounded-lg shadow-md "
+          class="bg-white p-4 rounded-lg shadow-md"
           v-for="(article, index) in articles"
           :key="index"
         >
@@ -78,7 +80,6 @@
           </a>
         </div>
       </div>
-      
 
       <div class="flex justify-between items-center mt-6">
         <n-button class="bg-gray-200 text-gray-600 p-2 rounded-lg">Sebelum</n-button>

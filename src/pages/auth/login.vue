@@ -1,26 +1,55 @@
-
-
 <script setup lang="ts">
 import { useUserSignin } from '@/services/auth'
-import { useMessage, type FormInst } from 'naive-ui'
+import { useMessage, type FormInst, type FormRules } from 'naive-ui'
 import { ref } from 'vue'
 
-interface ModelType {
-  email: string | null
-  password: string | null
-}
-
-const message = useMessage()
 const { mutate, isPending } = useUserSignin()
 
-const formData = ref<FormInst | null>(null)
-const formModel = ref<ModelType>({
-  email: '',
-  password: ''
-})
-const handleSubmit = () => {
-  mutate(formModel.value)
+type FormData = {
+  email?: string
+  password?: string
 }
+
+const formData = ref<FormData>({
+  email: undefined,
+  password: undefined
+})
+
+const formRef = ref<FormInst>()
+const message = useMessage()
+
+const handleSubmit = () => {
+  formRef.value?.validate((errors) => {
+    if (!errors) {
+      mutate(formData.value)
+
+      return
+    }
+    message.error('validasi gagal')
+  })
+}
+
+const rules: FormRules = {
+  email: [
+    {
+      type: 'email',
+      message: 'Email tidak valid'
+    },
+    {
+      type: 'string',
+      required: true,
+      message: 'Email wajib diisi'
+    }
+  ],
+  password: [
+    {
+      type: 'string',
+      required: true,
+      message: 'Password wajib diisi'
+    }
+  ]
+}
+
 </script>
 
 <template>
@@ -56,23 +85,27 @@ const handleSubmit = () => {
           Silahkan Masukan Email dan Password Anda
         </p>
 
-        <n-form class="space-y-6 mt-10" @submit.prevent="handleSubmit" ref="formData">
+        <n-form
+          class="space-y-6 mt-10"
+          @submit.prevent="handleSubmit"
+          ref="formRef"
+          :model="formData"
+          :rules="rules"
+        >
           <!-- Email -->
           <div>
             <div class="flex items-center justify-between">
-              <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-                >Email</label
-              >
             </div>
             <div class="mt-2">
-              <n-input
-                id="email"
+              <n-form-item label="Email" path="email">
+                <n-input
                 name="email"
-                type="text"
-                autocomplete="email"
-                v-model:value="formModel.email"
-                required
-              />
+                  type="text"
+                  autocomplete="email"
+                  v-model:value="formData.email"
+                  required
+                />
+              </n-form-item>
               <label></label>
             </div>
           </div>
@@ -80,20 +113,17 @@ const handleSubmit = () => {
           <!-- Password -->
           <div>
             <div class="flex items-center justify-between">
-              <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-                >Password</label
-              >
             </div>
             <div class="mt-2">
+              <n-form-item label="Password" path="password">
               <n-input
-                id="password"
                 name="password"
                 type="password"
-                v-model:value="formModel.password"
+                v-model:value="formData.password"
                 autocomplete="current-password"
                 required
-                
               />
+            </n-form-item>
             </div>
           </div>
 
@@ -134,6 +164,6 @@ const handleSubmit = () => {
 </template>
 
 <route lang="yaml">
-  meta:
-    layout: blank
-  </route>
+meta:
+  layout: blank
+</route>

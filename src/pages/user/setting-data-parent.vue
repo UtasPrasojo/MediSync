@@ -121,7 +121,7 @@
               <h3 class="text-lg font-semibold">Data Orang Tua</h3>
               <!-- Checkbox untuk Data Orang Tua -->
 
-              <n-checkbox v-model:checked="checked"> Samakan dengan profile </n-checkbox>
+              
             </div>
 
             <div class="mt-4 space-y-4">
@@ -140,6 +140,10 @@
               <!-- Dropdown Form Profil Ibu -->
               <div v-if="showIbu" class="bg-gray-50 p-4 rounded-lg">
                 <form>
+                  <div>
+                    <h3 class="font-bold text-lg mb-2">Form Data Akun Ibu</h3>
+                    <n-checkbox v-model:checked="checked" class="mb-4"> Samakan dengan profile </n-checkbox>
+                  </div>
                   <div class="mb-4">
                     <label class="block text-gray-700">Nama Ibu</label>
                     <n-input
@@ -175,13 +179,11 @@
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Provinsi</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />
@@ -230,6 +232,10 @@
               <!-- Dropdown Form Profil Ayah -->
               <div v-if="showAyah" class="bg-gray-50 p-4 rounded-lg">
                 <form>
+                  <div>
+                    <h3 class="font-bold text-lg mb-2">Form Data Akun Ayah</h3>
+                    <n-checkbox v-model:checked="checked" class="mb-4"> Samakan dengan profile </n-checkbox>
+                  </div>
                   <div class="mb-4">
                     <label class="block text-gray-700">Nama Ayah</label>
                     <n-input
@@ -266,13 +272,11 @@
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Provinsi</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />
@@ -353,9 +357,6 @@
             <div class="flex justify-between items-center mt-6">
               <h2 class="text-lg font-semibold">Data Orang Tua</h2>
               <!-- Checkbox untuk Data Orang Tua -->
-              <div>
-                <n-checkbox v-model:checked="checked"> Samakan dengan profile </n-checkbox>
-              </div>
             </div>
 
             <div class="mt-4 space-y-4">
@@ -374,6 +375,10 @@
               <!-- Dropdown Form Profil Ibu -->
               <div v-if="showIbu" class="bg-gray-50 p-4 rounded-lg">
                 <form>
+                  <div>
+                    <h3 class="font-bold text-lg mb-2">Form Data Akun Ibu</h3>
+                    <n-checkbox v-model:checked="checked" class="mb-4"> Samakan dengan profile </n-checkbox>
+                  </div>
                   <div class="mb-4">
                     <label class="block text-gray-700">Nama Ibu</label>
                     <n-input
@@ -410,13 +415,11 @@
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Provinsi</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />
@@ -463,6 +466,10 @@
               <!-- Dropdown Form Profil Ayah -->
               <div v-if="showAyah" class="bg-gray-50 p-4 rounded-lg">
                 <form>
+                  <div>
+                    <h3 class="font-bold text-lg mb-2">Form Data Akun Ayah</h3>
+                    <n-checkbox v-model:checked="checked" class="mb-4"> Samakan dengan profile </n-checkbox>
+                  </div>
                   <div class="mb-4">
                     <label class="block text-gray-700">Nama Ayah</label>
                     <n-input
@@ -499,13 +506,11 @@
                     </div>
                   </div>
                   <div class="mb-4 flex space-x-4">
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Provinsi</label>
                       <n-select v-model:value="value" :options="options" />
                     </div>
 
-                    
                     <div class="w-1/2">
                       <label class="block text-gray-700">Kabupaten</label>
                       <n-select v-model:value="value" :options="options" />

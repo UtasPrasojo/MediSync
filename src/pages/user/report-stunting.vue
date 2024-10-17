@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white p-6 rounded-lg shadow overflow-auto p-6">
-    <div class="flex justify-between items-center mb-6">
+  <div class="bg-white p-6 rounded-lg overflow-auto">
+    <div class="hidden md:flex justify-between items-center mb-6">
       <div class="flex items-center space-x-2 text-gray-600">
         <i class="fas fa-home"></i>
         <span>Dashboard</span>
@@ -24,10 +24,11 @@
         <p class="text-gray-600">Laporkan jika menemukan anak yang teridentifikasi stunting</p>
       </div>
     </div>
-    <div class="bg-white p-6 rounded-lg shadow overflow-auto">
+
+    <div class="hidden md:block bg-white p-6 rounded-lg shadow overflow-auto">
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-lg font-semibold">Riwayat Laporan</h3>
-        <button class="bg-pink-500 text-white px-4 py-2 rounded-md">Lapor Stunting</button>
+        <n-button type="primary">Lapor Stunting</n-button>
       </div>
       <div>
         <n-data-table
@@ -37,6 +38,57 @@
           :pagination="pagination"
         />
       </div>
+    </div>
+
+    <!-- Card untuk tampilan mobile -->
+    <div class="block md:hidden">
+      <div class="flex justify-between">
+        <h3 class="text-lg font-semibold mb-4">Riwayat Perkembangan</h3>
+        <n-button type="primary">Lapor Stunting</n-button>
+      </div>
+
+      <div v-for="(row, index) in data" :key="index" class="bg-white p-4 rounded-lg shadow-md mb-4">
+        <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-300">
+          <p class="font-semibold text-gray-800 bg-pink-100 px-2 rounded-lg py-2">
+            Tanggal: {{ row.date }}
+          </p>
+          <n-button>
+            <i-mage:dots></i-mage:dots>
+          </n-button>
+        </div>
+
+        <!-- Flex container untuk Nama Pelapor, Nama Anak, dan Alamat Anak -->
+        <div class="flex justify-between mb-2">
+          <div class="w-1/3">
+            <p class="text-gray-800 font-bold">Nama Pelapor:</p>
+            <p class="text-gray-600">{{ row.pelapor }}</p>
+          </div>
+          <div class="w-1/3">
+            <p class="text-gray-800 font-bold">Nama Anak:</p>
+            <p class="text-gray-600">{{ row.anak }}</p>
+          </div>
+          <div class="w-1/3">
+            <p class="text-gray-800 font-bold">Alamat Anak:</p>
+            <p class="text-gray-600">{{ row.alamat }}</p>
+          </div>
+        </div>
+
+        <!-- Flex container untuk Jenis Kelamin, No Telepon, dan Opsi Input -->
+        <div class="flex">
+          <div class="w-1/3">
+            <p class="text-gray-800 font-bold">Jenis Kelamin:</p>
+            <p class="text-gray-600">{{ row.gender }}</p>
+          </div>
+          <div class="w-1/3">
+            <p class="text-gray-800 font-bold">No Telepon:</p>
+            <p class="text-gray-600">{{ row.phone }}</p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class=" flex justify-center items-center mt-4">
+      <n-pagination v-model:page="page" :page-count="100" />
     </div>
   </div>
 </template>
@@ -54,7 +106,6 @@ export default {
         alamat: 'Jl. Merdeka No. 45',
         gender: 'Laki-laki',
         phone: '081234567890',
-        bmi: '21 Normal',
         option: 'Posyandu'
       },
       {
@@ -64,7 +115,6 @@ export default {
         alamat: 'Jl. Pahlawan No. 10',
         gender: 'Perempuan',
         phone: '081987654321',
-        bmi: '22 Normal',
         option: 'Posyandu'
       },
       {
@@ -74,7 +124,6 @@ export default {
         alamat: 'Jl. Kebon Jeruk No. 5',
         gender: 'Laki-laki',
         phone: '081234112233',
-        bmi: '23 Normal',
         option: 'Posyandu'
       }
     ])
@@ -104,10 +153,7 @@ export default {
         title: 'No Telepon',
         key: 'phone'
       },
-      {
-        title: 'BMI',
-        key: 'bmi'
-      },
+
       {
         title: 'Opsi Input',
         key: 'option'

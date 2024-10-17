@@ -2,16 +2,6 @@
   <div class="flex bg-white p-4 min-h-screen">
     <div class="flex-1 max-w-full p-4">
 
-      <div class=" justify-end items-center mb-4 hidden md:flex">
-        <div class="flex items-center space-x-4">
-          <i class="fas fa-bell text-xl"></i>
-          <div class="flex items-center space-x-2">
-            <img src="/profil.png" alt="Gambar profil pengguna" class="w-10 h-10 rounded-full" />
-            <span class="font-medium">Faygo Umandana</span>
-          </div>
-        </div>
-      </div>
-
       <div>
         <h2 class="text-xl font-bold text-black text-left">Dashboard</h2>
         <div class="flex flex-row md:hidden">
@@ -39,16 +29,12 @@
 
         <!-- Gambar Banner -->
         <n-carousel autoplay>
-        <img
+        <img v-for="(image, index) in images" :key="index"
           class="w-full h-full object-cover rounded-lg transition-opacity duration-500"
           :src="images[currentIndex]"
           alt="Gambar Banner"
         />
-        <img
-          class="w-full h-full object-cover rounded-lg transition-opacity duration-500"
-          :src="images[currentIndex]"
-          alt="Gambar Banner"
-        />
+        
         </n-carousel>
       </div>
       <div class="bg-gradient-to-tl from-pink-500/10 to-white h-20 rounded-lg md:hidden mb-4">

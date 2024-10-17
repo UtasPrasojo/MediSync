@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-white">
     <div class="bg-white shadow-sm">
       <div class="container mx-auto px-4 py-4 flex justify-between items-center">
         <h1 class="text-xl font-semibold">Artikel Kesehatan</h1>
-        <div class="flex items-center space-x-4">
+        <div class="hidden md:flex items-center space-x-4">
           <i class="fas fa-user-circle text-2xl"></i>
           <img
             alt="User profile picture"
@@ -16,10 +16,10 @@
       </div>
     </div>
 
-    <div class="container mx-auto px-4 py-6">
+    <div class="container w-full mx-auto px-2 py-6">
       <div class="flex space-x-6">
         <!-- Article Content -->
-        <div class="w-2/3 h-full  bg-white rounded-lg shadow-md mr-4 px-6">
+        <div class="w-full md:w-3/4 h-full bg-white px-2">
           <!-- Menambahkan padding di seluruh konten dalam div -->
           <div class="mb-4 my-6">
             <nav class="text-sm mb-4">
@@ -33,7 +33,7 @@
 
           <img
             alt="Illustration of a person with glasses and balloons"
-            class="w-full rounded-lg mb-4"
+            class="w-full mb-4"
             src="/fotoartikel.png"
           />
 
@@ -48,42 +48,84 @@
 
           <p class="text-gray-700 mb-4">
             Lorem ipsum dolor sit amet consectetur. Faucibus risus adipiscing amet nibh. Luctus ac
-            fringilla urna mauris elit vitae sed turpis ultrices.
-          </p>
-          <p class="text-gray-700 mb-4">
-            Lorem ipsum dolor sit amet consectetur. Faucibus risus adipiscing amet nibh. Luctus ac
-            fringilla urna mauris elit vitae sed turpis ultrices.
-          </p>
-          <p class="text-gray-700 mb-4">
+            fringilla urna mauris elit vitae sed turpis ultrices. Lorem ipsum dolor sit amet
+            consectetur. Faucibus risus adipiscing amet nibh. Luctus ac fringilla urna mauris elit
+            vitae sed turpis ultrices. Lorem ipsum dolor sit amet consectetur. Faucibus risus
+            adipiscing amet nibh. Luctus ac fringilla urna mauris elit vitae sed turpis ultrices.
             Lorem ipsum dolor sit amet consectetur. Faucibus risus adipiscing amet nibh. Luctus ac
             fringilla urna mauris elit vitae sed turpis ultrices.
           </p>
         </div>
 
         <!-- Sidebar -->
-        <div class="w-1/3">
-          <div class="bg-white shadow-sm rounded-lg p-4 mb-6">
+        <div class="hidden md:block w-1/4">
+          <div class="bg-white shadow-sm rounded-lg p-2 mb-6">
             <div class="flex justify-between items-center mb-4">
               <h3 class="text-lg font-semibold">Artikel Kesehatan</h3>
-              <a class="text-blue-500 text-sm" href="#">Lihat Semua</a>
+              <a class="text-gray-500 text-sm" href="#">Lihat Semua</a>
             </div>
 
             <div class="space-y-4">
               <div v-for="(article, index) in relatedArticles" :key="index" class="flex space-x-4">
-                <img
-                  :src="article.image"
-                  alt="Illustration"
-                  class="w-20 h-20 rounded-lg"
-                  height="100"
-                  width="100"
-                />
-                <div>
-                  <h4 class="text-sm font-semibold">{{ article.title }}</h4>
-                  <p class="text-xs text-gray-500">{{ article.description }}</p>
-                  <a class="text-pink-500 text-xs" href="#">
-                    Baca Selengkapnya <i class="fas fa-arrow-right"></i>
-                  </a>
+                <div class="flex flex-col rounded-lg shadow-md items-center">
+                  <!-- Membungkus gambar dan teks -->
+                  <img
+                    :src="article.image"
+                    alt="Illustration"
+                    class="w-full h-32 rounded-lg mb-2 object-cover"
+                    height="100"
+                    width="100"
+                  />
+                  <div class="ml-4 min-h-32 item">
+                    <!-- Mengatur teks agar terpusat -->
+                    <div>
+                      <h4 class="text-sm font-semibold">{{ article.title }}</h4>
+                      <p class="text-xs text-gray-500">{{ article.description }}</p>
+                    </div>
+                    <div>
+                      <a class="text-pink-500 text-xs" href="#">
+                        Baca Selengkapnya
+                        <i-lsicon:arrow-right-filled></i-lsicon:arrow-right-filled>
+                      </a>
+                    </div>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- mobile display -->
+    <div class="md:hidden w-full px-4">
+      <div class="bg-white shadow-sm rounded-lg p-2 mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold">Artikel Kesehatan</h3>
+          <a class="text-gray-500 text-sm" href="#">Lihat Semua</a>
+        </div>
+
+        <div class="space-y-4">
+          <div
+            v-for="(article, index) in relatedArticles"
+            :key="index"
+            class="flex flex-col items-center space-y-4"
+          >
+            <!-- Membungkus gambar dan teks -->
+            <div class="flex flex-col rounded-lg shadow-md items-center w-full">
+              <img
+                :src="article.image"
+                alt="Illustration"
+                class="w-full h-32 rounded-lg mb-2 object-cover"
+                height="100"
+                width="100"
+              />
+              <div class=" w-full">
+                <!-- Mengatur teks agar terpusat -->
+                <h4 class="text-sm font-semibold ml-2">{{ article.title }}</h4>
+                <p class="text-xs text-gray-500 ml-2">{{ article.description }}</p>
+                <a class="text-pink-500 text-xs ml-2" href="#">
+                  Baca Selengkapnya <i-lsicon:arrow-right-filled></i-lsicon:arrow-right-filled>
+                </a>
               </div>
             </div>
           </div>

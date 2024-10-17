@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { useAuthProfile } from '@/services/auth';
 import { ref } from 'vue';
+
+
 
 const isOpen= ref(false)
 </script>
 
 <template>
+ 
   <div v-if="isOpen" class="w-full h-screen bg-white fixed z-50" >
     <layout-sidebarmobile @close="isOpen = !isOpen" />
   </div>
