@@ -7,4 +7,13 @@ export const API = {
     AUTH_GET_OTP:'/v1/auth/otp',
     AUTH_POST_OTP:'/v1/auth/otp',
     USER_POST:"/v1/user",
+    USER_POST_CHILD:"/v1/user/child",
+    USER_GET_CHILD:"/v1/user/child",
+    USER_PUT_CHILD:"/v1/user/child/{id}",
+    USER_DELETE_CHILD:"/v1/user/child/{id}",
+    USER_POST_PARENT:"/v1/parents",
+    USER_GET_PARENT:"/v1/parents",
+    USER_GET_PARENT_ID:"/v1/parents/{id}",
+    USER_DELETE_PARENT_ID:"/v1/parents/{id}",
+    USER_PUT_PARENT_ID:"/v1/parents/{id}",
  }

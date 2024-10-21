@@ -1,6 +1,14 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 
-  <template>
+const goToDashboard = () => {
+  router.push({ name: '/user/dashboard' })
+}
+</script>
+
+<template>
   <div class="flex min-h-screen items-center justify-center bg-white">
     <div class="bg-white p-8 rounded-lg w-full max-w-md">
       <!-- Logo and Title -->
@@ -45,7 +53,7 @@
             Tambah Anggota
           </label>
           <RouterLink
-            to="/auth/registration-anak"
+            to="/auth/registration-child"
             class="flex items-center justify-center w-full rounded-md border-2 border-pink-600 bg-white text-pink-600 py-2 px-4 shadow-sm hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-pink-600 focus:ring-offset-2 sm:text-sm"
           >
             <svg
@@ -70,7 +78,9 @@
         <div class="mt-8">
           <!-- Submit Button -->
           <div class="flex justify-center">
-            <n-button type="tertiary">Mungkin Nanti</n-button>
+            <router-link to="/user/dashboard">
+              <n-button type="tertiary">Mungkin Nanti</n-button>
+            </router-link>
           </div>
         </div>
       </form>
@@ -79,6 +89,6 @@
 </template>
 
 <route lang="yaml">
-  meta:
-    layout: blank
-  </route>
+meta:
+  layout: blank
+</route>

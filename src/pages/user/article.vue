@@ -3,10 +3,7 @@
     <div class="hidden md:flex justify-end items-center mb-4 shadow-md">
       <div class="flex items-center space-x-4">
         <i class="fas fa-bell text-xl"></i>
-        <div class="flex items-center space-x-2">
-          <img src="/profil.png" alt="Gambar profil pengguna" class="w-10 h-10 rounded-full" />
-          <span class="font-medium">Faygo Umandana</span>
-        </div>
+        
       </div>
     </div>
     <div class="bg-white p-6 rounded-lg">

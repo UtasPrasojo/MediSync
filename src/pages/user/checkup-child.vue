@@ -1,22 +1,145 @@
+<script lang="ts">
+import { ref, onMounted } from 'vue'
+import ApexCharts from 'apexcharts'
+import { NDropdown, NButton, NIcon, NDataTable } from 'naive-ui'
+import { useReadChild } from '@/services/child'
+
+interface RowData {
+  date: string
+  high: string
+  weight: string
+  head: string
+  age: string
+  bmi: string
+  option: string
+  action: string
+}
+
+export default {
+  setup() {
+    const selectedChild = ref('Pilih Anak')
+    const selectedMonth = ref('Pilih Bulan')
+
+    // Opsi dropdown untuk anak
+    const childOptions = [
+      { label: 'Anak Ke-1', key: 'Anak Ke-1' },
+      { label: 'Anak Ke-2', key: 'Anak Ke-2' },
+      { label: 'Anak Ke-3', key: 'Anak Ke-3' }
+    ]
+
+    // Opsi dropdown untuk bulan
+    const monthOptions = [
+      { label: 'Januari', key: 'Januari' },
+      { label: 'Februari', key: 'Februari' },
+      { label: 'Maret', key: 'Maret' },
+      { label: 'April', key: 'April' },
+      { label: 'Mei', key: 'Mei' },
+      { label: 'Juni', key: 'Juni' },
+      { label: 'Juli', key: 'Juli' },
+      { label: 'Agustus', key: 'Agustus' },
+      { label: 'September', key: 'September' },
+      { label: 'Oktober', key: 'Oktober' },
+      { label: 'November', key: 'November' },
+      { label: 'Desember', key: 'Desember' }
+    ]
+
+    const selectChild = (key: string) => {
+      selectedChild.value = key
+    }
+
+    const selectMonth = (key: string) => {
+      selectedMonth.value = key
+    }
+
+    // Data yang diambil dari API
+    const childData = ref<RowData[]>([]) // Untuk menyimpan data anak
+    const { data, error } = useReadChild()
+
+    onMounted(() => {
+      if (data.value) {
+        childData.value = data.value.map((item: any) => ({
+          date: item.date,
+          high: item.high + ' cm',
+          weight: item.weight + ' kg',
+          head: item.head + ' cm',
+          age: item.age + ' hari',
+          bmi:
+            item.bmi + ' ' + (item.bmi < 18.5 ? 'Stunting' : item.bmi < 25 ? 'Normal' : 'Obesitas'),
+          option: 'Posyandu'
+        }))
+      }
+      if (error.value) {
+        console.error('Error fetching child data:', error.value)
+      }
+    })
+
+    const pagination = {
+      page: 1,
+      pageSize: 10,
+      itemCount: 0
+    }
+
+    const page = ref(1)
+
+    const columns = [
+      { title: 'Tanggal', key: 'date' },
+      { title: 'Tinggi Badan', key: 'high' },
+      { title: 'Berat Badan', key: 'weight' },
+      { title: 'Lingkar Kepala', key: 'head' },
+      { title: 'Usia', key: 'age' },
+      { title: 'BMI Anak', key: 'bmi' },
+      { title: 'Opsi Input', key: 'option' }
+    ]
+
+    // Opsi chart
+    const options = {
+      chart: {
+        height: '100%',
+        maxWidth: '100%',
+        type: 'area',
+        toolbar: {
+          show: false
+        }
+      },
+      series: [
+        {
+          name: 'Pengguna Baru',
+          data: [6500, 6418, 6456, 6526, 6356, 6456],
+          color: '#1A56DB'
+        }
+      ],
+      xaxis: {
+        categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb']
+      }
+    }
+
+    onMounted(() => {
+      const chartContainer = document.getElementById('area-chart')
+      if (chartContainer) {
+        const chart = new ApexCharts(chartContainer, options)
+        chart.render()
+      }
+    })
+
+    return {
+      selectedChild,
+      selectedMonth,
+      childOptions,
+      monthOptions,
+      childData,
+      columns,
+      selectChild,
+      selectMonth,
+      pagination,
+      page
+    }
+  }
+}
+</script>
+
 <template>
   <div class="bg-white p-6 rounded-lg shadow overflow-auto">
-    <div class="hidden md:flex justify-between items-center mb-6">
-      <div class="flex items-center space-x-2 text-gray-600">
-        <i class="fas fa-home"></i>
-        <span>Dashboard</span>
-        <i class="fas fa-chevron-right"></i>
-        <span>Kesehatan Anak</span>
-      </div>
-      <div class="flex items-center space-x-4">
-        <img
-          class="rounded-full"
-          width="40"
-          height="40"
-          src="https://storage.googleapis.com/a1aa/image/C2jfwt8kRwSWCK9YWQt3bHFWCuCch2VBzspxx6mSoIXhBeiTA.jpg"
-          alt="User profile picture"
-        />
-      </div>
-    </div>
+    <div class="hidden md:flex justify-between items-center mb-6"></div>
 
     <div class="flex justify-between items-center mb-6">
       <div>
@@ -256,155 +379,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { ref, onMounted } from 'vue'
-import ApexCharts from 'apexcharts'
-import { NDropdown, NButton, NIcon, NDataTable } from 'naive-ui'
-
-interface RowData {
-  date: string
-  high: string
-  weight: string
-  head: string
-  age: string
-  bmi: string
-  option: string
-  action: string
-}
-
-export default {
-  setup() {
-    const selectedChild = ref('Pilih Anak')
-    const selectedMonth = ref('Pilih Bulan')
-
-    // Opsi dropdown untuk anak
-    const childOptions = [
-      { label: 'Anak Ke-1', key: 'Anak Ke-1' },
-      { label: 'Anak Ke-2', key: 'Anak Ke-2' },
-      { label: 'Anak Ke-3', key: 'Anak Ke-3' }
-    ]
-
-    // Opsi dropdown untuk bulan
-    const monthOptions = [
-      { label: 'Januari', key: 'Januari' },
-      { label: 'Februari', key: 'Februari' },
-      { label: 'Maret', key: 'Maret' },
-      { label: 'April', key: 'April' },
-      { label: 'Mei', key: 'Mei' },
-      { label: 'Juni', key: 'Juni' },
-      { label: 'Juli', key: 'Juli' },
-      { label: 'Agustus', key: 'Agustus' },
-      { label: 'September', key: 'September' },
-      { label: 'Oktober', key: 'Oktober' },
-      { label: 'November', key: 'November' },
-      { label: 'Desember', key: 'Desember' }
-    ]
-
-    const selectChild = (key: string) => {
-      selectedChild.value = key
-    }
-
-    const selectMonth = (key: string) => {
-      selectedMonth.value = key
-    }
-
-    // Data tabel
-    const data = [
-      {
-        date: 'Juli, 23 2023',
-        high: '45 cm',
-        weight: '12 kg',
-        head: '24 cm',
-        age: '20 hari',
-        bmi: '21 Normal',
-        option: 'Posyandu'
-      },
-      {
-        date: 'Agustus, 15 2023',
-        high: '46 cm',
-        weight: '13 kg',
-        head: '25 cm',
-        age: '30 hari',
-        bmi: '22 Normal',
-        option: 'Posyandu'
-      }
-    ]
-    const pagination = {
-      page: 1,
-      pageSize: 10,
-      itemCount: 0
-    }
-    // const getBmiClass = (bmi) => {
-    //   const bmiValue = parseFloat(bmi); // Mengambil nilai BMI dari string
-    //   if (bmiValue < 18.5) {
-    //     return 'text-red-500'; // Stunting (merah)
-    //   } else if (bmiValue >= 18.5 && bmiValue < 25) {
-    //     return 'text-green-500'; // Normal (hijau)
-    //   } else {
-    //     return 'text-yellow-500'; // Obesitas (kuning)
-    //   }
-    // }
-    const page = ref(1)
-
-    const columns = [
-      { title: 'Tanggal', key: 'date' },
-      { title: 'Tinggi Badan', key: 'high' },
-      { title: 'Berat Badan', key: 'weight' },
-      { title: 'Lingkar Kepala', key: 'head' },
-      { title: 'Usia', key: 'age' },
-      { title: 'BMI Anak', key: 'bmi' },
-      { title: 'Opsi Input', key: 'option' }
-    ]
-
-    // Opsi chart
-    const options = {
-      chart: {
-        height: '100%',
-        maxWidth: '100%',
-        type: 'area',
-        toolbar: {
-          show: false
-        }
-      },
-      series: [
-        {
-          name: 'Pengguna Baru',
-          data: [6500, 6418, 6456, 6526, 6356, 6456],
-          color: '#1A56DB'
-        }
-      ],
-      xaxis: {
-        categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb']
-      }
-    }
-
-    onMounted(() => {
-      const chartContainer = document.getElementById('area-chart')
-      if (chartContainer) {
-        const chart = new ApexCharts(chartContainer, options)
-        chart.render()
-      }
-    })
-    const handleEdit = (row: RowData) => {
-      console.log('Editing row:', row)
-    }
-
-    return {
-      selectedChild,
-      selectedMonth,
-      childOptions,
-      monthOptions,
-      data,
-      columns,
-      selectChild,
-      selectMonth,
-      pagination,
-      page
-    }
-  }
-}
-</script>
 
 <style scoped>
 /* Your styles here */

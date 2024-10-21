@@ -4,7 +4,7 @@ import { initials } from '@dicebear/collection'
 import { computed } from 'vue';
 
 const props = defineProps<{
-  seed: string
+  seed?: string
 }>()
 
 const avatar = computed(() => {

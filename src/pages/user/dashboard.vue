@@ -1,7 +1,6 @@
 <template>
   <div class="flex bg-white p-4 min-h-screen">
     <div class="flex-1 max-w-full p-4">
-
       <div>
         <h2 class="text-xl font-bold text-black text-left">Dashboard</h2>
         <div class="flex flex-row md:hidden">
@@ -29,12 +28,13 @@
 
         <!-- Gambar Banner -->
         <n-carousel autoplay>
-        <img v-for="(image, index) in images" :key="index"
-          class="w-full h-full object-cover rounded-lg transition-opacity duration-500"
-          :src="images[currentIndex]"
-          alt="Gambar Banner"
-        />
-        
+          <img
+            v-for="(image, index) in images"
+            :key="index"
+            class="w-full h-full object-cover rounded-lg transition-opacity duration-500"
+            :src="images[currentIndex]"
+            alt="Gambar Banner"
+          />
         </n-carousel>
       </div>
       <div class="bg-gradient-to-tl from-pink-500/10 to-white h-20 rounded-lg md:hidden mb-4">
@@ -189,10 +189,14 @@
               "
             >
               <div class="flex justify-between items-center mb-2">
-                <h3 class="font-bold text-lg">Profil Ibu</h3>
-                <button class="text-pink-500 bg-white border border-pink-500 px-4 py-2 rounded-lg">
-                  Edit Profil
-                </button>
+                <h3 class="font-bold text-lg">Profil Pengguna</h3>
+                <router-link to="/user/setting-account">
+                  <n-button
+                    class="text-pink-500 bg-white border border-pink-500 px-4 py-2 rounded-lg"
+                  >
+                    Edit Profil
+                  </n-button>
+                </router-link>
               </div>
               <div class="md:flex md:items-center md:space-x-4">
                 <img src="/profil2.png" alt="Gambar profil Julia" class="w-16 h-16 rounded-full" />
@@ -713,7 +717,6 @@
           </div>
         </div>
 
-      
         <!-- Artikel -->
 
         <!-- Seksi Artikel -->
@@ -724,7 +727,6 @@
 
 <script>
 import headerImage from '/header-dashboard.png'
-
 
 export default {
   name: 'Dashboard',
