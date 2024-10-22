@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DetailPosyandu from '@/components/componen-user/comp-detail-posyandu.vue';
 import { useReadSchedule } from '@/services/schedule';
+import { DateTime } from 'luxon';
 import { NButton, NDataTable, NInput, NList, NListItem, NPagination } from 'naive-ui'; // Ensure proper Naive UI imports
 import { h, ref } from 'vue';
 
@@ -38,7 +39,10 @@ const searchSchedule = () => {
 const columns = ref([
   {
     title: 'Tanggal',
-    key: 'open'
+    key: 'open',
+    render(data) {
+      return DateTime.fromISO(data.open).toFormat('dd LLL yyyy')
+    }
   },
   {
     title: 'Posyandu',
@@ -46,7 +50,10 @@ const columns = ref([
   },
   {
     title: 'Waktu',
-    key: 'close'
+    key: 'close',
+    render(data) {
+      return DateTime.fromISO(data.close).toFormat('HH:mm')
+    }
   },
   {
     title: 'Petugas',
@@ -75,13 +82,13 @@ const columns = ref([
     <div class="hidden md:flex justify-end items-center mb-6">
       <div>
         <div class="flex items-center space-x-4">
-          <img
+          <!-- <img
             class="rounded-full"
             width="40"
             height="40"
             src="https://storage.googleapis.com/a1aa/image/C2jfwt8kRwSWCK9YWQt3bHFWCuCch2VBzspxx6mSoIXhBeiTA.jpg"
             alt="User profile picture"
-          />
+          /> -->
         </div>
       </div>
     </div>

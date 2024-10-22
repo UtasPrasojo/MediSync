@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useReadScheduleById } from '@/services/schedule'; // Import the service
+import { DateTime } from 'luxon';
 import { computed } from 'vue';
 
 const props = defineProps<{
@@ -7,6 +8,14 @@ const props = defineProps<{
 }>()
 
 const { data: scheduleDetail } = useReadScheduleById(computed(() => props.id))
+
+const formattedDate = computed(() => {
+  return DateTime.fromISO(scheduleDetail.value?.open).toFormat('dd LLL yyyy')
+});
+
+const formattedTime = computed(() => {
+  return DateTime.fromISO(scheduleDetail.value?.open).toFormat('HH:mm')
+});
 </script>
 
 <template>
@@ -22,11 +31,11 @@ const { data: scheduleDetail } = useReadScheduleById(computed(() => props.id))
       <div class="mb-4">
         <div class="flex justify-between mb-2">
           <span class="text-gray-700">Tanggal</span>
-          <span class="text-pink-500">{{ scheduleDetail?.open || '-' }}</span>
+          <span class="text-pink-500">{{ formattedDate }}</span>
         </div>
         <div class="flex justify-between mb-2">
           <span class="text-gray-700">Jam</span>
-          <span class="text-pink-500">{{ scheduleDetail?.close || '-' }}</span>
+          <span class="text-pink-500">{{ formattedTime }}</span>
         </div>
         <div class="flex justify-between mb-2">
           <span class="text-gray-700">Petugas</span>
