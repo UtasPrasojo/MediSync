@@ -1,140 +1,176 @@
-<script lang="ts">
-import { ref, onMounted } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue'
 import ApexCharts from 'apexcharts'
-import { NDropdown, NButton, NIcon, NDataTable } from 'naive-ui'
 import { useReadChild } from '@/services/child'
+import { useReadChildCheckup } from '@/services/checkup-children'
 
-interface RowData {
+// Definisi interface untuk data tabel
+interface checkup {
+  id: string
   date: string
-  high: string
-  weight: string
-  head: string
+  height: number
+  weight: number
+  headCircumference: number
   age: string
   bmi: string
   option: string
-  action: string
+  action?: string
 }
 
-export default {
-  setup() {
-    const selectedChild = ref('Pilih Anak')
-    const selectedMonth = ref('Pilih Bulan')
+// Mengelola state dropdown
+const selectedChild = ref<string>('Pilih Anak')
+const selectedMonth = ref<string>('Pilih Bulan')
+const { data: checkupData, isLoading, refetch } = useReadChildCheckup()
 
-    // Opsi dropdown untuk anak
-    const childOptions = [
-      { label: 'Anak Ke-1', key: 'Anak Ke-1' },
-      { label: 'Anak Ke-2', key: 'Anak Ke-2' },
-      { label: 'Anak Ke-3', key: 'Anak Ke-3' }
-    ]
-
-    // Opsi dropdown untuk bulan
-    const monthOptions = [
-      { label: 'Januari', key: 'Januari' },
-      { label: 'Februari', key: 'Februari' },
-      { label: 'Maret', key: 'Maret' },
-      { label: 'April', key: 'April' },
-      { label: 'Mei', key: 'Mei' },
-      { label: 'Juni', key: 'Juni' },
-      { label: 'Juli', key: 'Juli' },
-      { label: 'Agustus', key: 'Agustus' },
-      { label: 'September', key: 'September' },
-      { label: 'Oktober', key: 'Oktober' },
-      { label: 'November', key: 'November' },
-      { label: 'Desember', key: 'Desember' }
-    ]
-
-    const selectChild = (key: string) => {
-      selectedChild.value = key
-    }
-
-    const selectMonth = (key: string) => {
-      selectedMonth.value = key
-    }
-
-    // Data yang diambil dari API
-    const childData = ref<RowData[]>([]) // Untuk menyimpan data anak
-    const { data, error } = useReadChild()
-
-    onMounted(() => {
-      if (data.value) {
-        childData.value = data.value.map((item: any) => ({
-          date: item.date,
-          high: item.high + ' cm',
-          weight: item.weight + ' kg',
-          head: item.head + ' cm',
-          age: item.age + ' hari',
-          bmi:
-            item.bmi + ' ' + (item.bmi < 18.5 ? 'Stunting' : item.bmi < 25 ? 'Normal' : 'Obesitas'),
-          option: 'Posyandu'
-        }))
-      }
-      if (error.value) {
-        console.error('Error fetching child data:', error.value)
-      }
-    })
-
-    const pagination = {
-      page: 1,
-      pageSize: 10,
-      itemCount: 0
-    }
-
-    const page = ref(1)
-
-    const columns = [
-      { title: 'Tanggal', key: 'date' },
-      { title: 'Tinggi Badan', key: 'high' },
-      { title: 'Berat Badan', key: 'weight' },
-      { title: 'Lingkar Kepala', key: 'head' },
-      { title: 'Usia', key: 'age' },
-      { title: 'BMI Anak', key: 'bmi' },
-      { title: 'Opsi Input', key: 'option' }
-    ]
-
-    // Opsi chart
-    const options = {
-      chart: {
-        height: '100%',
-        maxWidth: '100%',
-        type: 'area',
-        toolbar: {
-          show: false
-        }
-      },
-      series: [
-        {
-          name: 'Pengguna Baru',
-          data: [6500, 6418, 6456, 6526, 6356, 6456],
-          color: '#1A56DB'
-        }
-      ],
-      xaxis: {
-        categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb']
-      }
-    }
-
-    onMounted(() => {
-      const chartContainer = document.getElementById('area-chart')
-      if (chartContainer) {
-        const chart = new ApexCharts(chartContainer, options)
-        chart.render()
-      }
-    })
-
+const itemsCheckup = computed(() => {
+  return checkupData.value?.data.map((checkup: checkup) => {
     return {
-      selectedChild,
-      selectedMonth,
-      childOptions,
-      monthOptions,
-      childData,
-      columns,
-      selectChild,
-      selectMonth,
-      pagination,
-      page
+      id: checkup.id,
+      date: checkup.date,
+      height: checkup.height,
+      weight: checkup.weight,
+      headCircumference: checkup.headCircumference,
+      
     }
+  })
+})
+
+// Opsi dropdown untuk anak
+
+// Opsi dropdown untuk bulan
+const monthOptions = [
+  { label: 'Januari', key: 'Januari' },
+  { label: 'Februari', key: 'Februari' },
+  { label: 'Maret', key: 'Maret' },
+  { label: 'April', key: 'April' },
+  { label: 'Mei', key: 'Mei' },
+  { label: 'Juni', key: 'Juni' },
+  { label: 'Juli', key: 'Juli' },
+  { label: 'Agustus', key: 'Agustus' },
+  { label: 'September', key: 'September' },
+  { label: 'Oktober', key: 'Oktober' },
+  { label: 'November', key: 'November' },
+  { label: 'Desember', key: 'Desember' }
+]
+
+// Fungsi untuk memilih anak dan bulan
+const selectChild = (key: string) => {
+  selectedChild.value = key
+}
+
+const selectMonth = (key: string) => {
+  selectedMonth.value = key
+}
+
+// Data yang diambil dari API
+const childData = ref<RowData[]>([]) // Untuk menyimpan data anak
+const { data: childrenData, error } = useReadChild()
+
+// cara menampilkan data string
+const childrenOptions = computed(() => {
+  const options =
+    childrenData.value?.data?.map((item) => {
+      return { label: item.name, value: item.name }
+    }) || []
+
+  // Sisipkan opsi placeholder di awal daftar
+  return [{ label: 'Pilih Anak', value: null }, ...options]
+})
+
+const childrenFilter = ref<string>('')
+
+const selectChildren = (value: string) => {
+  childrenFilter.value = value
+}
+
+onMounted(() => {
+  if (childrenData.value) {
+    childData.value = childrenData.value.map((item: any) => ({
+      date: item.date,
+      high: `${item.high} cm`,
+      weight: `${item.weight} kg`,
+      head: `${item.head} cm`,
+      age: `${item.age} hari`,
+      bmi: `${item.bmi} ${item.bmi < 18.5 ? 'Stunting' : item.bmi < 25 ? 'Normal' : 'Obesitas'}`,
+      option: 'Posyandu'
+    }))
+  }
+  if (error.value) {
+    console.error('Error fetching child data:', error.value)
+  }
+})
+
+// Konfigurasi pagination
+const pagination = {
+  page: 1,
+  pageSize: 10,
+  itemCount: 0
+}
+
+const page = ref<number>(1)
+const handlePaginationChange = (newPagination: { page: number; pageSize: number }) => {
+  pagination.value = newPagination
+}
+
+// Kolom untuk NDataTable
+const columns = [
+  { title: 'Tanggal', key: 'date' },
+  { title: 'Tinggi Badan (cm)', key: 'height' },
+  { title: 'Berat Badan (kg)', key: 'weight' },
+  { title: 'Lingkar Kepala (cm)', key: 'headCircumference' },
+  { title: 'Usia', key: 'age' },
+  { title: 'BMI Anak', key: 'bmi' },
+  { title: 'Opsi Input', key: 'option' }
+]
+
+// Opsi untuk ApexCharts
+const options = {
+  chart: {
+    height: '100%',
+    maxWidth: '100%',
+    type: 'area',
+    toolbar: {
+      show: false
+    }
+  },
+  series: [
+    {
+      name: 'Pengguna Baru',
+      data: [6500, 6418, 6456, 6526, 6356, 6456],
+      color: '#1A56DB'
+    }
+  ],
+  xaxis: {
+    categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb']
   }
 }
+
+// Render chart setelah komponen dimount
+onMounted(() => {
+  // Logic untuk chart
+  const chartContainer = document.getElementById('area-chart')
+  if (chartContainer) {
+    const chart = new ApexCharts(chartContainer, options)
+    chart.render()
+  }
+
+  // Logic untuk checkupData dan childData
+  if (checkupData.value) {
+    console.log('Checkup Data:', checkupData.value)
+    // Lakukan pemrosesan atau penugasan checkupData sesuai kebutuhan
+  }
+
+  if (childData.value) {
+    console.log('Child Data:', childData.value)
+    // Lakukan pemrosesan atau penugasan childData sesuai kebutuhan
+  }
+
+  if (error.value) {
+    console.error('Error fetching child data:', error.value)
+  }
+})
+
+const showModal = ref(false)
 </script>
 
 <template>
@@ -142,29 +178,45 @@ export default {
     <div class="hidden md:flex justify-between items-center mb-6"></div>
 
     <div class="flex justify-between items-center mb-6">
-      <div>
-        <h1 class="text-2xl font-semibold">Dashboard</h1>
-        <p class="text-gray-600">Informasi tentang aktifitas anda</p>
+      <div class="flex items-center justify-between w-full">
+        <div class="flex items-center justify-between">
+          <!-- Bagian Kiri: Tulisan Dashboard -->
+          <div>
+            <h1 class="text-2xl font-semibold">Dashboard</h1>
+            <p class="text-gray-600">Informasi tentang aktifitas anda</p>
+          </div>
+
+          <!-- Bagian Kanan: Dropdown dengan latar belakang merah -->
+        </div>
+        <div class="w-1/6 p-4 rounded-lg">
+          <n-select
+            @update:value="selectChildren"
+            :options="childrenOptions"
+            placeholder="Pilih Anak"
+            :value="childrenFilter"
+          />
+        </div>
       </div>
 
       <!-- Dropdown Anak -->
-      <n-dropdown :options="childOptions" trigger="click" @select="selectChild">
+
+      <!-- <n-dropdown :options="childrenOptions" trigger="click" @select="selectChild">
         <n-button class="bg-pink-500 text-white">
-          {{ selectedChild }}
           <n-icon class="ml-2">
             <i class="fas fa-chevron-down"></i>
           </n-icon>
         </n-button>
-      </n-dropdown>
+      </n-dropdown> -->
     </div>
     <!-- div BIM -->
     <div class="bg-white p-2 rounded-lg mb-6">
       <div class="flex justify-between">
-        <h2 class="text-lg font-semibold mb-2">Grafik BMI Putri</h2>
+        <h2 class="text-lg font-semibold mb-2">Grafik BMI {{ childrenFilter }}</h2>
 
         <!-- Dropdown Bulan -->
         <div class="relative inline-block text-left mb-2">
           <!-- Dropdown Bulan -->
+
           <n-dropdown :options="monthOptions" trigger="click" @select="selectMonth">
             <n-button class="bg-pink-500 text-white">
               {{ selectedMonth }}
@@ -308,10 +360,14 @@ export default {
     </div>
     <div class="md:flex justify-between">
       <div>
+        
         <h2 class="text-lg font-semibold mb-4">Riwayat Perkembangan</h2>
       </div>
       <div class="flex justify-start md:justify-end mb-6">
-        <n-button type="primary">Tambah Pertumbuhan Mandiri</n-button>
+        <n-button @click="showModal = true" type="primary">Tambah Pertumbuhan Mandiri</n-button>
+        <n-modal v-model:show="showModal">
+          <modal-input-user-modal-tambah-pemeriksaanbayi />
+        </n-modal>
       </div>
     </div>
 
@@ -321,16 +377,13 @@ export default {
         <n-data-table
           pagination-behavior-on-filter="first"
           :columns="columns"
-          :data="data"
+          :data="itemsCheckup"
           :pagination="pagination"
-          class="min-w-full text-sm lg:text-base"
-          :page="page"
-        >
-          <!-- Slot untuk kolom action -->
-          <template #action="{ row }">
-            <n-button @click="handleEdit(row)" type="primary"> Edit </n-button>
-          </template>
-        </n-data-table>
+          :loading="isLoading"
+          @refetch="refetch"
+          @update:pagination="handlePaginationChange"
+        />
+        <!-- Slot untuk kolom action -->
       </div>
 
       <!-- Card Layout untuk tampilan Mobile -->

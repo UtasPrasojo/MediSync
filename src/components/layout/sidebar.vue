@@ -55,11 +55,11 @@ const toggleDropdown = () => {
           <ul v-if="dropdownOpen" class="ml-6 mt-2 space-y-2">
             <li>
               <router-link to="/user/checkup-child" class="flex items-center justify-center ml-10 my-3 text-gray-900 dark:text-black hover:text-pink-600">
-                Perkembangan Anak
+                Kesehatan Anak
               </router-link>
             </li>
             <li>
-              <router-link to="/user/health-mom" class="flex items-center justify-center mt-4 my-3 text-gray-900 dark:text-black hover:text-pink-600">
+              <router-link to="/user/health-mom" class="flex items-center justify-center mt-4 ml-7 my-3 text-gray-900 dark:text-black hover:text-pink-600">
                 Kesehatan Ibu
               </router-link>
             </li>

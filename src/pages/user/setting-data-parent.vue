@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useMessage, type FormInst, type FormRules } from 'naive-ui'
-import { useUserParentAddData } from '@/services/parents'
+import { useUserParentAddData, useReadParent } from '@/services/parents'
+import { useAuthProfile } from '@/services/auth'
 import { DateTime } from 'luxon'
+
 
 const showIbu = ref(false)
 const showAyah = ref(false)
@@ -12,19 +14,23 @@ const userEmail = ref('email@example.com')
 const userPhone = ref('081234567890')
 const userAddress = ref('Jl. Contoh Alamat, Indonesia')
 
-const { mutate, isPending } = useUserParentAddData()
+const { mutate, isPending,  } = useUserParentAddData()
+const { data } = useAuthProfile()
+const {data: parents} = useReadParent()
 
 type FormData = {
   name?: string
   identityNumber?: string
-  dateOfBirth?: number
+  dateOfBirth?: string
   placeOfBirth?: string
   address?: string
   subDistrict?: string
   district?: string
   regency?: string
-  type?: 'Father' | 'Mother'
+  type?: 'FATHER' | 'MOTHER'
 }
+
+
 
 // Data form yang akan digunakan
 const formDataFather = ref<FormData>({
@@ -36,7 +42,7 @@ const formDataFather = ref<FormData>({
   subDistrict: undefined,
   district: undefined,
   regency: undefined,
-  type: 'Father'
+  type: 'FATHER'
 })
 
 const formDataMother = ref<FormData>({
@@ -48,22 +54,55 @@ const formDataMother = ref<FormData>({
   subDistrict: undefined,
   district: undefined,
   regency: undefined,
-  type: 'Mother'
+  type: 'MOTHER'
+})
+
+watchEffect(() => {
+  const father = parents.value?.data.find(parent => parent.type === 'FATHER')
+  const mother = parents.value?.data.find(parent => parent.type === 'MOTHER')
+
+  console.log(father)
+  if(father) {
+    formDataFather.value.name = father?.name
+    formDataFather.value.identityNumber = father?.identityNumber
+    formDataFather.value.dateOfBirth = father?.dateOfBirth
+    formDataFather.value.placeOfBirth = father?.placeOfBirth
+    formDataFather.value.address = father?.address
+    formDataFather.value.subDistrict = father?.subDistrict
+    formDataFather.value.district = father?.district
+    formDataFather.value.regency = father?.regency
+  }
+  if(mother) {
+    formDataMother.value.name = mother?.name
+    formDataMother.value.identityNumber = mother?.identityNumber
+    formDataMother.value.dateOfBirth = mother?.dateOfBirth
+    formDataMother.value.placeOfBirth = mother?.placeOfBirth
+    formDataMother.value.address = mother?.address
+    formDataMother.value.subDistrict = mother?.subDistrict
+    formDataMother.value.district = mother?.district
+    formDataMother.value.regency = mother?.regency
+  }
 })
 
 const rules: FormRules = {
   name: [{ type: 'string', required: true, message: 'Nama lengkap wajib diisi' }],
-  identityNumber: [{ type: 'number', required: true, message: 'NIK wajib diisi' }],
+  identityNumber: [{ type: 'string', required: true, message: 'NIK wajib diisi' }],
   placeOfBirth: [{ type: 'string', required: true, message: 'Tempat Lahir wajib diisi' }],
-  dateOfBirth: [{ type: 'number', required: true, message: 'Tanggal Lahir wajib diisi' }],
+  dateOfBirth: [{ type: 'string', required: true, message: 'Tanggal Lahir wajib diisi' }],  // Tanggal lahir biasanya string
   address: [{ type: 'string', required: true, message: 'Alamat wajib diisi' }],
   subDistrict: [{ type: 'string', required: true, message: 'Kecamatan wajib diisi' }],
   district: [{ type: 'string', required: true, message: 'Kabupaten wajib diisi' }],
-  regency: [{ type: 'string', required: true, message: 'Kelurahan wajib diisi' }]
+  regency: [{ type: 'string', required: true, message: 'Kelurahan wajib diisi' }],
+  type: [{ type: 'enum', required: true, enum: ['FATHER', 'MOTHER'], message: 'Tipe wajib diisi' }]
 }
 
+
+
+
+
 // Referensi untuk form
-const formRef = ref<FormInst>()
+const formRefMother = ref<FormInst>()
+const formRefFather = ref<FormInst>()
 const message = useMessage()
 
 function toggleDropdown(profile: string) {
@@ -75,7 +114,7 @@ function toggleDropdown(profile: string) {
 }
 
 const handleSubmitFather = () => {
-  formRef.value?.validate((errors) => {
+  formRefFather.value?.validate((errors) => {
     if (!errors) {
       mutate({
         ...formDataFather.value,
@@ -89,7 +128,7 @@ const handleSubmitFather = () => {
 }
 
 const handleSubmitMother = () => {
-  formRef.value?.validate((errors) => {
+  formRefMother.value?.validate((errors) => {
     if (!errors) {
       mutate({
         ...formDataMother.value,
@@ -110,17 +149,17 @@ const disabled2 = ref(false)
 // Perbaikan tipe array untuk options
 const options = [
   {
-    label: "Everybody's Got Something to Hide Except Me and My Monkey",
-    value: 'song0',
-    disabled: true
+    label: "Sleman",
+    value: 'Sleman',
+    
   },
   {
-    label: 'Drive My Car',
-    value: 'song1'
+    label: 'Bantul',
+    value: 'Bantul'
   },
   {
-    label: 'Norwegian Wood',
-    value: 'song2'
+    label: 'Gunung Kidul',
+    value: 'Gunung Kidul'
   }
 ]
 
@@ -410,30 +449,24 @@ const timestamp = ref(1183135260000)
             </div>
             <div class="flex flex-col items-center mt-4">
               <div>
-                <img
-                  alt="User profile picture"
-                  class="w-24 h-24 rounded-full"
-                  :src="profileImage"
-                  width="100"
-                  height="100"
-                />
-                <h3 class="mt-4 text-xl font-semibold">{{ userName }}</h3>
-                <p class="text-gray-500">{{ userEmail }}</p>
+                <ui-avatar :seed="data?.fullName" class="w-20 h-20" />
+                <h3 class="mt-4 text-xl font-semibold">{{ data?.fullName }}</h3>
+                <p class="text-gray-500">{{ data?.email }}</p>
               </div>
 
               <hr class="w-full mt-2 border-t border-gray-200" />
               <div class="mt-4 space-y-2 text-gray-500">
                 <div class="flex items-center space-x-2">
                   <i-ic:round-phone></i-ic:round-phone>
-                  <span>{{ userPhone }}</span>
+                  <span>{{ data?.phone }}</span>
                 </div>
                 <div class="flex items-center space-x-2">
                   <i-prime:address-book></i-prime:address-book>
-                  <span>{{ userAddress }}</span>
+                  <span>{{ data?.identityNumber }}</span>
                 </div>
                 <div class="flex items-center space-x-2">
                   <i-mdi:address-marker></i-mdi:address-marker>
-                  <span>{{ userAddress }}</span>
+                  <span>{{ data?.address }}</span>
                 </div>
               </div>
 
@@ -470,9 +503,10 @@ const timestamp = ref(1183135260000)
               <div v-if="showIbu" class="bg-gray-50 p-4 rounded-lg">
                 <n-form
                   @submit.prevent="handleSubmitMother"
-                  ref="formRef"
+                  ref="formRefMother"
                   :model="formDataMother"
                   :rules="rules"
+                  
                 >
                   <div>
                     <h3 class="font-bold text-lg mb-2">Form Data Akun Ibu</h3>
@@ -562,7 +596,7 @@ const timestamp = ref(1183135260000)
               <div v-if="showAyah" class="bg-gray-50 p-4 rounded-lg">
                 <n-form
                   @submit.prevent="handleSubmitFather"
-                  ref="formRef"
+                  ref="formRefFather"
                   :model="formDataFather"
                   :rules="rules"
                 >
@@ -573,30 +607,29 @@ const timestamp = ref(1183135260000)
                     </n-checkbox>
                   </div>
                   <div class="mb-4">
-                    <n-form-item label="Nama Ibu" path="namaibu">
-                      <n-input class="w-full p-2 border rounded" type="text" />
+                    <n-form-item label="Nama Ayah" path="namaayah">
+                      <n-input class="w-full p-2 border rounded" type="text" v-model:value="formDataFather.name"  />
                     </n-form-item>
                   </div>
                   <div class="mb-4">
                     <n-form-item label="NIK" path="nik">
-                      <n-input class="w-full p-2 border rounded" type="text" />
+                      <n-input class="w-full p-2 border rounded" type="text" v-model:value="formDataFather.identityNumber"/>
                     </n-form-item>
                   </div>
-
                   <!-- Flex container for Tempat Lahir and Tanggal Lahir -->
                   <div class="mb-4 flex space-x-4">
                     <!-- Tempat Lahir -->
                     <div class="w-1/2">
                       <n-form-item label="Tempat Lahir" path="tempatlahir">
-                        <n-input class="w-full p-2 border rounded" type="text" />
+                        <n-input class="w-full p-2 border rounded" type="text" v-model:value="formDataFather.placeOfBirth" />
                       </n-form-item>
                     </div>
 
                     <!-- Tanggal Lahir -->
                     <div class="w-1/2">
-                      >
+                      
                       <n-form-item label="Tanggal Lahir" path="tanggallahir">
-                        <n-date-picker v-model:value="timestamp" type="date" />
+                        <n-date-picker v-model:value="formDataFather.dateOfBirth" type="date" />
                       </n-form-item>
                     </div>
                   </div>
@@ -609,7 +642,7 @@ const timestamp = ref(1183135260000)
 
                     <div class="w-1/2">
                       <n-form-item path="kabupaten" label="Kabupaten">
-                        <n-select v-model:value="value" :options="options" />
+                        <n-select v-model:value="formDataFather.district" :options="options" />
                       </n-form-item>
                     </div>
                   </div>
@@ -617,23 +650,23 @@ const timestamp = ref(1183135260000)
                     <!-- Kelurahan -->
                     <div class="w-1/2">
                       <n-form-item path="kelurahan" label="Kelurahan">
-                        <n-select v-model:value="value" :options="options" />
+                        <n-select v-model:value="formDataFather.subDistrict" :options="options" />
                       </n-form-item>
                     </div>
 
                     <!-- Kecamatan -->
                     <div class="w-1/2">
                       <n-form-item path="kecamatan" label="Kecamatan">
-                        <n-select v-model:value="value" :options="options" />
+                        <n-select v-model:value="formDataFather.regency" :options="options" />
                       </n-form-item>
                     </div>
                   </div>
                   <div class="mb-4">
                     <n-form-item path="alamat" label="Alamat">
-                      <n-input ctype="textarea" />
+                      <n-input type="textarea" v-model:value="formDataFather.address" />
                     </n-form-item>
                   </div>
-                  <ui-button color="primary" variant="fill">Simpan</ui-button>
+                  <n-button type="primary" :loading="isPending" attr-type="submit">Simpan</n-button>
 
                   <!-- Form fields lainnya -->
                 </n-form>
