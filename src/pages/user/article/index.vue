@@ -22,7 +22,7 @@ const params = ref<{ page: number }>({
 const search = ref<string>('')
 
 // Fetch articles using the composable and type the data
-const { data: articles } = useReadArticle(params) as { data: PaginatedResponse<Article> | null }
+const { data: articles } = useReadArticle(params)
 
 // Method to search articles
 const searchArticles = () => {

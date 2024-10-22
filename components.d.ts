@@ -7,12 +7,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ComponenUserCompDetailPosyandu: typeof import('./src/components/componen-user/comp-detail-posyandu.vue')['default']
+    ComponenUserDetailPosyandu: typeof import('./src/components/componen-user/comp-detail-posyandu.vue')['default']
     ComponenUserEditProfilAnak: typeof import('./src/components/componen-user/edit-profil-anak.vue')['default']
     ComponenUserEditProfilChild: typeof import('./src/components/componen-user/edit-profil-child.vue')['default']
     IFeArrowLeft: typeof import('~icons/fe/arrow-left')['default']
     'IIc:baselineHome': typeof import('~icons/ic/baseline-home')['default']
     'IIc:outlineMessage': typeof import('~icons/ic/outline-message')['default']
     'IIc:roundPhone': typeof import('~icons/ic/round-phone')['default']
+    'IIon:arrowUpRightBoxOutline': typeof import('~icons/ion/arrow-up-right-box-outline')['default']
     'ILucide:fileChartLine': typeof import('~icons/lucide/file-chart-line')['default']
     'IMage:dots': typeof import('~icons/mage/dots')['default']
     'IMaterialSymbols:articleOutline': typeof import('~icons/material-symbols/article-outline')['default']
@@ -25,6 +28,7 @@ declare module 'vue' {
     LayoutSidebar: typeof import('./src/components/layout/sidebar.vue')['default']
     LayoutSidebarmobile: typeof import('./src/components/layout/sidebarmobile.vue')['default']
     LayoutSiderbarAdmin: typeof import('./src/components/layout/siderbarAdmin.vue')['default']
+    ModalInputUserDetailPosyandu: typeof import('./src/components/modal/input-user/detail-posyandu.vue')['default']
     ModalInputUserEditDataChild: typeof import('./src/components/modal/input-user/edit-data-child.vue')['default']
     ModalInputUserInputDataChild: typeof import('./src/components/modal/input-user/input-data-child.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
@@ -39,6 +43,8 @@ declare module 'vue' {
     NImage: typeof import('naive-ui')['NImage']
     NInput: typeof import('naive-ui')['NInput']
     NInputNumber: typeof import('naive-ui')['NInputNumber']
+    NList: typeof import('naive-ui')['NList']
+    NListItem: typeof import('naive-ui')['NListItem']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NModal: typeof import('naive-ui')['NModal']
     NPagination: typeof import('naive-ui')['NPagination']
