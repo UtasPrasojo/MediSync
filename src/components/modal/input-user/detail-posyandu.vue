@@ -10,12 +10,13 @@ const props = defineProps<{
 const { data: scheduleDetail } = useReadScheduleById(computed(() => props.id))
 
 const formattedDate = computed(() => {
-  return DateTime.fromISO(scheduleDetail.value?.open).toFormat('dd LLL yyyy')
+  return DateTime.fromISO(scheduleDetail.value?.date).toFormat('dd LLL yyyy')
 });
 
 const formattedTime = computed(() => {
-  return DateTime.fromISO(scheduleDetail.value?.open).toFormat('HH:mm')
-});
+  const openTime = DateTime.fromISO(scheduleDetail.value?.open).toFormat('HH:mm');
+  const closeTime = DateTime.fromISO(scheduleDetail.value?.close).toFormat('HH:mm');
+  return `${openTime} - ${closeTime}`;});
 </script>
 
 <template>
