@@ -1,4 +1,4 @@
-export const API = { 
+export const API = {
     AUTH_USER_SIGNIN: '/v1/auth/user/sign-in',
     AUTH_USER_SIGNUP:'/v1/auth/user/sign-up',
     AUTH_USER_REGISTRATION:'/v1/auth/user/account-registration',
@@ -16,10 +16,4 @@ export const API = {
     USER_GET_PARENT_ID:"/v1/parents/{id}",
     USER_DELETE_PARENT_ID:"/v1/parents/{id}",
     USER_PUT_PARENT_ID:"/v1/parents/{id}",
-    USER_POST_CHECKUP_CHILDREN:"/v1/user/checkup-child",
-    USER_GET_CHECKUP_CHILDREN:"/v1/user/checkup-child",
-    USER_POST_CHECKUP_PARENTS:"/v1/user/checkupmother",
-    USER_GET_CHECKUP_PARENTS:"/v1/user/checkupmother",
-    USER_POST_REPORT_STUNTING:"/v1/user/report",
-    USER_GET_REPORT_STUNTING:"/v1/user/report",
  }
