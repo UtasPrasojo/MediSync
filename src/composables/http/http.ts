@@ -80,7 +80,7 @@ export function useHttp<TData = any, TError = any>(
   if (options?.queryOptions) {
     Object.assign(defaultOptions, options.queryOptions)
   }
-  return useQuery(defaultOptions)
+  return useQuery<TData, TError>(defaultOptions)
 }
 
 type HttpMutationOptions<TData = any, TError = any, TVariables = any, TContext = any> = {

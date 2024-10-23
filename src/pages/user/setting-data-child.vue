@@ -9,6 +9,7 @@ import { useReadChild } from '@/services/child'
 const selectedChild = ref<Child | null>(null)
 
 const showModal = ref(false)
+const TambahAnak = ref(false)
 
 const selectChild = (child: Child) => {
   selectedChild.value = child // Simpan data anak yang dipilih
@@ -169,9 +170,10 @@ function calculateAge(birthDate: string): number {
     <div class="hidden md:block bg-white p-6 rounded-md shadow-md">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-lg font-semibold">Data Anak</h2>
-        <n-button class="px-4 py-2 bg-pink-500 text-white rounded-md flex items-center">
+        <n-button class="px-4 py-2 bg-pink-500 text-white rounded-md flex items-center" @click="TambahAnak= true">
           Tambah Profil Anak
         </n-button>
+        <n-modal v-model:show="TambahAnak"><modal-input-user-modal-input-data-child/></n-modal>
       </div>
       <div>
         <n-data-table

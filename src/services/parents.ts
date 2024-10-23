@@ -8,13 +8,44 @@ const { message } = createDiscreteApi(
     ['message'],
   )
 
+
+  
+  export interface Data {
+    data: Daum[]
+    meta: Meta
+  }
+  
+  export interface Daum {
+    id: string
+    name: string
+    type: string
+    identityNumber: string
+    dateOfBirth: string
+    placeOfBirth: string
+    address: string
+    subDistrict: string
+    district: string
+    regency: string
+    deletedAt: any
+    createdAt: string
+    updatedAt: string
+  }
+  
+  export interface Meta {
+    limit: number
+    page: number
+    totalData: number
+    totalPage: number
+  }
+  
+
   export const useUserParentAddData =() => {
     const router = useRouter()
     return useHttpMutation(API.USER_POST_PARENT, {
       method: 'POST',
       queryOptions: {
         onSuccess: () => {
-          message.success('Registrasi anak berhasil')
+          message.success('Registrasi Orang Tua berhasil')
           router.push('/user/setting-account')
         },
         onError: (error) => {
@@ -25,7 +56,7 @@ const { message } = createDiscreteApi(
     })
   }
 
-  export const useReadParent =() => useHttp(API.USER_GET_PARENT, {
+  export const useReadParent =() => useHttp<Data>(API.USER_GET_PARENT, {
 
   })
 

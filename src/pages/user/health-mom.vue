@@ -1,23 +1,233 @@
+<script setup lang="ts">
+import { ref, onMounted,computed } from 'vue'
+import ApexCharts from 'apexcharts'
+import { useReadParentsCheckup } from '@/services/checkup-parents'
+
+// Definisikan tipe untuk data baris
+
+interface checkup {
+  id: string
+  date: string
+  height: number
+  weight: number
+  fundusMeasurement:number
+  upperArmCircumference: number
+  bmi: string
+  option: string
+}
+
+
+const { data: checkupData, isLoading, refetch } = useReadParentsCheckup()
+const isMonthDropdownOpen = ref(false)
+const selectedMonth = ref('Pilih Bulan')
+const showModal = ref(false)
+
+const itemsCheckup = computed(() => {
+  return checkupData.value?.data.map((checkup: checkup) => {
+    return {
+      id: checkup.id,
+      date: checkup.date,
+      height: checkup.height,
+      weight: checkup.weight,
+      upperArmCircumference: checkup.upperArmCircumference,
+      
+    }
+  })
+})
+
+
+// Fungsi untuk mengubah status dropdown bulan
+const toggleMonthDropdown = () => {
+  isMonthDropdownOpen.value = !isMonthDropdownOpen.value
+}
+
+// Fungsi untuk memilih anak
+
+
+// Fungsi untuk memilih bulan
+const selectMonth = (month: string) => {
+  selectedMonth.value = month
+  isMonthDropdownOpen.value = false // Menutup dropdown setelah pemilihan
+}
+
+// Definisikan pagination dan data
+const pagination = {
+  page: 1,
+  pageSize: 10,
+  itemCount: 0
+}
+const page = ref(1)
+
+const data = [
+  {
+    date: 'Juli, 23 2023',
+    high: '45 cm',
+    weight: '12 kg',
+    urteri: '24 cm',
+    lengan: '20 hari',
+    bmi: '21 Normal',
+    option: 'Posyandu'
+  },
+  {
+    date: 'Agustus, 15 2023',
+    high: '46 cm',
+    weight: '13 kg',
+    urteri: '25 cm',
+    lengan: '30 hari',
+    bmi: '22 Normal',
+    option: 'Posyandu'
+  },
+  {
+    date: 'September, 10 2023',
+    high: '48 cm',
+    weight: '14 kg',
+    urteri: '26 cm',
+    lengan: '40 hari',
+    bmi: '23 Normal',
+    option: 'Posyandu'
+  }
+  // Tambahkan lebih banyak baris jika diperlukan
+]
+
+const columns = [
+  {
+    title: 'Tanggal',
+    key: 'date'
+  },
+  {
+    title: 'Tinggi Badan',
+    key: 'height'
+  },
+  {
+    title: 'Berat Badan',
+    key: 'weight'
+  },
+  {
+    title: 'Fundus Uteri',
+    key: 'upperArmCircumference'
+  },
+  {
+    title: 'Lingkar Lengan',
+    key: 'lengan'
+  },
+  {
+    title: 'BMI Ibu',
+    key: 'weight'
+  },
+  {
+    title: 'Opsi Input',
+    key: 'option'
+  },
+  {
+    title: ' ',
+    key: 'action'
+  }
+]
+
+const monthOptions = [
+  { label: 'Januari', key: 'Januari' },
+  { label: 'Februari', key: 'Februari' },
+  { label: 'Maret', key: 'Maret' },
+  { label: 'April', key: 'April' },
+  { label: 'Mei', key: 'Mei' },
+  { label: 'Juni', key: 'Juni' },
+  { label: 'Juli', key: 'Juli' },
+  { label: 'Agustus', key: 'Agustus' },
+  { label: 'September', key: 'September' },
+  { label: 'Oktober', key: 'Oktober' },
+  { label: 'November', key: 'November' },
+  { label: 'Desember', key: 'Desember' }
+]
+
+const options = {
+  chart: {
+    height: '100%',
+    maxWidth: '100%',
+    type: 'area',
+    fontFamily: 'Inter, sans-serif',
+    dropShadow: {
+      enabled: false
+    },
+    toolbar: {
+      show: false
+    }
+  },
+  tooltip: {
+    enabled: true,
+    x: {
+      show: false
+    }
+  },
+  fill: {
+    type: 'gradient',
+    gradient: {
+      opacityFrom: 0.55,
+      opacityTo: 0,
+      shade: '#1C64F2',
+      gradientToColors: ['#1C64F2']
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    width: 6
+  },
+  grid: {
+    show: false,
+    strokeDashArray: 4,
+    padding: {
+      left: 2,
+      right: 2,
+      top: 0
+    }
+  },
+  series: [
+    {
+      name: 'New users',
+      data: [6500, 6418, 6456, 6526, 6356, 6456],
+      color: '#1A56DB'
+    }
+  ],
+  xaxis: {
+    categories: [
+      '01 February',
+      '02 February',
+      '03 February',
+      '04 February',
+      '05 February',
+      '06 February',
+      '07 February'
+    ],
+    labels: {
+      show: false
+    },
+    axisBorder: {
+      show: false
+    },
+    axisTicks: {
+      show: false
+    }
+  },
+  yaxis: {
+    show: false
+  }
+}
+
+// Logika render chart di dalam onMounted
+onMounted(() => {
+  const chartContainer = document.getElementById('area-chart')
+  if (chartContainer && typeof ApexCharts !== 'undefined') {
+    const chart = new ApexCharts(chartContainer, options)
+    chart.render()
+  }
+})
+
+// Ekspos variabel dan fungsi
+</script>
+
 <template>
   <div class="bg-white p-6 rounded-lg shadow overflow-auto p-6">
-    <div class="hidden md:flex justify-between items-center mb-6">
-      <div class="flex items-center space-x-2 text-gray-600">
-        <i class="fas fa-home"></i>
-        <span>Dashboard</span>
-        <i class="fas fa-chevron-right"></i>
-        <span>Kesehatan Anak</span>
-      </div>
-      <div class="flex items-center space-x-4">
-        <img
-          class="rounded-full"
-          width="40"
-          height="40"
-          src="https://storage.googleapis.com/a1aa/image/C2jfwt8kRwSWCK9YWQt3bHFWCuCch2VBzspxx6mSoIXhBeiTA.jpg"
-          alt="User profile picture"
-        />
-      </div>
-    </div>
-
     <div class="flex justify-between items-center mb-6">
       <div>
         <h1 class="text-2xl font-semibold">Dashboard</h1>
@@ -33,23 +243,22 @@
 
         <!-- Dropdown Bulan -->
         <div class="relative inline-block text-left">
-
           <!-- Dropdown Menu Bulan -->
           <div class="relative inline-block text-left mb-2">
-          <!-- Dropdown Bulan -->
-          <n-dropdown :options="monthOptions" trigger="click" @select="selectMonth">
-            <n-button class="bg-pink-500 text-white">
-              {{ selectedMonth }}
-              <n-icon class="ml-2">
-                <i class="fas fa-chevron-down"></i>
-              </n-icon>
-            </n-button>
-          </n-dropdown>
-        </div>
+            <!-- Dropdown Bulan -->
+            <n-dropdown :options="monthOptions" trigger="click" @select="selectMonth">
+              <n-button class="bg-pink-500 text-white">
+                {{ selectedMonth }}
+                <n-icon class="ml-2">
+                  <i class="fas fa-chevron-down"></i>
+                </n-icon>
+              </n-button>
+            </n-dropdown>
+          </div>
         </div>
       </div>
 
-      <div class="h-full w-full bg-white rounded-lg  dark:bg-white p-4">
+      <div class="h-full w-full bg-white rounded-lg dark:bg-white p-4">
         <div class="flex justify-between">
           <div>
             <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
@@ -179,21 +388,22 @@
         </div>
       </div>
     </div>
-    <div class="rounded-lg  mb-6">
+    <div class="rounded-lg mb-6">
       <div class="flex justify-between mb-6">
         <h2 class="text-lg font-semibold">Riwayat Perkembangan</h2>
-        <n-button type="primary">Input Mandiri</n-button>
+        <n-button type="primary" @click="showModal = true">Input Mandiri</n-button>
+        <n-modal v-model:show="showModal"><modal-input-user-modal-tambah-pemeriksaanibu /></n-modal>
       </div>
       <div class="hidden md:block">
         <n-data-table
           pagination-behavior-on-filter="first"
           :columns="columns"
-          :data="data"
+          :data="itemsCheckup"
           :pagination="pagination"
         />
       </div>
-       <!-- Card Layout untuk tampilan Mobile -->
-       <div class="block md:hidden space-y-4">
+      <!-- Card Layout untuk tampilan Mobile -->
+      <div class="block md:hidden space-y-4">
         <div v-for="(row, index) in data" :key="index" class="bg-white p-4 rounded-lg shadow-md">
           <!-- Flex container untuk Tanggal dan BMI Anak dengan garis bawah -->
           <div class="flex justify-between items-center mb-2 pb-2 border-b border-gray-300">
@@ -239,234 +449,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { ref, onMounted } from 'vue'
-import ApexCharts from 'apexcharts'
-
-interface RowData {
-  key: number
-  name: string
-  age: number
-  address: string
-}
-
-export default {
-  setup() {
-    const selectedChild = ref('Pilih Anak')
-    const isChildDropdownOpen = ref(false)
-    const isMonthDropdownOpen = ref(false)
-    const selectedMonth = ref('Pilih Bulan')
-
-    const toggleChildDropdown = () => {
-      isChildDropdownOpen.value = !isChildDropdownOpen.value
-    }
-
-    const toggleMonthDropdown = () => {
-      isMonthDropdownOpen.value = !isMonthDropdownOpen.value
-    }
-
-    const selectChild = (child: string) => {
-      selectedChild.value = child
-      isChildDropdownOpen.value = false // Close dropdown after selection
-    }
-
-    const selectMonth = (month: string) => {
-      selectedMonth.value = month
-      isMonthDropdownOpen.value = false // Close dropdown after selection
-    }
-
-    // Define pagination and data
-    const pagination = {
-      page: 1,
-      pageSize: 10,
-      itemCount: 0
-    }
-    const page = ref(1)
-
-    const data = [
-      {
-        date: 'Juli, 23 2023',
-        high: '45 cm',
-        weight: '12 kg',
-        urteri: '24 cm',
-        lengan: '20 hari',
-        bmi: '21 Normal',
-        option: 'Posyandu'
-      },
-      {
-        date: 'Agustus, 15 2023',
-        high: '46 cm',
-        weight: '13 kg',
-        urteri: '25 cm',
-        lengan: '30 hari',
-        bmi: '22 Normal',
-        option: 'Posyandu'
-      },
-      {
-        date: 'September, 10 2023',
-        high: '48 cm',
-        weight: '14 kg',
-        urteri: '26 cm',
-        lengan: '40 hari',
-        bmi: '23 Normal',
-        option: 'Posyandu'
-      }
-      // Tambahkan lebih banyak baris jika diperlukan
-    ]
-
-    const columns = [
-      {
-        title: 'Tanggal',
-        key: 'date'
-      },
-      {
-        title: 'Tinggi Badan',
-        key: 'high'
-      },
-      {
-        title: 'Berat Badan',
-        key: 'weight'
-      },
-      {
-        title: 'fundus urteri',
-        key: 'urteri'
-      },
-      {
-        title: 'Lingkar Lengan',
-        key: 'lengan'
-      },
-      {
-        title: 'BMI Ibu',
-        key: 'weight'
-      },
-      {
-        title: 'Opsi Input',
-        key: 'option'
-      },
-      {
-        title: ' ',
-        key: 'action'
-      }
-    ]
-
-    const monthOptions = [
-      { label: 'Januari', key: 'Januari' },
-      { label: 'Februari', key: 'Februari' },
-      { label: 'Maret', key: 'Maret' },
-      { label: 'April', key: 'April' },
-      { label: 'Mei', key: 'Mei' },
-      { label: 'Juni', key: 'Juni' },
-      { label: 'Juli', key: 'Juli' },
-      { label: 'Agustus', key: 'Agustus' },
-      { label: 'September', key: 'September' },
-      { label: 'Oktober', key: 'Oktober' },
-      { label: 'November', key: 'November' },
-      { label: 'Desember', key: 'Desember' }
-    ]
-
-    const options = {
-      chart: {
-        height: '100%',
-        maxWidth: '100%',
-        type: 'area',
-        fontFamily: 'Inter, sans-serif',
-        dropShadow: {
-          enabled: false
-        },
-        toolbar: {
-          show: false
-        }
-      },
-      tooltip: {
-        enabled: true,
-        x: {
-          show: false
-        }
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          opacityFrom: 0.55,
-          opacityTo: 0,
-          shade: '#1C64F2',
-          gradientToColors: ['#1C64F2']
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: 6
-      },
-      grid: {
-        show: false,
-        strokeDashArray: 4,
-        padding: {
-          left: 2,
-          right: 2,
-          top: 0
-        }
-      },
-      series: [
-        {
-          name: 'New users',
-          data: [6500, 6418, 6456, 6526, 6356, 6456],
-          color: '#1A56DB'
-        }
-      ],
-      xaxis: {
-        categories: [
-          '01 February',
-          '02 February',
-          '03 February',
-          '04 February',
-          '05 February',
-          '06 February',
-          '07 February'
-        ],
-        labels: {
-          show: false
-        },
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        }
-      },
-      yaxis: {
-        show: false
-      }
-    }
-
-    // Chart rendering logic inside onMounted
-    onMounted(() => {
-      const chartContainer = document.getElementById('area-chart')
-      if (chartContainer && typeof ApexCharts !== 'undefined') {
-        const chart = new ApexCharts(chartContainer, options)
-        chart.render()
-      }
-    })
-
-    return {
-      selectedChild,
-      isChildDropdownOpen,
-      toggleChildDropdown,
-      selectChild,
-      selectedMonth,
-      isMonthDropdownOpen,
-      toggleMonthDropdown,
-      selectMonth,
-      monthOptions,
-      pagination,
-      data,
-      columns,
-      page,
-    }
-  }
-}
-</script>
 
 <style scoped>
 /* Your styles here */

@@ -38,9 +38,9 @@ import Keamanan from '../user/user-change-password.vue'
     <div class="flex justify-start">
       <div class="w-full mx-6">
         <n-tabs type="segment" animated>
-          <n-tab-pane name="Data Akun" tab="Data Akun"> <DataAkun /> </n-tab-pane>
-          <n-tab-pane name="Anak" tab="Anak"> <Anak /> </n-tab-pane>
-          <n-tab-pane name="Keamanan" tab="Keamanan"> <Keamanan /> </n-tab-pane>
+          <n-tab-pane name="Data Akun" tab="Data Akun"> <DataAkun/> </n-tab-pane>
+          <n-tab-pane name="Anak" tab="Anak"> <Anak/> </n-tab-pane>
+          <n-tab-pane name="Keamanan" tab="Keamanan"> <Keamanan/> </n-tab-pane>
         </n-tabs>
       </div>
     </div>
