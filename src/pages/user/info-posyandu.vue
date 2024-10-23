@@ -167,15 +167,13 @@ const columns = ref([
                 </div>
               </div>
               <div class="w-1/4 flex justify-center items-center">
-                <NButton class="ml-2 p-2 text-2xl">
-                  <i class="fas fa-ellipsis-h"></i>
-                </NButton>
+                <DetailPosyandu :id="row.id" />
               </div>
             </div>
           </div>
         </NListItem>
       </NList>
-      <NPagination v-model:page="params.page" :page-count="50" />
+      <NPagination v-model:page="params.page" :page-count="3" />
     </div>
   </div>
 </template>
