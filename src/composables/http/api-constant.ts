@@ -16,4 +16,8 @@ export const API = {
     USER_GET_PARENT_ID:"/v1/parents/{id}",
     USER_DELETE_PARENT_ID:"/v1/parents/{id}",
     USER_PUT_PARENT_ID:"/v1/parents/{id}",
+    USER_GET_ARTICLE:"/v1/article",
+    USER_GET_ARTICLE_ID:"/v1/article/{id}",
+    USER_GET_SCHEDULE:"/v1/schedule",
+    USER_GET_SCHEDULE_ID:"/v1/schedule/{id}"
  }
