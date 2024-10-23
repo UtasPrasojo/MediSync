@@ -1,18 +1,25 @@
-import type { AxiosError, AxiosRequestConfig } from 'axios'
 import {
-  type UseQueryOptions,
-  type UseMutationOptions,
-  useQuery,
   useMutation,
-
+  useQuery,
+  type UseMutationOptions,
+  type UseQueryOptions
 } from '@tanstack/vue-query'
+import type { AxiosError, AxiosRequestConfig } from 'axios'
 
 import axios from 'axios'
 import type { AxiosResponse } from 'node_modules/axios/index.cjs'
-
+import { unref, type Ref } from 'vue'
 
 export const http = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL
+})
+
+http.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token && config.headers) {
+    Object.assign(config.headers, { Authorization: `Bearer ${token}` })
+  }
+  return config
 })
 
 type ResponseData<TData = any> = {
@@ -48,7 +55,10 @@ type DefaultError = {
   * @param url URL API
   * @param options HTTP Mutation Options
   */
-export function useHttp<TData = any, TError = any>(url: string, options?: Config<TData, TError>) {
+export function useHttp<TData = any, TError = any>(
+  url: Ref<string>,
+  options?: Config<TData, TError>
+) {
   const defaultOptions = {
     queryKey: [url],
     queryFn: async () => {
@@ -58,7 +68,7 @@ export function useHttp<TData = any, TError = any>(url: string, options?: Config
         if (options?.params) {
           Object.assign(defaultConfig, { params: options.params })
         }
-        const { data } = await http.get<ResponseData>(url, defaultConfig)
+        const { data } = await http.get<ResponseData>(unref(url), defaultConfig)
         return data?.data ?? null
       } catch (e: any) {
         Promise.reject(e?.response ?? e)

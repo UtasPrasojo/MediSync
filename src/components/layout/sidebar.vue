@@ -1,210 +1,115 @@
 <script setup lang="ts">
-import { defineComponent } from 'vue'
+import { ref } from 'vue'
 
 // Tipe objek untuk setiap opsi
-interface Option {
-  label: string;
-  key: string;
-}
 
-const options: Option[] = [
-  {
-    label: 'Profile',
-    key: 'profile'
-  },
-  {
-    label: 'Edit Profile',
-    key: 'editProfile'
-  },
-  {
-    label: 'Logout',
-    key: 'logout'
-  }
-]
+
+
+const dropdownOpen = ref(false);
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value;
+};
+
 </script>
 
-
-
 <template>
+  
   <aside
-    class="hidden md:block sticky inset-y-0 top-0 left-0 w-64 h-screen bg-white border-r border-gray-200 dark:bg-white dark:border-gray-200"
+    class="hidden md:block  sticky inset-y-0 top-0 left-0 w-64 h-screen bg-white border-r border-gray-200 dark:bg-white dark:border-gray-200"
   >
     <div class="flex items-center justify-center my-6">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="44"
-        height="42"
-        viewBox="0 0 44 42"
-        fill="none"
-      >
-        <path
-          d="M21.365 1.15678C19.8719 0.0455612 17.9948 -0.284111 16.2122 0.250562L4.15408 3.86792C1.66998 4.61361 0 6.85631 0 9.45085V35.2231C0 37.0842 0.856134 38.7883 2.34917 39.8978C3.84247 41.0091 5.72156 41.3387 7.50212 40.8041L16.5036 38.103C16.2221 37.1746 16.0795 36.2058 16.0795 35.2231V23.5188C16.0795 21.0609 16.9758 18.7135 18.6076 16.9129C19.8053 15.5864 21.359 14.6078 23.0954 14.0853L23.7143 13.9085V5.83336C23.7143 3.97233 22.8582 2.26814 21.3649 1.15678H21.365Z"
-          fill="#E74694"
-        />
-        <path
-          d="M43.8114 19.9014V31.6057C43.8114 34.1984 42.1433 36.4431 39.6573 37.1867L27.5992 40.8042C27.0406 40.973 26.4718 41.0555 25.9091 41.0555C24.677 41.0555 23.4712 40.6616 22.4462 39.8979C21.9779 39.5482 21.572 39.1443 21.2384 38.6921C20.8325 38.1495 20.529 37.5446 20.3381 36.8954C20.336 36.8954 20.3341 36.8954 20.332 36.8973L20.336 36.8933C20.1814 36.3607 20.0969 35.8 20.0969 35.2232V23.5189C20.0969 22.317 20.4546 21.1897 21.0858 20.2531C21.7168 19.3165 22.6211 18.569 23.7144 18.1248C23.8893 18.0544 24.0682 17.99 24.2511 17.9359L25.7263 17.4938L36.3094 14.3184C38.0919 13.7838 39.9691 14.1134 41.4622 15.2248C42.9555 16.3361 43.8115 18.0403 43.8115 19.9014H43.8114Z"
-          fill="#E74694"
-        />
-      </svg>
+      <img src="/public/stunting.svg" alt="Logo" width="44" height="42" />
       <h3 class="ml-2 font-bold text-xl">Stunting</h3>
     </div>
 
-    <div class="h-1/3 flex flex-col py-5 px-3">
-      <div class="flex justify-center h-1/5">
-        <ul>
-          <li>
-            <router-link
-              to="/user/dashboard"
-              class="block p-2 text-gray-900 dark:text-black hover:text-white"
-            >
-              <div class="rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600">
-                <div class="flex item-center mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="25"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                    class="hover:text-white"
-                  >
-                    <path
-                      d="M20.747 11.419L18.9448 9.619L12.6371 3.31893C12.4681 3.1502 12.2389 3.05542 12 3.05542C11.7611 3.05542 11.5319 3.1502 11.3629 3.31893L5.05517 9.619L3.25295 11.419C3.08881 11.5888 2.99798 11.8161 3.00003 12.0521C3.00209 12.2881 3.09686 12.5138 3.26393 12.6807C3.431 12.8475 3.65701 12.9422 3.89328 12.9442C4.12954 12.9463 4.35717 12.8556 4.52712 12.6916L4.79114 12.4279V19.2554C4.79114 19.7328 4.98102 20.1906 5.319 20.5282C5.65698 20.8658 6.11538 21.0554 6.59336 21.0554H10.1978C10.4368 21.0554 10.666 20.9606 10.835 20.7918C11.004 20.623 11.0989 20.3941 11.0989 20.1554V15.6554H12.9011V20.1554C12.9011 20.3941 12.996 20.623 13.165 20.7918C13.334 20.9606 13.5632 21.0554 13.8022 21.0554H17.4066C17.8846 21.0554 18.343 20.8658 18.681 20.5282C19.019 20.1906 19.2089 19.7328 19.2089 19.2554V12.4279L19.4729 12.6916C19.6428 12.8556 19.8705 12.9463 20.1067 12.9442C20.343 12.9422 20.569 12.8475 20.7361 12.6807C20.9031 12.5138 20.9979 12.2881 21 12.0521C21.002 11.8161 20.9112 11.5888 20.747 11.419ZM17.4066 19.2554H14.7033V15.6554C14.7033 15.178 14.5134 14.7201 14.1755 14.3826C13.8375 14.045 13.3791 13.8553 12.9011 13.8553H11.0989C10.6209 13.8553 10.1625 14.045 9.82453 14.3826C9.48655 14.7201 9.29668 15.178 9.29668 15.6554V19.2554H6.59336V10.6279L12 5.22785L17.4066 10.6279V19.2554Z"
-                      fill="#1F2A37"
-                    />
-                  </svg>
-                  <span>Dashboard</span>
-                </div>
+    <div class="flex justify-center h-1/3 flex-col py-5 px-3">
+      <ul>
+        <li>
+          <router-link
+            to="/user/dashboard"
+            class="block text-gray-900 w-full dark:text-black hover:text-white"
+          >
+            <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+              <div class="flex items-center justify-start h-full  ml-12">
+                <i-ic:baseline-home class="text-xl"></i-ic:baseline-home>
+                <span class="ml-2 text-md">Dashboard</span>
               </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              to="/about"
-              class="block p-2 text-gray-900 dark:text-black hover:text-white"
-            >
-              <n-dropdown :options="options">
-                <n-button>User profile</n-button>
-              </n-dropdown>
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              to="/user/info-posyandu"
-              class="block p-2 text-gray-900 dark:text-black hover:text-white"
-            >
-              <div class="rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600">
-                <div class="flex items-center mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="25"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                  >
-                    <path
-                      d="M19.2 4.85542H17.4V3.95542C17.4 3.71673 17.3052 3.48781 17.1364 3.31902C16.9676 3.15024 16.7387 3.05542 16.5 3.05542C16.2613 3.05542 16.0324 3.15024 15.8636 3.31902C15.6948 3.48781 15.6 3.71673 15.6 3.95542V4.85542H12.9V3.95542C12.9 3.71673 12.8052 3.48781 12.6364 3.31902C12.4676 3.15024 12.2387 3.05542 12 3.05542C11.7613 3.05542 11.5324 3.15024 11.3636 3.31902C11.1948 3.48781 11.1 3.71673 11.1 3.95542V4.85542H8.4V3.95542C8.4 3.71673 8.30518 3.48781 8.1364 3.31902C7.96761 3.15024 7.73869 3.05542 7.5 3.05542C7.26131 3.05542 7.03239 3.15024 6.8636 3.31902C6.69482 3.48781 6.6 3.71673 6.6 3.95542V4.85542H4.8C4.32261 4.85542 3.86477 5.04506 3.52721 5.38263C3.18964 5.72019 3 6.17803 3 6.65542V19.2554C3 19.7328 3.18964 20.1906 3.52721 20.5282C3.86477 20.8658 4.32261 21.0554 4.8 21.0554H19.2C19.6774 21.0554 20.1352 20.8658 20.4728 20.5282C20.8104 20.1906 21 19.7328 21 19.2554V6.65542C21 6.17803 20.8104 5.72019 20.4728 5.38263C20.1352 5.04506 19.6774 4.85542 19.2 4.85542ZM6.6 6.65542C6.6 6.89411 6.69482 7.12303 6.8636 7.29182C7.03239 7.4606 7.26131 7.55542 7.5 7.55542C7.73869 7.55542 7.96761 7.4606 8.1364 7.29182C8.30518 7.12303 8.4 6.89411 8.4 6.65542H11.1C11.1 6.89411 11.1948 7.12303 11.3636 7.29182C11.5324 7.4606 11.7613 7.55542 12 7.55542C12.2387 7.55542 12.4676 7.4606 12.6364 7.29182C12.8052 7.12303 12.9 6.89411 12.9 6.65542H15.6C15.6 6.89411 15.6948 7.12303 15.8636 7.29182C16.0324 7.4606 16.2613 7.55542 16.5 7.55542C16.7387 7.55542 16.9676 7.4606 17.1364 7.29182C17.3052 7.12303 17.4 6.89411 17.4 6.65542H19.2V8.45542H4.8V6.65542H6.6ZM4.8 19.2554V10.2554H19.2V19.2554H4.8Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M16.5 12.0554H7.5C7.2613 12.0554 7.03239 12.1502 6.8636 12.319C6.69482 12.4878 6.6 12.7167 6.6 12.9554C6.6 13.1941 6.69482 13.423 6.8636 13.5918C7.03239 13.7606 7.2613 13.8554 7.5 13.8554H16.5C16.7387 13.8554 16.9676 13.7606 17.1364 13.5918C17.3052 13.423 17.4 13.1941 17.4 12.9554C17.4 12.7167 17.3052 12.4878 17.1364 12.319C16.9676 12.1502 16.7387 12.0554 16.5 12.0554Z"
-                      fill="#1F2A37"
-                    />
-                  </svg>
-                  <span>Posyandu</span>
-                </div>
+            </div>
+          </router-link>
+        </li>
+
+        <!-- Dropdown for Kesehatan -->
+        <li>
+          <div @click="toggleDropdown" class="block text-gray-900 w-full dark:text-black hover:text-white cursor-pointer">
+            <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600 ">
+              <div class="flex items-center justify-start h-full ml-12">
+                <i-lucide:file-chart-line class="text-xl"></i-lucide:file-chart-line>
+                <span class="ml-2 text-md">Kesehatan</span>
+
+                <i :class="dropdownOpen ? 'i-ep:arrow-down-bold' : 'i-ic:baseline-arrow-drop-down'" class="ml-2 text-xl"></i>
               </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              to="/user/artikel"
-              class="block p-2 text-gray-900 dark:text-black hover:text-white"
-            >
-              <div class="rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600">
-                <div class="flex items-center mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="25"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                  >
-                    <path
-                      d="M20 4.05542H4C2.897 4.05542 2 4.95242 2 6.05542V18.0554C2 19.1584 2.897 20.0554 4 20.0554H20C21.103 20.0554 22 19.1584 22 18.0554V6.05542C22 4.95242 21.103 4.05542 20 4.05542ZM4 18.0554V6.05542H20L20.001 18.0554H4Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M17 8.05542H11C10.447 8.05542 10 8.50342 10 9.05542C10 9.60742 10.447 10.0554 11 10.0554H17C17.553 10.0554 18 9.60742 18 9.05542C18 8.50342 17.553 8.05542 17 8.05542Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M17 11.0554H11C10.447 11.0554 10 11.5034 10 12.0554C10 12.6074 10.447 13.0554 11 13.0554H17C17.553 13.0554 18 12.6074 18 12.0554C18 11.5034 17.553 11.0554 17 11.0554Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M17 14.0554H11C10.447 14.0554 10 14.5034 10 15.0554C10 15.6074 10.447 16.0554 11 16.0554H17C17.553 16.0554 18 15.6074 18 15.0554C18 14.5034 17.553 14.0554 17 14.0554Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M7 10.0554C7.55228 10.0554 8 9.6077 8 9.05542C8 8.50314 7.55228 8.05542 7 8.05542C6.44772 8.05542 6 8.50314 6 9.05542C6 9.6077 6.44772 10.0554 7 10.0554Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M7 13.0554C7.55228 13.0554 8 12.6077 8 12.0554C8 11.5031 7.55228 11.0554 7 11.0554C6.44772 11.0554 6 11.5031 6 12.0554C6 12.6077 6.44772 13.0554 7 13.0554Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M7 16.0554C7.55228 16.0554 8 15.6077 8 15.0554C8 14.5031 7.55228 14.0554 7 14.0554C6.44772 14.0554 6 14.5031 6 15.0554C6 15.6077 6.44772 16.0554 7 16.0554Z"
-                      fill="#1F2A37"
-                    />
-                  </svg>
-                  <span>Artikel</span>
-                </div>
+            </div>
+          </div>
+
+          <!-- Dropdown items -->
+          <ul v-if="dropdownOpen" class="ml-6 mt-2 space-y-2">
+            <li>
+              <router-link to="/user/checkup-child" class="flex items-center justify-center ml-10 my-3 text-gray-900 dark:text-black hover:text-pink-600">
+                Perkembangan Anak
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/user/health-mom" class="flex items-center justify-center mt-4 my-3 text-gray-900 dark:text-black hover:text-pink-600">
+                Kesehatan Ibu
+              </router-link>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <router-link
+            to="/user/info-posyandu"
+            class="block text-gray-900 w-full dark:text-black hover:text-white"
+          >
+            <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+              <div class="flex items-center justify-start ml-12 h-full">
+                <i-uil:calender class="text-xl"></i-uil:calender>
+                <span class="ml-2 text-md">Posyandu</span>
               </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              to="/user/lapor-stunting"
-              class="block p-2 text-gray-900 dark:text-black hover:text-white"
-            >
-              <div class="flex flex-col rounded-lg hover:bg-pink-600 dark:hover:bg-pink-600 h-10">
-                <div class="flex items-center mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="25"
-                    viewBox="0 0 24 25"
-                    fill="none"
-                  >
-                    <path
-                      d="M19.8947 3.05542H4.10526C3.54691 3.05542 3.01143 3.27852 2.61662 3.67565C2.2218 4.07278 2 4.6114 2 5.17302V14.7022C2 15.2638 2.2218 15.8025 2.61662 16.1996C3.01143 16.5967 3.54691 16.8198 4.10526 16.8198H6.21053V19.9962C6.21045 20.1957 6.26642 20.3912 6.37198 20.5601C6.47754 20.729 6.6284 20.8645 6.80718 20.9509C6.98595 21.0373 7.18536 21.0712 7.38243 21.0486C7.57951 21.026 7.76622 20.9478 7.92105 20.8231L12.8958 16.8198H19.8947C20.4531 16.8198 20.9886 16.5967 21.3834 16.1996C21.7782 15.8025 22 15.2638 22 14.7022V5.17302C22 4.6114 21.7782 4.07278 21.3834 3.67565C20.9886 3.27852 20.4531 3.05542 19.8947 3.05542ZM19.8947 14.7022H12.5263C12.2872 14.7021 12.0552 14.7839 11.8684 14.9341L8.31579 17.7929V15.761C8.31579 15.4802 8.20489 15.2109 8.00748 15.0123C7.81007 14.8138 7.54233 14.7022 7.26316 14.7022H4.10526V5.17302H19.8947V14.7022Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M7.26316 9.40822H12.5263C12.8055 9.40822 13.0732 9.29667 13.2706 9.0981C13.468 8.89954 13.5789 8.63023 13.5789 8.34942C13.5789 8.06861 13.468 7.7993 13.2706 7.60074C13.0732 7.40217 12.8055 7.29062 12.5263 7.29062H7.26316C6.98398 7.29062 6.71624 7.40217 6.51884 7.60074C6.32143 7.7993 6.21053 8.06861 6.21053 8.34942C6.21053 8.63023 6.32143 8.89954 6.51884 9.0981C6.71624 9.29667 6.98398 9.40822 7.26316 9.40822Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M7.26316 12.5846H9.36842C9.6476 12.5846 9.91534 12.4731 10.1127 12.2745C10.3102 12.0759 10.4211 11.8066 10.4211 11.5258C10.4211 11.245 10.3102 10.9757 10.1127 10.7771C9.91534 10.5786 9.6476 10.467 9.36842 10.467H7.26316C6.98398 10.467 6.71624 10.5786 6.51884 10.7771C6.32143 10.9757 6.21053 11.245 6.21053 11.5258C6.21053 11.8066 6.32143 12.0759 6.51884 12.2745C6.71624 12.4731 6.98398 12.5846 7.26316 12.5846Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M15.6842 9.40822H16.7368C17.016 9.40822 17.2838 9.29667 17.4812 9.0981C17.6786 8.89954 17.7895 8.63023 17.7895 8.34942C17.7895 8.06861 17.6786 7.7993 17.4812 7.60074C17.2838 7.40217 17.016 7.29062 16.7368 7.29062H15.6842C15.405 7.29062 15.1373 7.40217 14.9399 7.60074C14.7425 7.7993 14.6316 8.06861 14.6316 8.34942C14.6316 8.63023 14.7425 8.89954 14.9399 9.0981C15.1373 9.29667 15.405 9.40822 15.6842 9.40822Z"
-                      fill="#1F2A37"
-                    />
-                    <path
-                      d="M12.5263 10.467C12.2471 10.467 11.9794 10.5786 11.782 10.7771C11.5846 10.9757 11.4737 11.245 11.4737 11.5258C11.4737 11.8066 11.5846 12.0759 11.782 12.2745C11.9794 12.4731 12.2471 12.5846 12.5263 12.5846H17.7895C18.0686 12.5846 18.3364 12.4731 18.5338 12.2745C18.7312 12.0759 18.8421 11.8066 18.8421 11.5258C18.8421 11.245 18.7312 10.9757 18.5338 10.7771C18.3364 10.5786 18.0686 10.467 17.7895 10.467H12.5263Z"
-                      fill="#1F2A37"
-                    />
-                  </svg>
-                  <span>Laporkan Stunting</span>
-                </div>
+            </div>
+          </router-link>
+        </li>
+
+        <li>
+          <router-link
+            to="/user/article"
+            class="block text-gray-900 w-full dark:text-black hover:text-white"
+          >
+            <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+              <div class="flex items-center justify-start ml-12 h-full">
+                <i-material-symbols:article-outline
+                  class="text-xl"
+                ></i-material-symbols:article-outline>
+                <span class="ml-2 text-md">Artikel</span>
               </div>
-            </router-link>
-          </li>
-        </ul>
-      </div>
+            </div>
+          </router-link>
+        </li>
+
+        <li>
+          <router-link
+            to="/user/report-stunting"
+            class="block text-gray-900 w-full dark:text-black hover:text-white"
+          >
+            <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+              <div class="flex items-center justify-start ml-12 h-full">
+                <i-ic:outline-message class="text-xl"></i-ic:outline-message>
+                <span class="ml-2 text-md">Laporkan Stunting</span>
+              </div>
+            </div>
+          </router-link>
+        </li>
+      </ul>
     </div>
   </aside>
 </template>

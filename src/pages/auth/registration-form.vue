@@ -1,35 +1,84 @@
-
-
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useHttpMutation } from '@/composables/http/http'
-import { useMessage, type FormInst } from 'naive-ui'
+import { useMessage, type FormInst, type FormRules } from 'naive-ui'
 import { useUserSignup } from '@/services/auth'
 
-interface ModelType {
-  email: string | null
-  fullName: string | null
-  phone: number | null
-  password: string | null
-  confirmPassword: string | null
+const { mutate, isPending } = useUserSignup()
+
+type FormData = {
+  email?: string
+  fullName?: string
+  phone?: string
+  password?: string
+  confirmPassword?: string
 }
 
-const formData = ref<FormInst | null>(null)
-const formModel = ref<ModelType>({
-  email: '',
-  fullName: '',
-  phone: null,
-  password: '',
-  confirmPassword: ''
+const formData = ref<FormData>({
+  email: undefined,
+  fullName: undefined,
+  phone: undefined,
+  password: undefined,
+  confirmPassword: undefined
 })
 
+const formRef = ref<FormInst>()
 const message = useMessage()
 
-const onSubmit = () => {
-  mutate(formModel.value)
-  console.log(formData)
+const handleSubmit = () => {
+  formRef.value?.validate((errors) => {
+    if (!errors) {
+      mutate({
+        ...formData.value
+      })
+
+      return
+    }
+    message.error('validasi gagal')
+  })
 }
-const { mutate, isPending } = useUserSignup()
+
+const rules: FormRules = {
+  email: [
+    {
+      type: 'email',
+      message: 'Email tidak valid'
+    },
+    {
+      type: 'string',
+      required: true,
+      message: 'Email wajib diisi'
+    }
+  ],
+  fullName: [
+    {
+      type: 'string',
+      required: true,
+      message: 'Nama lengkap wajib diisi'
+    }
+  ],
+  phone: [
+    {
+      type: 'string',
+      required: true,
+      message: 'Nomor Telpon Wajib diisi',
+      min: 10
+    }
+  ],
+  password: [
+    {
+      type: 'string',
+      required: true,
+      message: 'Password wajib diisi'
+    }
+  ],
+  confirmPassword: [
+    {
+      type: 'string',
+      required: true,
+      message: 'Password wajib diisi'
+    }
+  ]
+}
 </script>
 
 <template>
@@ -38,7 +87,7 @@ const { mutate, isPending } = useUserSignup()
     <div class="w-full md:w-1/2 flex flex-col justify-center items-center">
       <!-- Logo Div -->
       <div class="bg-white p-2 w-full max-w-md">
-        <div class="flex items-center justify-center space-x-4">
+        <div class="flex md:hidden items-center justify-center space-x-4">
           <!-- SVG Logo -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,109 +118,79 @@ const { mutate, isPending } = useUserSignup()
           Silahkan Masukan Data Diri Anda
         </p>
 
-        <n-form class="space-y-6 mt-10" @submit.prevent="onSubmit" ref="formData">
+        <n-form
+          class="space-y-6 mt-4"
+          @submit.prevent="handleSubmit"
+          ref="formRef"
+          :model="formData"
+          :rules="rules"
+        >
           <!-- Flex container for Nama Lengkap and Password -->
           <div class="flex flex-col md:flex-row gap-4">
             <!-- Nama Lengkap -->
             <div class="w-full md:w-1/2">
-              <div class="flex items-center justify-between">
-                <label for="namalengkap" class="block text-sm font-medium leading-6 text-gray-900"
-                  >Nama Lengkap</label
-                >
-              </div>
               <div class="mt-2">
-                <n-input
-                  type="text"
-                  required
-                  v-model:value="formModel.fullName"
-                  
-                />
+                <n-form-item label="Nama lengkap" path="fullname">
+                  <n-input v-model:value="formData.fullName" name="fullname" />
+                </n-form-item>
               </div>
             </div>
 
-            <!-- Password -->
+            <!-- Email -->
             <div class="w-full md:w-1/2">
-              <div class="flex items-center justify-between">
-                <label for="password" class="block text-sm font-medium leading-6 text-gray-900"
-                  >Password</label
-                >
-              </div>
               <div class="mt-2">
-                <n-input
-                  type="password"
-                  v-model:value="formModel.password"
-                  autocomplete="current-password"
-                  required
-                  
-                />
+                <n-form-item label="Email" path="email">
+                  <n-input v-model:value="formData.email" name="email" />
+                </n-form-item>
               </div>
             </div>
           </div>
 
           <!-- Flex container for Email and Confirm Password -->
           <div class="flex flex-col md:flex-row gap-4">
-            <!-- Email -->
-            <div class="w-full md:w-1/2 md:order-1 order-2">
-              <div class="flex items-center justify-between">
-                <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
-                  >Email</label
-                >
-              </div>
+            <!-- Password -->
+            <div class="w-full md:w-1/2">
               <div class="mt-2">
-                <n-input
-                  type="text"
-                  v-model:value="formModel.email"
-                  autocomplete="email"
-                  required
-                  
-                />
+                <n-form-item label="Kata Sandi" path="password">
+                  <n-input
+                    v-model:value="formData.password"
+                    name="password"
+                    type="password"
+                    required
+                  />
+                </n-form-item>
               </div>
             </div>
 
             <!-- Confirm Password -->
-            <div class="w-full md:w-1/2 md:order-2 order-1">
-              <div class="flex items-center justify-between">
-                <label
-                  for="confirm-password"
-                  class="block text-sm font-medium leading-6 text-gray-900"
-                  >Confirm Password</label
-                >
-              </div>
+            <div class="w-full md:w-1/2">
               <div class="mt-2">
-                <n-input
-                  type="password"
-                  v-model:value="formModel.confirmPassword"
-                  required
-                  
-                />
+                <n-form-item label="Konfirmasi Kata Sandi" path="confirmPassword">
+                  <n-input
+                    v-model:value="formData.confirmPassword"
+                    name="confirmpassword"
+                    type="password"
+                    required
+                  />
+                </n-form-item>
               </div>
             </div>
           </div>
 
           <!-- Nomor WA -->
           <div>
-            <div class="flex items-center justify-between">
-              <label for="wa" class="block text-sm font-medium leading-6 text-gray-900"
-                >Nomor WA</label
-              >
-            </div>
+            <div class="flex items-center justify-between"></div>
             <div class="mt-2">
-              <n-input-number
-                :show-button="false"
-                clearable
-                type="text"
-                v-model:value="formModel.phone"
-                placeholder=""
-                required
-                
-              />
+              <n-form-item label="Nomor WA" path="phone">
+                <n-input v-model:value="formData.phone" name="phone" />
+              </n-form-item>
             </div>
           </div>
 
           <!-- Submit Button -->
           <div>
             <div class="flex justify-center">
-              <n-button type="primary" attr-type="submit"> Sign In </n-button>
+              <n-button :loading="isPending" type="primary" attr-type="submit"> Daftar </n-button>
             </div>
           </div>
 
@@ -196,8 +215,7 @@ const { mutate, isPending } = useUserSignup()
   </div>
 </template>
 
-
 <route lang="yaml">
-  meta:
-    layout: blank
-  </route>
+meta:
+  layout: blank
+</route>

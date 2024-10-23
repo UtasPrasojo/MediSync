@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="flex min-h-screen">
     <!-- Left Side (Form) -->
@@ -36,7 +34,7 @@
           <!-- Reduced bottom margin -->
           <img src="/otp.png" alt="OTP Image" class="mx-auto w-32 h-20 object-cover" />
         </div>
-        <h3 class="text-center text-xl  leading-9 tracking-tight text-gray-900 mb-4">
+        <h3 class="text-center text-xl leading-9 tracking-tight text-gray-900 mb-4">
           Cek Whatsapp Anda
         </h3>
         <p class="text-center font-medium leading-4 text-gray-900 mb-4">
@@ -44,16 +42,26 @@
         </p>
         <p class="text-center font-medium leading-4 text-gray-900">
           Belum Menerima?
-          <a
-            href="#"
-            class="text-pink-500 hover:text-pink-600 font-semibold cursor-pointer"
-            @click.prevent=""
-          >
-            Kirim ulang
-          </a>
-          <!-- <span v-if="countdown > 0" class="ml-2 text-gray-600">
-                {{ formattedCountdown }}
-              </span> -->
+          <!-- Conditional rendering: Tampilkan countdown atau tombol kirim ulang -->
+          <span v-if="!resendAvailable">
+            <n-countdown
+              :duration="300000"
+              :active="active"
+              @finish="onCountdownFinish"
+              v-slot="{ time }"
+            >
+              {{ time.seconds }} detik
+            </n-countdown>
+          </span>
+          <span v-else>
+            <a
+              href="#"
+              class="text-pink-500 hover:text-pink-600 font-semibold cursor-pointer"
+              @click.prevent="resendOtp"
+            >
+              Kirim ulang
+            </a>
+          </span>
         </p>
       </div>
     </div>
@@ -65,53 +73,28 @@
   </div>
 </template>
 
-<!-- <script>
-  export default {
-    data() {
-      return {
-        countdown: 0,
-        timer: null,
-      };
-    },
-    computed: {
-      formattedCountdown() {
-        const minutes = Math.floor(this.countdown / 60);
-        const seconds = this.countdown % 60;
-        return `${minutes} menit ${seconds} detik`;
-      },
-    },
-    methods: {
-      resendOtp() {
-        if (this.countdown > 0) return; // Prevent resending while countdown is active
-  
-        // Reset countdown to 2 minutes (120 seconds)
-        this.countdown = 120;
-        this.startCountdown();
-  
-        // Handle OTP resend logic here
-      },
-      startCountdown() {
-        this.timer = setInterval(() => {
-          if (this.countdown > 0) {
-            this.countdown -= 1;
-          } else {
-            clearInterval(this.timer);
-            this.timer = null; // Clear the timer when countdown ends
-          }
-        }, 1000);
-      },
-    },
-    beforeDestroy() {
-      // Clear the timer if the component is destroyed
-      if (this.timer) {
-        clearInterval(this.timer);
-      }
-    },
-  };
-  </script> -->
+<script setup lang="ts">
+import { ref } from 'vue'
 
+// Status untuk mengontrol countdown dan teks "Kirim ulang"
+const active = ref(true)
+const resendAvailable = ref(false)
 
-  <route lang="yaml">
-    meta:
-      layout: blank
-    </route>
+// Fungsi yang dipanggil saat countdown selesai
+const onCountdownFinish = () => {
+  active.value = false
+  resendAvailable.value = true
+}
+
+// Fungsi untuk menangani klik pada "Kirim ulang"
+const resendOtp = () => {
+  console.log('Mengirim ulang OTP...')
+  active.value = true
+  resendAvailable.value = false
+}
+</script>
+
+<route lang="yaml">
+meta:
+  layout: blank
+</route>

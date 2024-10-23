@@ -1,44 +1,18 @@
+<script setup lang="ts">
+const name = 'ChangePassword'
+</script>
+
 <template>
   <div class="p-6" id="app">
-    <div class="bg-white shadow-sm py-4 px-6 flex justify-between items-center">
-      <!-- Breadcrumbs atau navigasi -->
-      <div class="flex items-center space-x-2">
-        <i class="fas fa-home text-gray-500"></i>
-        <span class="text-black">Dashboard</span>
-        <span class="text-black">/</span>
-        <span class="text-black">Pengaturan</span>
-      </div>
-      <!-- Profil dan Icon -->
-      <div class="flex items-center space-x-4">
-        <i class="fas fa-user-circle text-gray-500"></i>
-        <img
-          alt="User profile picture"
-          class="w-10 h-10 rounded-full"
-          src="/profil.png"
-          width="40"
-          height="40"
-        />
-      </div>
-    </div>
-
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="flex justify-between items-center mb-6">
         <div>
           <h1 class="text-xl font-semibold">Ganti Kata Sandi</h1>
           <p class="text-gray-500">Anda Dapat Mengganti Kata Sandi Anda Sendiri Disini</p>
         </div>
-        <div class="flex space-x-4">
-          <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded">
-            Data Akun
-          </button>
-          <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded">
-            Anak
-          </button>
-          <button class="bg-pink-500 text-white px-4 py-2 rounded">Keamanan</button>
-        </div>
       </div>
 
-      <div class="flex items-center mb-6">
+      <div class="flex flex-col md:flex-row items-center mb-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="211"
@@ -170,43 +144,43 @@
             fill="#242526"
           />
         </svg>
-        <div class="flex-grow ml-4">
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Kata Sandi Sekarang</label>
-            <input
-              class="w-full p-2 border border-gray-300 rounded"
-              placeholder="Input Kata Sandi"
-              type="password"
-            />
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Kata Sandi Baru</label>
-            <input
-              class="w-full p-2 border border-gray-300 rounded"
-              placeholder="Input Kata Sandi Baru"
-              type="password"
-            />
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 mb-2">Konfirmasi Kata Sandi</label>
-            <input
-              class="w-full p-2 border border-gray-300 rounded"
-              placeholder="Input Konfirmasi Kata Sandi"
-              type="password"
-            />
-          </div>
-          <button class="bg-pink-500 text-white px-4 py-2 rounded">Simpan</button>
+
+        <div class="flex-grow w-full ml-2">
+          <n-form>
+            <div class="mb-4">
+              <n-form-item path="katasandi" label="Kata Sandi Sekarang">
+                <n-input
+                  class="w-full p-2 border border-gray-300 rounded"
+                  placeholder="Input Kata Sandi"
+                  type="password"
+                />
+              </n-form-item>
+            </div>
+            <div class="mb-4">
+              <n-form-item path="katasandi" label="Kata Sandi Baru">
+                <n-input
+                  class="w-full p-2 border border-gray-300 rounded"
+                  placeholder="Input Kata Sandi Baru"
+                  type="password"
+                />
+              </n-form-item>
+            </div>
+            <div class="mb-4">
+              <n-form-item path="katasandi" label="Konfirmasi Kata Sandi">
+                <n-input
+                  class="w-full p-2 border border-gray-300 rounded"
+                  placeholder="Input Konfirmasi Kata Sandi"
+                  type="password"
+                />
+              </n-form-item>
+            </div>
+            <n-button class="bg-pink-500 text-white px-4 py-2 rounded">Simpan</n-button>
+          </n-form>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'ChangePassword' // Nama komponen
-}
-</script>
 
 <style scoped>
 body {
