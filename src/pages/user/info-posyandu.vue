@@ -22,7 +22,7 @@ interface PaginatedResponse<T> {
 
 // Reactive parameter for pagination
 const params = ref<{ page: number }>({
-  page: 1
+  page: 21
 })
 
 const search = ref<string>('')
@@ -39,9 +39,9 @@ const searchSchedule = () => {
 const columns = ref([
   {
     title: 'Tanggal',
-    key: 'open',
+    key: 'date',
     render(data) {
-      return DateTime.fromISO(data.open).toFormat('dd LLL yyyy')
+      return DateTime.fromISO(data.date).toFormat('dd LLL yyyy')
     }
   },
   {
@@ -50,9 +50,11 @@ const columns = ref([
   },
   {
     title: 'Waktu',
-    key: 'close',
+    key: 'open-close',
     render(data) {
-      return DateTime.fromISO(data.close).toFormat('HH:mm')
+      const openTime = DateTime.fromISO(data.open).toFormat('HH:mm');
+      const closeTime = DateTime.fromISO(data.close).toFormat('HH:mm');
+      return `${openTime} - ${closeTime}`;
     }
   },
   {
@@ -75,6 +77,8 @@ const columns = ref([
     }
   }
 ])
+
+
 </script>
 
 <template>
@@ -82,13 +86,6 @@ const columns = ref([
     <div class="hidden md:flex justify-end items-center mb-6">
       <div>
         <div class="flex items-center space-x-4">
-          <!-- <img
-            class="rounded-full"
-            width="40"
-            height="40"
-            src="https://storage.googleapis.com/a1aa/image/C2jfwt8kRwSWCK9YWQt3bHFWCuCch2VBzspxx6mSoIXhBeiTA.jpg"
-            alt="User profile picture"
-          /> -->
         </div>
       </div>
     </div>
@@ -127,6 +124,7 @@ const columns = ref([
         :data="schedules.data"
         pagination-behavior-on-filter="first"
       />
+      <n-pagination v-model:page="page" :page-count="100" />
     </div>
 
     <!-- Card for mobile view -->
@@ -158,26 +156,24 @@ const columns = ref([
                 <div class="flex justify-between items-center mb-2 pb-2 border-gray-300">
                   <p class="font-semibold text-gray-800">{{ row.healthPost }}</p>
                   <div class="flex items-center">
-                    <p class="font-semibold text-gray-800">{{ row.date }}</p>
+                    <p class="font-semibold text-gray-800">{{ DateTime.fromISO(row.date).toFormat('dd LLL yyyy') }}</p>
                   </div>
                 </div>
                 <div class="flex justify-between items-center mb-2 pb-2 border-gray-300">
                   <p class="text-gray-500">Petugas: {{ row.staff }}</p>
                   <div class="flex items-center">
-                    <p class="text-gray-500">{{ row.open }} - {{ row.close }}</p>
+                    <p class="text-gray-500">{{ DateTime.fromISO(row.open).toFormat('HH:mm') }} - {{ DateTime.fromISO(row.close).toFormat('HH:mm') }}</p>
                   </div>
                 </div>
               </div>
               <div class="w-1/4 flex justify-center items-center">
-                <NButton class="ml-2 p-2 text-2xl">
-                  <i class="fas fa-ellipsis-h"></i>
-                </NButton>
+                <DetailPosyandu :id="row.id" />
               </div>
             </div>
           </div>
         </NListItem>
       </NList>
-      <NPagination v-model:page="params.page" :page-count="50" />
+      <NPagination v-model:page="params.page" :page-count="3" />
     </div>
   </div>
 </template>
