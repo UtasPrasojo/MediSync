@@ -39,8 +39,8 @@ const searchArticles = () => {
       </div>
     </div>
     <div class="bg-white p-6 rounded-lg">
-      <h1 class="text-2xl font-semibold">Artikel Kesehatan</h1>
-      <p class="text-gray-600">Kumpulan Artikel Kesehatan</p>
+      <h1 class="text-lg md:text-2xl font-semibold">Artikel Kesehatan</h1>
+      <p class="text-gray-600 md:text-lg text-sm ">Kumpulan Artikel Kesehatan</p>
       <nav class="flex items-center text-gray-600 mt-4">
         <a class="flex items-center text-gray-600 hover:text-gray-800" href="#">
           <i class="fas fa-home mr-2"></i>
@@ -51,7 +51,7 @@ const searchArticles = () => {
       </nav>
     </div>
     <div class="bg-white p-6 mt-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Artikel Kesehatan</h2>
+      <h2 class="text-lg md:text-2xl font-semibold mb-4">Artikel Kesehatan</h2>
       <div class="flex justify-between md:justify-end mb-6 w-full">
         <div class="w-full flex items-center mb-6 md:w-1/3">
           <n-input
@@ -83,7 +83,7 @@ const searchArticles = () => {
             width="600"
           />
           <h3 class="text-lg font-semibold mt-4">{{ article.title }}</h3>
-          <p class="text-gray-600">{{ article.description }}</p>
+          <p class="text-gray-600 truncate">{{ article.description }}</p>
           <a class="text-pink-500 mt-4 inline-block" :href="`/user/article/${article.id}`">
             Baca Selengkapnya
             <i class="fas fa-arrow-right"></i>

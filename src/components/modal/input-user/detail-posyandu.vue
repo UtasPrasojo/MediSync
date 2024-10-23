@@ -10,17 +10,18 @@ const props = defineProps<{
 const { data: scheduleDetail } = useReadScheduleById(computed(() => props.id))
 
 const formattedDate = computed(() => {
-  return DateTime.fromISO(scheduleDetail.value?.open).toFormat('dd LLL yyyy')
+  return DateTime.fromISO(scheduleDetail.value?.date).toFormat('dd LLL yyyy')
 });
 
 const formattedTime = computed(() => {
-  return DateTime.fromISO(scheduleDetail.value?.open).toFormat('HH:mm')
-});
+  const openTime = DateTime.fromISO(scheduleDetail.value?.open).toFormat('HH:mm');
+  const closeTime = DateTime.fromISO(scheduleDetail.value?.close).toFormat('HH:mm');
+  return `${openTime} - ${closeTime}`;});
 </script>
 
 <template>
-  <div class="flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+  <div class=" flex items-center justify-center bg-white rounded-lg ">
+    <div class="bg-white p-9   w-[100%] rounded-lg md:w-96 ">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-lg">Detail Posyandu</h2>
         <i class="fas fa-times cursor-pointer"></i>
