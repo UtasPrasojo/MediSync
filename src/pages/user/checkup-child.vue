@@ -29,8 +29,7 @@ const itemsCheckup = computed(() => {
       date: checkup.date,
       height: checkup.height,
       weight: checkup.weight,
-      headCircumference: checkup.headCircumference,
-      
+      headCircumference: checkup.headCircumference
     }
   })
 })
@@ -74,10 +73,10 @@ const childrenOptions = computed(() => {
     }) || []
 
   // Sisipkan opsi placeholder di awal daftar
-  return [{ label: 'Pilih Anak', value: null }, ...options]
+  return [{ label: 'Pilih Anak', disabled: true, selectedOption: '', value: null }, ...options]
 })
 
-const childrenFilter = ref<string>('')
+const childrenFilter = ref<string>()
 
 const selectChildren = (value: string) => {
   childrenFilter.value = value
@@ -103,7 +102,7 @@ onMounted(() => {
 // Konfigurasi pagination
 const pagination = {
   page: 1,
-  pageSize: 10,
+  pageSize: 6,
   itemCount: 0
 }
 
@@ -182,7 +181,7 @@ const showModal = ref(false)
         <div class="flex items-center justify-between">
           <!-- Bagian Kiri: Tulisan Dashboard -->
           <div>
-            <h1 class=" text-lg md:text-2xl font-semibold">Dashboard</h1>
+            <h1 class="text-lg md:text-2xl font-semibold">Dashboard</h1>
             <p class="text-gray-600 md:text-lg text-sm">Informasi tentang aktifitas anda</p>
           </div>
 
@@ -193,7 +192,7 @@ const showModal = ref(false)
             @update:value="selectChildren"
             :options="childrenOptions"
             placeholder="Pilih Anak"
-            :value="childrenFilter"
+            v-model:value="childrenFilter"
           />
         </div>
       </div>
@@ -360,7 +359,6 @@ const showModal = ref(false)
     </div>
     <div class="md:flex justify-between">
       <div>
-        
         <h2 class="text-lg font-semibold mb-4">Riwayat Perkembangan</h2>
       </div>
       <div class="flex justify-start md:justify-end mb-6 mx-4">

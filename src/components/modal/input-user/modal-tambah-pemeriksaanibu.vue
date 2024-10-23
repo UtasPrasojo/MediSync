@@ -21,7 +21,7 @@ const formData = ref<FormData>({
 const rules: FormRules = {
   height: [{ type: 'number', required: true, message: 'Tinggi Badan wajib diisi' }],
   weigh: [{ type: 'number', required: true, message: 'Berat Badan wajib diisi' }],
-  upperArmCircumference: [{ type: 'number', required: true, message: 'Lingkar Kepala wajib diisi' }]
+  upperArmCircumference: [{ type: 'number', required: true, message: 'Lingkar lengan wajib diisi' }]
 }
 // Handle form submission
 const handleSubmit = () => {
@@ -90,7 +90,7 @@ const goBack = () => {
             <n-form-item label="Lingkar Lengan" path="upperArmCircumference" class="w-full">
             <n-input-number
               v-model:value="formData.upperArmCircumference"
-              placeholder="Input Lingkar Kepala"
+              placeholder="Input Lingkar Lengan"
               class="w-full"
             />
             </n-form-item>

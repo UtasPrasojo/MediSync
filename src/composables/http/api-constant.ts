@@ -19,5 +19,11 @@ export const API = {
     USER_GET_ARTICLE:"/v1/article",
     USER_GET_ARTICLE_ID:"/v1/article/{id}",
     USER_GET_SCHEDULE:"/v1/schedule",
-    USER_GET_SCHEDULE_ID:"/v1/schedule/{id}"
+    USER_GET_SCHEDULE_ID:"/v1/schedule/{id}",
+    USER_POST_REPORT_STUNTING:"/v1/user/report",
+    USER_GET_REPORT_STUNTING:"/v1/user/report",
+    USER_GET_CHECKUP_CHILDREN:"/v1/user/checkup-child",
+    USER_POST_CHECKUP_CHILDREN:"/v1/user/checkup-child",
+    USER_GET_CHECKUP_PARENTS:"/v1/user/checkupmother",
+    USER_POST_CHECKUP_PARENTS:"/v1/user/checkupmother",
  }

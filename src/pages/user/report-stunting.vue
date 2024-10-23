@@ -5,6 +5,17 @@ import { useReadReportStunting } from '@/services/report-stunting'
 // Reactive variables
 const showModal = ref(false)
 const { data: reportData, isLoading, refetch } = useReadReportStunting()
+const getGenderLabel = (gender: string) => {
+  switch (gender) {
+    case 'MALE':
+      return 'Laki-Laki'
+    case 'FEMALE':
+      return 'Perempuan'
+    default:
+      return 'Tidak Diketahui'
+  }
+}
+
 const itemsReport = computed(() => {
   return reportData.value?.data.map((checkup: report) => {
     return {
@@ -14,7 +25,8 @@ const itemsReport = computed(() => {
       childAddress: checkup.childAddress,
       fileChildPicture: checkup.fileChildPicture,
       fileHousePicture: checkup.fileHousePicture,
-      observation: checkup.observation
+      observation: checkup.observation,
+      gender: getGenderLabel(checkup.gender) // Menggunakan fungsi untuk mengubah gender
     }
   })
 })
@@ -27,37 +39,42 @@ interface report {
   fileChildPicture: string
   fileHousePicture: string
   observation: string
+  gender: string
+}
+enum gender {
+  Male = 'MALE',
+  Female = 'FEMALE'
 }
 
-const data = ref([
-  {
-    date: 'Juli, 23 2023',
-    pelapor: 'Budi Santoso',
-    anak: 'Ahmad Zulkarnain',
-    alamat: 'Jl. Merdeka No. 45',
-    gender: 'Laki-laki',
-    phone: '081234567890',
-    option: 'Posyandu'
-  },
-  {
-    date: 'Agustus, 15 2023',
-    pelapor: 'Siti Aminah',
-    anak: 'Fatimah Aisyah',
-    alamat: 'Jl. Pahlawan No. 10',
-    gender: 'Perempuan',
-    phone: '081987654321',
-    option: 'Posyandu'
-  },
-  {
-    date: 'September, 10 2023',
-    pelapor: 'Rahmat Hidayat',
-    anak: 'Deni Kurniawan',
-    alamat: 'Jl. Kebon Jeruk No. 5',
-    gender: 'Laki-laki',
-    phone: '081234112233',
-    option: 'Posyandu'
-  }
-])
+// const data = ref([
+//   {
+//     date: 'Juli, 23 2023',
+//     pelapor: 'Budi Santoso',
+//     anak: 'Ahmad Zulkarnain',
+//     alamat: 'Jl. Merdeka No. 45',
+//     gender: 'Laki-laki',
+//     phone: '081234567890',
+//     option: 'Posyandu'
+//   },
+//   {
+//     date: 'Agustus, 15 2023',
+//     pelapor: 'Siti Aminah',
+//     anak: 'Fatimah Aisyah',
+//     alamat: 'Jl. Pahlawan No. 10',
+//     gender: 'Perempuan',
+//     phone: '081987654321',
+//     option: 'Posyandu'
+//   },
+//   {
+//     date: 'September, 10 2023',
+//     pelapor: 'Rahmat Hidayat',
+//     anak: 'Deni Kurniawan',
+//     alamat: 'Jl. Kebon Jeruk No. 5',
+//     gender: 'Laki-laki',
+//     phone: '081234112233',
+//     option: 'Posyandu'
+//   }
+// ])
 
 const columns = ref([
   { title: 'Tanggal', key: 'date' },
@@ -103,6 +120,9 @@ const columns = ref([
           :data="itemsReport"
           :pagination="pagination"
         />
+      </div>
+      <div>
+        <n-pagination v-model:page="page" :page-count="3" />
       </div>
     </div>
 
@@ -155,8 +175,6 @@ const columns = ref([
         </div>
       </div>
     </div>
-    <div class="flex justify-center items-center mt-4">
-      <n-pagination v-model:page="page" :page-count="100" />
-    </div>
+    <div class="flex justify-center items-center mt-4"></div>
   </div>
 </template>

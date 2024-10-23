@@ -2,6 +2,7 @@
 import { useUserReportStunting } from '@/services/report-stunting'
 import { ref } from 'vue'
 import { useMessage, type FormInst, type FormRules } from 'naive-ui'
+import router from '@/router';
 
 // Definisikan tipe untuk form data
 
@@ -15,6 +16,7 @@ type FormData = {
   fileChildPicture?: string
   fileHousePicture?: string
   observation?: string
+  gender?: 'MALE' | 'FEMALE'
 }
 const formData = ref<FormData>({
   reporter: undefined,
@@ -23,7 +25,8 @@ const formData = ref<FormData>({
   childAddress: undefined,
   fileChildPicture: undefined,
   fileHousePicture: undefined,
-  observation: undefined
+  observation: undefined,
+  gender: undefined
 })
 
 const formRef = ref<FormInst>()
@@ -36,15 +39,31 @@ const rules: FormRules = {
   childAddress: [{ type: 'string', required: true, message: 'Alamat Anak wajib diisi' }],
   fileChiledPicture: [{ type: 'string', required: true, message: 'Foto Anak wajib diisi' }],
   fileHousePicture: [{ type: 'string', message: 'Foto Rumah wajib diisi' }],
-  observation: [{ type: 'string', message: 'Observasi wajib diisi' }]
+  observation: [{ type: 'string', message: 'Observasi wajib diisi' }],
+  gender: [{ type: 'string', required: true,  enum: ['MALE', 'FEMALE'],message: 'gender wajib diisi' }]
 }
+
+const options: { label: string; value: string }[] = [
+  {
+    label: 'Laki-Laki',
+    value: 'MALE'
+  },
+  {
+    label: 'Perempuan',
+    value: 'FEMALE'
+  }
+]
 
 // Fungsi untuk mengirimkan formulir
 const handleSubmit = () => {
   formRef.value?.validate((errors) => {
     if (!errors) {
       mutate({
-        ...formData.value
+        ...formData.value,
+      }, {
+        onSuccess: () => {
+          router.push('/user/report-stunting')
+        }
       })
 
       return
@@ -69,7 +88,7 @@ const closeForm = () => {
 </script>
 
 <template>
-  <div v-if="isModalOpen" class="flex items-center justify-center  mx-auto my-8 md:h-[80%]">
+  <div v-if="isModalOpen" class="flex items-center justify-center mx-auto my-8 md:h-[80%]">
     <div
       class="bg-white p-6 rounded-lg shadow-lg mx-4 md:w-full md:max-w-2xl h-auto md:h-[80%] overflow-y-auto max-h-screen"
     >
@@ -113,6 +132,15 @@ const closeForm = () => {
               type="text"
               placeholder="Masukan Nama Anak"
             />
+          </n-form-item>
+        </div>
+        <div class="mb-4 w-full">
+          <n-form-item label="Pilih Jenis Kelamin" path="gender">
+            <div class="w-full">
+              <n-space vertical>
+                <n-select v-model:value="formData.gender" :options="options" />
+              </n-space>
+            </div>
           </n-form-item>
         </div>
         <div class="mb-4">

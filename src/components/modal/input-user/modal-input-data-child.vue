@@ -90,10 +90,10 @@ const placeOfBirthOptions = ref([
 </script>
 
 <template>
-  <div class="flex items-center justify-center bg-gray-100 h-[80%]">
+  <div class="flex items-center justify-center mt-6 mb-6 bg-gray-100 h-[100%]">
     <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
       <n-form
-        class="space-y-6 mt-4"
+        class="space-y-2 mt-4"
         @submit.prevent="handleSubmit"
         ref="formRef"
         :model="formData"
