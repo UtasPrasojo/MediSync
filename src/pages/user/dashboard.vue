@@ -52,7 +52,9 @@
           </div>
           <div class="flex justify-end items-center ml-auto">
             <!-- Menempatkan tombol di sebelah kanan -->
+            <router-link to="/user/setting-account">
             <n-button type="tertiary"> Edit Profil </n-button>
+            </router-link>
           </div>
         </div>
       </div>

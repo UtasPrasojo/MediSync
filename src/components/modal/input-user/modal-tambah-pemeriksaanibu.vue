@@ -44,15 +44,16 @@ const closeModal = () => {
 }
 
 // Handle back action
+const isModalOpen = ref<boolean>(true)
+// Handle back button click
 const goBack = () => {
-  console.log('Go back action')
-  // Implement go back functionality
+  isModalOpen.value = false
 }
 </script>
 
 <template>
-  <div id="app" class="flex items-center justify-center">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+  <div v-if="isModalOpen" class="flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 mx-4 md:w-full max-w-md">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold">Tambah Perkembangan Ibu</h2>
         <button class="text-gray-500 hover:text-gray-700" @click="closeModal">

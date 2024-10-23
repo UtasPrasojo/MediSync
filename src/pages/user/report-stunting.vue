@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted,computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useReadReportStunting } from '@/services/report-stunting'
 
 // Reactive variables
@@ -14,8 +14,7 @@ const itemsReport = computed(() => {
       childAddress: checkup.childAddress,
       fileChildPicture: checkup.fileChildPicture,
       fileHousePicture: checkup.fileHousePicture,
-      observation: checkup.observation,
-      
+      observation: checkup.observation
     }
   })
 })
@@ -80,7 +79,6 @@ const columns = ref([
         <i class="fas fa-chevron-right"></i>
         <span>Kesehatan Anak</span>
       </div>
-      
     </div>
 
     <div class="flex justify-between items-center mb-6">
@@ -95,7 +93,7 @@ const columns = ref([
         <h3 class="text-lg font-semibold">Riwayat Laporan</h3>
         <n-button @click="showModal = true" type="primary">Lapor Stunting</n-button>
         <n-modal v-model:show="showModal">
-          <modal-input-user-modal-lapor-stunting/>
+          <modal-input-user-modal-lapor-stunting />
         </n-modal>
       </div>
       <div>
@@ -112,7 +110,10 @@ const columns = ref([
     <div class="block md:hidden">
       <div class="flex justify-between">
         <h3 class="text-lg font-semibold mb-4">Riwayat Kesehatan</h3>
-        <n-button type="primary">Lapor Stunting</n-button>
+        <n-button @click="showModal = true" type="primary">Lapor Stunting</n-button>
+        <n-modal v-model:show="showModal">
+          <modal-input-user-modal-lapor-stunting />
+        </n-modal>
       </div>
 
       <div v-for="(row, index) in data" :key="index" class="bg-white p-4 rounded-lg shadow-md mb-4">

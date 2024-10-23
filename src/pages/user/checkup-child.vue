@@ -182,13 +182,13 @@ const showModal = ref(false)
         <div class="flex items-center justify-between">
           <!-- Bagian Kiri: Tulisan Dashboard -->
           <div>
-            <h1 class="text-2xl font-semibold">Dashboard</h1>
-            <p class="text-gray-600">Informasi tentang aktifitas anda</p>
+            <h1 class=" text-lg md:text-2xl font-semibold">Dashboard</h1>
+            <p class="text-gray-600 md:text-lg text-sm">Informasi tentang aktifitas anda</p>
           </div>
 
           <!-- Bagian Kanan: Dropdown dengan latar belakang merah -->
         </div>
-        <div class="w-1/6 p-4 rounded-lg">
+        <div class="w-28 md:w-1/6 md:p-4 rounded-lg">
           <n-select
             @update:value="selectChildren"
             :options="childrenOptions"
@@ -363,7 +363,7 @@ const showModal = ref(false)
         
         <h2 class="text-lg font-semibold mb-4">Riwayat Perkembangan</h2>
       </div>
-      <div class="flex justify-start md:justify-end mb-6">
+      <div class="flex justify-start md:justify-end mb-6 mx-4">
         <n-button @click="showModal = true" type="primary">Tambah Pertumbuhan Mandiri</n-button>
         <n-modal v-model:show="showModal">
           <modal-input-user-modal-tambah-pemeriksaanbayi />

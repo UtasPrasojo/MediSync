@@ -4,18 +4,21 @@
 </route> -->
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const isClose= ref(true)
- defineEmits<{
+const isClose = ref(true)
+defineEmits<{
   close: []
- }>()
+}>()
 
+const dropdownOpen = ref(false)
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value
+}
 </script>
 
 <template>
   <div v-if="isClose" class="flex h-screen">
- 
     <div class="w-full bg-white border-l border-gray-300 ml-auto">
       <div class="flex items-center justify-between p-4">
         <div @click="$emit('close')">
@@ -42,29 +45,107 @@ const isClose= ref(true)
         </div>
       </div>
 
-      <nav class="mt-4">
-        <a href="#" class="flex items-center p-4 text-white bg-pink-500">
-          <i class="fas fa-home mr-2"></i>
-          <span>Dashboard</span>
-        </a>
-        <a href="#" class="flex items-center p-4 text-gray-800 hover:bg-pink-200">
-          <i class="fas fa-chart-bar mr-2"></i>
-          <span>Kesehatan</span>
-          <i class="fas fa-chevron-down ml-auto"></i>
-        </a>
-        <a href="#" class="flex items-center p-4 text-gray-800 hover:bg-pink-200">
-          <i class="fas fa-calendar-alt mr-2"></i>
-          <span>Posyandu</span>
-        </a>
-        <a href="#" class="flex items-center p-4 text-gray-800 hover:bg-pink-200">
-          <i class="fas fa-newspaper mr-2"></i>
-          <span>Artikel</span>
-        </a>
-        <a href="#" class="flex items-center p-4 text-gray-800 hover:bg-pink-200">
-          <i class="fas fa-comment-dots mr-2"></i>
-          <span>Laporkan Stunting</span>
-        </a>
-      </nav>
+      <div class="flex justify-center h-1/3 flex-col py-5 px-3">
+        <ul>
+          <li>
+            <router-link
+              to="/user/dashboard"
+              class="block text-gray-900 w-full dark:text-black hover:text-white"
+            >
+              <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+                <div class="flex items-center justify-start h-full ml-12">
+                  <i-ic:baseline-home class="text-xl"></i-ic:baseline-home>
+                  <span class="ml-2 text-md">Dashboard</span>
+                </div>
+              </div>
+            </router-link>
+          </li>
+
+          <!-- Dropdown for Kesehatan -->
+          <li>
+            <div
+              @click="toggleDropdown"
+              class="block text-gray-900 w-full dark:text-black hover:text-white cursor-pointer"
+            >
+              <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+                <div class="flex items-center justify-start h-full ml-12">
+                  <i-lucide:file-chart-line class="text-xl"></i-lucide:file-chart-line>
+                  <span class="ml-2 text-md">Kesehatan</span>
+
+                  <i
+                    :class="dropdownOpen ? 'i-ep:arrow-down-bold' : 'i-ic:baseline-arrow-drop-down'"
+                    class="ml-2 text-xl"
+                  ></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dropdown items -->
+            <ul v-if="dropdownOpen" class="ml-6 mt-2 space-y-2">
+              <li>
+                <router-link
+                  to="/user/checkup-child"
+                  class="flex items-center justify-start ml-14 mr- my-3 text-gray-900 dark:text-black hover:text-pink-600"
+                >
+                  Kesehatan Anak
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  to="/user/health-mom"
+                  class="flex items-center justify-start ml-14 mt-4 my-3 text-gray-900 dark:text-black hover:text-pink-600"
+                >
+                  Kesehatan Ibu
+                </router-link>
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <router-link
+              to="/user/info-posyandu"
+              class="block text-gray-900 w-full dark:text-black hover:text-white"
+            >
+              <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+                <div class="flex items-center justify-start ml-12 h-full">
+                  <i-uil:calender class="text-xl"></i-uil:calender>
+                  <span class="ml-2 text-md">Posyandu</span>
+                </div>
+              </div>
+            </router-link>
+          </li>
+
+          <li>
+            <router-link
+              to="/user/article"
+              class="block text-gray-900 w-full dark:text-black hover:text-white"
+            >
+              <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+                <div class="flex items-center justify-start ml-12 h-full">
+                  <i-material-symbols:article-outline
+                    class="text-xl"
+                  ></i-material-symbols:article-outline>
+                  <span class="ml-2 text-md">Artikel</span>
+                </div>
+              </div>
+            </router-link>
+          </li>
+
+          <li>
+            <router-link
+              to="/user/report-stunting"
+              class="block text-gray-900 w-full dark:text-black hover:text-white"
+            >
+              <div class="rounded-lg w-full h-14 hover:bg-pink-600 dark:hover:bg-pink-600">
+                <div class="flex items-center justify-start ml-12 h-full">
+                  <i-ic:outline-message class="text-xl"></i-ic:outline-message>
+                  <span class="ml-2 text-md">Laporkan Stunting</span>
+                </div>
+              </div>
+            </router-link>
+          </li>
+        </ul>
+      </div>
       <div class="mt-auto p-4">
         <a href="#" class="block p-4 text-gray-800 hover:bg-pink-200"> Settings </a>
         <a href="#" class="block p-4 text-gray-800 hover:bg-pink-200"> Logout </a>

@@ -40,10 +40,10 @@ const handleSubmit = () => {
     message.error('Validasi gagal')
   })
 }
-
+const isModalOpen = ref<boolean>(true)
 // Handle back button click
 const goBack = () => {
-  alert('Kembali clicked')
+  isModalOpen.value = false
 }
 
 // Handle form close
@@ -53,8 +53,8 @@ const closeForm = () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center bg-gray-200">
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+  <div v-if="isModalOpen" class="flex items-center justify-center ">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-4 md:mx-0">
       <div class="flex justify-between items-center border-b pb-4 mb-4">
         <h2 class="text-lg font-semibold">Tambah Pemeriksaan Anak</h2>
         <button @click="closeForm" class="text-gray-500 hover:text-gray-700">
@@ -118,6 +118,7 @@ const closeForm = () => {
     </div>
   </div>
 </template>
+
 
 
 <style scoped>
