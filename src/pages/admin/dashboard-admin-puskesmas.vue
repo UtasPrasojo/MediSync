@@ -287,7 +287,6 @@
 </template>
 
 <script setup lang="ts">
-import { options } from 'node_modules/axios/index.cjs'
 import { ref, computed } from 'vue'
 import ApexChart from 'vue3-apexcharts'
 
